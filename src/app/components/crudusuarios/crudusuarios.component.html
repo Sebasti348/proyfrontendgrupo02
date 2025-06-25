@@ -1,0 +1,79 @@
+
+<div class="usuarioscrud-bg d-flex align-items-center justify-content-center min-vh-100">
+  <div class="container py-4 position-relative w-100">
+    <div class="usuarioscrud-anim-bg"></div>
+    <h2 class="mb-4 fw-bold" style="color: #FFD600;">Gestión de Usuarios</h2>
+    <div class="usuarioscrud-content p-4 rounded-4">
+      <!-- Formulario para cargar usuarios -->
+      <div class="p-4 mb-4 user-form-box">
+        <form class="row g-3 align-items-end"  #usuarioForm="ngForm">
+          <div class="col-md-4">
+            <label for="nombre" class="form-label fw-bold">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="usuario.nombre" placeholder="Nombre" required>
+          </div>
+          <div class="col-md-4">
+            <label for="apellido" class="form-label fw-bold">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="usuario.apellido" placeholder="Apellido" required>
+          </div>
+          <div class="col-md-4">
+            <label for="username" class="form-label fw-bold">Username</label>
+            <input type="text" class="form-control" id="username" name="username" [(ngModel)]="usuario.username" placeholder="Username" required>
+          </div>
+          <div class="col-md-4">
+            <label for="email" class="form-label fw-bold">Email</label>
+            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="usuario.email" placeholder="Email" required>
+          </div>
+          <div class="col-md-4">
+            <label for="password" class="form-label fw-bold">Password</label>
+            <input type="password" class="form-control" id="password" name="password" [(ngModel)]="usuario.password" placeholder="Password" required>
+          </div>
+          <div class="col-md-3">
+            <label for="rol" class="form-label fw-bold">Rol</label>
+            <select class="form-select" id="rol" name="rol" [(ngModel)]="usuario.rol" required>
+              <option value="">Seleccionar</option>
+              <option value="administrador">Administrador</option>
+              <option value="auditor">Auditor</option>
+            </select>
+          </div>
+          <div class="col-md-1 d-grid">
+            <button type="submit" class="btn btn-guardar" [disabled]="!usuarioForm.form.valid" (click)="agregarUsuario()">Guardar</button>
+          </div>
+        </form>
+      </div>
+    
+      <!-- Lista de usuarios existentes -->
+      <div class="table-responsive rounded-3 shadow mt-4">
+        <table class="table table-dark table-hover align-middle mb-0" style="background: #111;">
+          <thead style="background: #0D47A1; color: #FFD600;">
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of usuarios; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ u.nombre }}</td>
+              <td>{{ u.apellido }}</td>
+              <td>{{ u.username }}</td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.rol | titlecase }}</td>
+              <td>
+                <button class="btn btn-modificar me-2" title="Modificar" (click)="editarUsuario(u._id!)">Modificar</button>
+                <button class="btn btn-eliminar" title="Eliminar" (click)="eliminarUsuario(u._id!)">Eliminar</button>
+              </td>
+            </tr>
+            <tr *ngIf="usuarios.length === 0">
+              <td colspan="7" class="text-center">No hay usuarios registrados.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
