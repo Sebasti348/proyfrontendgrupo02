@@ -1,0 +1,193 @@
+.login-bg {
+    background: linear-gradient(135deg, #0A192F 60%, #0D47A1 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .login-card {
+    background: rgba(17, 17, 17, 0.98);
+    border-radius: 1.5rem;
+    max-width: 600px;
+    width: 100%;
+    z-index: 2;
+    border: 3px solid #FFD600;
+    box-shadow: 0 8px 32px 0 rgba(13,71,161,0.25);
+    animation: fadeInDown 1s cubic-bezier(.39,.575,.56,1.000);
+  }
+  
+  @keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-40px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  .login-logo {
+    letter-spacing: 2px;
+    font-size: 2.5rem;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  }
+  
+  .login-input {
+    background: #fff !important;
+    color: #111 !important;
+    border: 2px solid #FFD600 !important;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .login-input:focus {
+    border-color: #0D47A1 !important;
+    box-shadow: 0 0 0 0.2rem rgba(13,71,161,0.15) !important;
+  }
+  .login-input::placeholder {
+    color: #FFD600 !important;
+    opacity: 1;
+  }
+  
+  .btn-login {
+    background: linear-gradient(90deg, #FFD600 60%, #0D47A1 100%);
+    color: #111;
+    font-weight: bold;
+    border: 2px solid #FFD600;
+    border-radius: 2rem;
+    transition: 0.2s;
+    box-shadow: 0 2px 8px rgba(13,71,161,0.15);
+    font-size: 1.1rem;
+  }
+  .btn-login:hover {
+    background: #0D47A1;
+    color: #FFD600;
+    border-color: #0D47A1;
+  }
+  
+  .btn-register {
+    background: #0D47A1;
+    color: #FFD600;
+    font-weight: bold;
+    border: 2px solid #0D47A1;
+    border-radius: 2rem;
+    transition: 0.2s;
+    box-shadow: 0 2px 8px rgba(255,214,0,0.10);
+    font-size: 1.1rem;
+  }
+  .btn-register:hover {
+    background: #FFD600;
+    color: #0D47A1;
+    border-color: #FFD600;
+  }
+  
+  .forgot-link {
+    color: #FFD600;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+  }
+  .forgot-link:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  
+  /* Animación de fondo */
+  .login-anim-bg {
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle at 60% 40%, #FFD60033 0%, #0D47A1 80%);
+    filter: blur(60px);
+    opacity: 0.7;
+    z-index: 1;
+    animation: moveBg 8s ease-in-out infinite alternate;
+  }
+  @keyframes moveBg {
+    0% { transform: scale(1) translate(0,0); }
+    100% { transform: scale(1.1) translate(60px, 40px); }
+  }
+  
+  .nav-pills .nav-link.active {
+    background: linear-gradient(90deg, #FFD600 60%, #0D47A1 100%);
+    color: #111;
+    font-weight: bold;
+    border-radius: 2rem;
+    border: 2px solid #FFD600;
+  }
+  .nav-pills .nav-link {
+    color: #FFD600;
+    font-weight: bold;
+    border-radius: 2rem;
+    border: 2px solid transparent;
+    transition: 0.2s;
+  }
+  .nav-pills .nav-link:hover {
+    color: #0D47A1;
+    background: #FFD60033;
+  }
+  
+  .btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.08rem;
+    border-radius: 0.7rem;
+    border: none;
+    padding: 0.7rem 1rem;
+    transition: box-shadow 0.2s, transform 0.2s, background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px rgba(13,71,161,0.10);
+    margin-bottom: 0.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-social .social-icon {
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border-radius: 0.3rem;
+    padding: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  }
+  .btn-google {
+    background: #4285F4;
+    color: #fff;
+  }
+  .btn-google:hover {
+    background: linear-gradient(90deg, #4285F4 60%, #FFD600 100%);
+    color: #111;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 16px #4285F4aa;
+  }
+  .btn-facebook {
+    background: #181A2A;
+    color: #FFD600;
+  }
+  .btn-facebook:hover {
+    background: linear-gradient(90deg, #181A2A 60%, #1877F3 100%);
+    color: #fff;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 16px #1877F3aa;
+  }
+  .btn-phone {
+    background: #FFD600;
+    color: #0D47A1;
+  }
+  .btn-phone:hover {
+    background: linear-gradient(90deg, #FFD600 60%, #0D47A1 100%);
+    color: #fff;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 16px #FFD600aa;
+  }
+  
+  .login-divider {
+    width: 3px;
+    height: 80%;
+    background: #FFD600;
+    margin: 0 auto;
+    border-radius: 1rem;
+    min-height: 200px;
+    max-height: 400px;
+  }
+  
+  @media (max-width: 767px) {
+    .login-divider {
+      display: none;
+    }
+  } 

@@ -1,0 +1,120 @@
+<div class="login-bg d-flex align-items-center justify-content-center min-vh-100">
+    <div class="login-card p-4 shadow-lg">
+      <div class="row g-0 align-items-center">
+        <!-- Formulario Login/Register -->
+        <div class="col-12 col-md-7 pe-md-4 border-end-md">
+          <div class="text-center mb-4">
+            <div class="login-logo mb-2">
+              <span class="fw-bold" style="color:#FFD600; font-size:2.5rem; letter-spacing:2px;">Cine<span style='color:#0D47A1;'>Beta</span></span>
+            </div>
+            <h3 class="fw-bold" style="color:#FFD600;">Bienvenido</h3>
+            <p class="text-light mb-0">Inicia sesión o regístrate para continuar</p>
+          </div>
+          <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="login-tab" data-bs-toggle="pill" data-bs-target="#login" type="button" role="tab">Login</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="register-tab" data-bs-toggle="pill" data-bs-target="#register" type="button" role="tab">Registro</button>
+            </li>
+          </ul>
+          <div class="tab-content" id="pills-tabContent">
+            <!-- Login -->
+            <div class="tab-pane fade show active" id="login" role="tabpanel">
+              <form autocomplete="off">
+                <div class="mb-3">
+                  <label for="login-username" class="form-label fw-bold">Usuario o Email</label>
+                  <input type="text" class="form-control login-input" id="login-username" placeholder="Usuario o Email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="login-password" class="form-label fw-bold">Contraseña</label>
+                  <input type="password" class="form-control login-input" id="login-password" placeholder="Contraseña" required>
+                </div>
+                <div class="d-grid mb-2">
+                  <button type="submit" class="btn btn-login">Iniciar Sesión</button>
+                </div>
+                <div class="text-end">
+                  <a href="#" class="text-decoration-none forgot-link">¿Olvidaste tu contraseña?</a>
+                </div>
+              </form>
+            </div>
+            <!-- Register -->
+            <div class="tab-pane fade" id="register" role="tabpanel">
+              <form autocomplete="off">
+                <div class="mb-3">
+                  <label for="reg-nombre" class="form-label fw-bold">Nombre</label>
+                  <input type="text" class="form-control login-input" id="reg-nombre" placeholder="Nombre" required>
+                </div>
+                <div class="mb-3">
+                  <label for="reg-apellido" class="form-label fw-bold">Apellido</label>
+                  <input type="text" class="form-control login-input" id="reg-apellido" placeholder="Apellido" required>
+                </div>
+                <div class="mb-3">
+                  <label for="reg-username" class="form-label fw-bold">Username</label>
+                  <input type="text" class="form-control login-input" id="reg-username" placeholder="Username" required>
+                </div>
+                <div class="mb-3">
+                  <label for="reg-email" class="form-label fw-bold">Email</label>
+                  <input type="email" class="form-control login-input" id="reg-email" placeholder="Email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="reg-password" class="form-label fw-bold">Contraseña</label>
+                  <input type="password" class="form-control login-input" id="reg-password" placeholder="Contraseña" required>
+                </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-register">Registrarse</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- Línea divisoria vertical -->
+        <div class="d-none d-md-block col-md-1 px-0">
+          <div class="login-divider"></div>
+        </div>
+        
+        <!-- Social Login -->
+        <div class="col-12 col-md-4 ps-md-4 mt-4 mt-md-0">
+          <div class="d-flex flex-column align-items-center justify-content-center h-100">
+            <div class=" p-4 shadow-sm text-center">
+              <div id="g_id_onload"
+                data-client_id="657767929746-8quhhgu57q2bu7mqdokg8at2lk7k61ra.apps.googleusercontent.com"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-callback="handleCredentialResponse"
+                data-auto_prompt="false">
+              </div>
+              <div class="g_id_signin d-flex justify-content-center mt-3"
+                data-type="standard"
+                data-shape="rectangular"
+                data-theme="outline"
+                data-text="signin_with"
+                data-size="large"
+                data-logo_alignment="left">
+              </div>
+            </div>
+            <button class="btn-social btn-facebook w-100 mb-2 d-flex align-items-center justify-content-center" (click)="loginWithFacebook()">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook" class="me-2 social-icon">
+              <span>Login con Facebook</span>
+            </button>
+            <div *ngIf="userLoggedIn">
+              <p>¡Hola, {{ userName }}! Has iniciado sesión.</p>
+              <button (click)="logoutFromFacebook()">
+              Cerrar sesión de Facebook
+              </button>
+              </div>
+              <div *ngIf="userLoggedIn" class="facebook-profile-picture">
+              </div>
+            <button class="btn-social btn-phone w-100 d-flex align-items-center justify-content-center">
+              <svg class="me-2 social-icon" width="20" height="20" fill="none" viewBox="0 0 24 24"><path fill="#FFD600" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z"/></svg>
+              <span>Login con Teléfono</span>
+            </button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="login-anim-bg"></div>
+  </div>
+  
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
