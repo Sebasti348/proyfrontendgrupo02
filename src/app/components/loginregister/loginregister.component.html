@@ -23,15 +23,27 @@
             <div class="tab-pane fade show active" id="login" role="tabpanel">
               <form autocomplete="off">
                 <div class="mb-3">
-                  <label for="login-username" class="form-label fw-bold">Usuario o Email</label>
-                  <input type="text" class="form-control login-input" id="login-username" placeholder="Usuario o Email" required>
+                  <label for="email" class="form-label fw-bold">Usuario o Email</label>
+                  <input type="text" [(ngModel)]="email" class="form-control login-input" name= "email" id="email" placeholder="Usuario o Email"  required>
                 </div>
                 <div class="mb-3">
                   <label for="login-password" class="form-label fw-bold">Contraseña</label>
-                  <input type="password" class="form-control login-input" id="login-password" placeholder="Contraseña" required>
+                  <input type="password" [(ngModel)]="password" class="form-control login-input" name= "password" id="login-password" placeholder="Contraseña"  required>
                 </div>
                 <div class="d-grid mb-2">
-                  <button type="submit" class="btn btn-login">Iniciar Sesión</button>
+                  <button type="button" class="btn btn-login" (click)="login() " [disabled]="isLoading">
+                    <span *ngIf="!isLoading">Iniciar Sesión</span>
+                    <span *ngIf="isLoading">
+                      <div class="spinner-border spinner-border-sm me-2" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                      </div>
+                      Iniciando sesión...
+                    </span>
+                  </button>
+                </div>
+                <!-- Mensaje de error -->
+                <div *ngIf="msglogin" class="alert alert-danger mt-2" role="alert">
+                  {{ msglogin }}
                 </div>
                 <div class="text-end">
                   <a href="#" class="text-decoration-none forgot-link">¿Olvidaste tu contraseña?</a>
@@ -43,26 +55,26 @@
               <form autocomplete="off">
                 <div class="mb-3">
                   <label for="reg-nombre" class="form-label fw-bold">Nombre</label>
-                  <input type="text" class="form-control login-input" id="reg-nombre" placeholder="Nombre" required>
+                  <input type="text" [(ngModel)]="usuario.nombre" class="form-control login-input" name= "nombre" id="reg-nombre" placeholder="Nombre" required>
                 </div>
                 <div class="mb-3">
                   <label for="reg-apellido" class="form-label fw-bold">Apellido</label>
-                  <input type="text" class="form-control login-input" id="reg-apellido" placeholder="Apellido" required>
+                  <input type="text" [(ngModel)]="usuario.apellido" class="form-control login-input" name= "apellido" id="reg-apellido" placeholder="Apellido" required>
                 </div>
                 <div class="mb-3">
                   <label for="reg-username" class="form-label fw-bold">Username</label>
-                  <input type="text" class="form-control login-input" id="reg-username" placeholder="Username" required>
+                  <input type="text" [(ngModel)]="usuario.username" class="form-control login-input" name= "username" id="reg-username" placeholder="Username" required>
                 </div>
                 <div class="mb-3">
                   <label for="reg-email" class="form-label fw-bold">Email</label>
-                  <input type="email" class="form-control login-input" id="reg-email" placeholder="Email" required>
+                  <input type="email" [(ngModel)]="usuario.email" class="form-control login-input" name= "email" id="reg-email" placeholder="Email" required>
                 </div>
                 <div class="mb-3">
                   <label for="reg-password" class="form-label fw-bold">Contraseña</label>
-                  <input type="password" class="form-control login-input" id="reg-password" placeholder="Contraseña" required>
+                  <input type="password" [(ngModel)]="usuario.password" class="form-control login-input" name= "password" id="reg-password" placeholder="Contraseña" required>
                 </div>
                 <div class="d-grid">
-                  <button type="submit" class="btn btn-register">Registrarse</button>
+                  <button type="button" class="btn btn-register" (click)="register()">Registrarse</button>
                 </div>
               </form>
             </div>
@@ -93,22 +105,6 @@
                 data-logo_alignment="left">
               </div>
             </div>
-            <button class="btn-social btn-facebook w-100 mb-2 d-flex align-items-center justify-content-center" (click)="loginWithFacebook()">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook" class="me-2 social-icon">
-              <span>Login con Facebook</span>
-            </button>
-            <div *ngIf="userLoggedIn">
-              <p>¡Hola, {{ userName }}! Has iniciado sesión.</p>
-              <button (click)="logoutFromFacebook()">
-              Cerrar sesión de Facebook
-              </button>
-              </div>
-              <div *ngIf="userLoggedIn" class="facebook-profile-picture">
-              </div>
-            <button class="btn-social btn-phone w-100 d-flex align-items-center justify-content-center">
-              <svg class="me-2 social-icon" width="20" height="20" fill="none" viewBox="0 0 24 24"><path fill="#FFD600" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z"/></svg>
-              <span>Login con Teléfono</span>
-            </button>
           </div>
           
         </div>
