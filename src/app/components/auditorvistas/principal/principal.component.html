@@ -1,0 +1,53 @@
+<div class="container-fluid p-4">
+    <!-- Title Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-gold mb-3">Bienvenido Auditor</h1>
+        <p class="lead text-light">Tu panel de control</p>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="row g-4">
+        <!-- Card 1 -->
+        <div class="col-md-4">
+            <div class="card auditor-card h-100">
+                <div class="card-body text-center">
+                    <div class="icon-container mb-3">
+                        <i class="fas fa-file-invoice-dollar fa-3x text-gold"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Informes Estadísticos</h5>
+                    <p class="card-text text-light">Realiza auditorías detalladas de las operaciones financieras</p>
+                    <a [routerLink]="['/estadisticas']" class="btn btn-gold w-100 mt-3">Iniciar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-md-4">
+            <div class="card auditor-card h-100">
+                <div class="card-body text-center">
+                    <div class="icon-container mb-3">
+                        <i class="fas fa-chart-line fa-3x text-gold"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Reportes</h5>
+                    <p class="card-text text-light">Genera y visualiza reportes detallados</p>
+                    <a [routerLink]="['/reportes']" class="btn btn-gold w-100 mt-3">Ver Reportes</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-4">
+            <div class="card auditor-card h-100">
+                <div class="card-body text-center">
+                    <div class="icon-container mb-3">
+                        <i class="fas fa-user-shield fa-3x text-gold"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Seguridad</h5>
+                    <p class="card-text text-light">Gestiona y monitorea la seguridad del sistema</p>
+                    <a routerLink="seguridad" class="btn btn-gold w-100 mt-3">Ver Seguridad</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
