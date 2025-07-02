@@ -16,13 +16,16 @@
           <a class="nav-link" [routerLink]="['funcion/activas']">Funciones</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isAdmin()" [routerLink]="['gestion-funciones']">Gestión Funciones</a>
+          <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isAdmin() " [routerLink]="['gestion-funciones']">Gestión Funciones</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isAdmin()" [routerLink]="['gestion-peliculas']">Gestión Peliculas</a>
+          <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isAdmin() " [routerLink]="['gestion-peliculas']">Gestión Peliculas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isAdmin()" [routerLink]="['usuarios']" routerLinkActive="active">Usuarios</a>
+          <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isRoot() " [routerLink]="['usuarios']" routerLinkActive="active">Usuarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isSupervisor() " [routerLink]="['lista-reservas']" routerLinkActive="active">Reservas</a>
         </li>
         <li class="nav-item dropdown" >
           <a class="nav-link dropdown-toggle" *ngIf="loginservice.userLoggedIn() && loginservice.isAuditor()" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

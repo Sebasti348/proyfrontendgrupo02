@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FuncionesService } from '../../services/funciones.service';
 import { Funcion } from '../../models/funcion';
 import { NavigationExtras, Router, RouterLink } from '@angular/router';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-funciones',
@@ -15,7 +16,7 @@ import { NavigationExtras, Router, RouterLink } from '@angular/router';
 export class FuncionesComponent implements OnInit {
   funciones: Funcion[] = [];
 
-  constructor(private http: HttpClient, private funcionService: FuncionesService, private router: Router) { }
+  constructor(private http: HttpClient, private funcionService: FuncionesService, private router: Router,private loginservice: LoginService) { }
 
   ngOnInit(): void {
     this.cargarFunciones();
@@ -34,10 +35,14 @@ export class FuncionesComponent implements OnInit {
   }
 
   reservarPelicula(funcionSeleccionada: string | undefined) {
-    if (funcionSeleccionada) {
-      this.router.navigate(['reservas', funcionSeleccionada]);
-    } else {
-      console.error('No se seleccionó ninguna función');
+    if(this.loginservice.userLoggedIn()){
+      if (funcionSeleccionada) {
+        this.router.navigate(['reservas', funcionSeleccionada]);
+      } else {
+        console.error('No se seleccionó ninguna función');
+      }
+    }else{
+      this.router.navigate(['loginregister']);
     }
   }
 
