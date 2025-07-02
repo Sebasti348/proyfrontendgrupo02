@@ -9,6 +9,7 @@ import { ReservasComponent } from './components/reservas/reservas.component';
 import { PrincipalComponent } from './components/auditorvistas/principal/principal.component';
 import { EstadisticasComponent } from './components/auditorvistas/estadisticas/estadisticas.component';
 import { ReportesComponent } from './components/auditorvistas/reportes/reportes.component';
+import { ListaReservasComponent } from './components/lista-reservas/lista-reservas.component';
 
 export const routes: Routes = [
     { path: 'usuarios', component: CrudusuariosComponent },
@@ -17,6 +18,7 @@ export const routes: Routes = [
     {path: 'gestion-funciones',component: GestionFuncionesComponent},
     {path: 'funcion/activas',component: FuncionesComponent},
     {path: 'reservas',component: ReservasComponent},
+    {path: 'lista-reservas',component: ListaReservasComponent},
     {path: 'reservas/:id',component: ReservasComponent},
     { path: 'usuarios', component: CrudusuariosComponent },
     { path: 'loginregister', component: LoginregisterComponent },
