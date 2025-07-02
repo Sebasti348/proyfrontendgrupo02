@@ -105,7 +105,7 @@ login(){
      }
      
      //redirigimos a home o a pagina que llamo
-     this.router.navigateByUrl("/main");
+     this.router.navigateByUrl("/");
      this.isLoading = false; // Ocultar spinner
    }, 1500);
  } else {

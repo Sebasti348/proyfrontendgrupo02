@@ -41,7 +41,7 @@ export class CarteleraComponent implements OnInit {
   }
 
   verFunciones() {
-    this.router.navigate(['funciones']);
+    this.router.navigate(['funcion/activas']);
   }
 
   verTrailer(trailerUrl: string) {
