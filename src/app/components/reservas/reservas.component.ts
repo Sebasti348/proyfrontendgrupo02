@@ -7,7 +7,8 @@ import { FuncionesService } from '../../services/funciones.service';
 import { Funcion } from '../../models/funcion';
 import { Reserva } from '../../models/reserva';
 import { ReservasService } from '../../services/reserva.service';
-
+import { LoginService } from '../../services/login.service';
+import { Location } from '@angular/common';
 interface ButacaUI {
   id: string;
   status: 'available' | 'selected' | 'occupied';
@@ -33,7 +34,9 @@ export class ReservasComponent implements OnInit {
     private route: ActivatedRoute,
     private funcionService: FuncionesService,
     private reservaService: ReservasService,
-    private router: Router
+    private router: Router,
+    private loginservice: LoginService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +68,10 @@ export class ReservasComponent implements OnInit {
         alert('No se pudo cargar la información de la función. Inténtalo de nuevo.');
       }
     );
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   generateSeats(occupiedSeatsIds: string[]): void {
@@ -103,9 +110,11 @@ export class ReservasComponent implements OnInit {
     }
 
     const seatsToReserveArray = Array.from(this.butacaSeleccionada);
-
+    const idUsuario = this.loginservice.idLogged();
     const nuevaReserva = new Reserva();
-    nuevaReserva.usuario = 'ID_DEL_USUARIO_ACTUAL'; // <-- ¡IMPORTANTE! Reemplaza con el ID de usuario real (ej: desde un servicio de autenticación)
+    if (idUsuario != null) {
+      nuevaReserva.usuario = idUsuario; // <-- ¡IMPORTANTE! Reemplaza con el ID de usuario real (ej: desde un servicio de autenticación)
+    }
     nuevaReserva.funcion = this.funcionSeleccionada; // Envía solo el ID de la función
     nuevaReserva.cantidadReservas = seatsToReserveArray.length;
 
@@ -126,6 +135,7 @@ export class ReservasComponent implements OnInit {
         // Recargar la función para actualizar el estado de las butacas en la UI
         this.obtenerFuncion();
         this.butacaSeleccionada.clear(); // Limpia las selecciones en el front después de una reserva exitosa
+        this.router.navigate(['']);
       },
       error => {
         console.error('Error al realizar la reserva:', error);
