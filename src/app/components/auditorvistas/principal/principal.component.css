@@ -1,0 +1,65 @@
+/* Main Background */
+.container-fluid {
+    background-color: #0A192F;
+    min-height: 100vh;
+}
+
+/* Text Colors */
+.text-gold {
+    color: #FFD600;
+}
+
+/* Card Styles */
+.auditor-card {
+    background-color: rgba(17, 17, 17, 0.98);
+    border: 3px solid #FFD600;
+    border-radius: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.auditor-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Icon Container */
+.icon-container {
+    background-color: rgba(255, 214, 0, 0.1);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Button Styles */
+.btn-gold {
+    background: linear-gradient(90deg, #FFD600 60%, #0D47A1 100%);
+    color: #111;
+    font-weight: bold;
+    border: 2px solid #FFD600;
+    transition: all 0.3s ease;
+}
+
+.btn-gold:hover {
+    background: linear-gradient(90deg, #0D47A1 60%, #FFD600 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 214, 0, 0.3);
+}
+
+/* Card Body */
+.card-body {
+    padding: 2rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .container-fluid {
+        padding: 2rem 1rem;
+    }
+}

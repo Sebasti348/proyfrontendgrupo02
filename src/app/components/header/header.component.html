@@ -27,6 +27,22 @@
         <li class="nav-item">
           <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isAdmin()" [routerLink]="['usuarios']" routerLinkActive="active">Usuarios</a>
         </li>
+        <li class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-chart-line me-2"></i>Auditoría
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/estadisticas']">
+              <i class="fas fa-chart-bar me-2"></i>Estadísticas
+            </a></li>
+            <li><a class="dropdown-item" [routerLink]="['/reportes']">
+              <i class="fas fa-file-alt me-2"></i>Reportes
+            </a></li>
+            <li><a class="dropdown-item" [routerLink]="['/auditor']">
+              <i class="fas fa-home me-2"></i>Inicio
+            </a></li>
+          </ul>
+        </li>
       </ul>
 
       <div class="navbar-nav ms-auto">
