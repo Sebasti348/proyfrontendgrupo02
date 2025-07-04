@@ -1,0 +1,185 @@
+h2,
+.text-center {
+  font-weight: 600;
+  font-size: 2rem;
+  color: #ecf0f1;
+  margin-bottom: 30px;
+}
+
+/* Contenedor del Formulario */
+.form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  /* Más padding para un mejor espaciado interno */
+  border-radius: 10px;
+  /* Bordes más redondeados */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  /* Sombra más pronunciada */
+  background-color: #2c3e50;
+  /* Fondo azul oscuro */
+  color: #ecf0f1;
+  /* Texto claro para contraste */
+}
+
+h4.text-center {
+  color: #ecf0f1;
+  /* Oro para el subtítulo */
+  margin-bottom: 25px;
+  font-size: 1.6rem;
+}
+
+/* Selector de Modo (Botones de Alternancia) */
+.selector-modo {
+  display: flex;
+  justify-content: center;
+  /* Centrar los botones */
+  margin-bottom: 30px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px solid;
+  /* Borde para todos los botones */
+}
+
+.btn-primario {
+  background-color: #34495e;
+  color: #ecf0f1;
+  border: #ecf0f1 solid 3px;
+  padding: 15px 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primario:hover {
+  background-color: #ecf0f1;
+  color: #4a667f;
+  border-color: #ecf0f1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-secundario {
+  background-color: #34495e;
+  color: #ecf0f1;
+  border: #ecf0f1 solid 3px;
+  padding: 15px 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secundario:hover {
+  background-color: #ecf0f1;
+  color: #4a667f;
+  border-color: #ecf0f1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+
+/* Grupos de Formulario */
+.grupo-formulario {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #ecf0f1;
+  /* Texto claro para las etiquetas */
+  font-size: 1.1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  /* Más padding para los inputs/selects */
+  border: 1px solid #4a667f;
+  /* Borde más oscuro */
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: #34495e;
+  /* Fondo de los inputs/selects */
+  color: #ecf0f1;
+  /* Texto de los inputs/selects */
+  appearance: none;
+  /* Elimina estilos por defecto de select */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 12px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #FFD700;
+  /* Borde dorado al enfocar */
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+  /* Sombra dorada al enfocar */
+}
+
+/* Mensajes de Error */
+.mensaje-error {
+  color: #FF6347;
+  /* Tomate para errores */
+  font-size: 0.9em;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* Botón de Enviar */
+.btn-enviar {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background-color: #4a667f;
+  /* Fondo oscuro principal */
+  color: #ecf0f1;
+  /* Texto dorado */
+  border: 2px solid #ecf0f1;
+  /* Borde dorado */
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-enviar:hover:not(:disabled) {
+  background-color: #ecf0f1;
+  color: #4a667f;
+}
+
+.btn-enviar:disabled {
+  background-color: #34495e;
+    color: #ecf0f1;
+    border: #ecf0f1 solid 3px;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Estilos para los options dentro del select */
+.form-control option {
+  background-color: #34495e;
+  /* Fondo de las opciones */
+  color: #ecf0f1;
+  /* Color del texto de las opciones */
+}
+
+/* Pequeño ajuste para evitar el desplazamiento del contenido cuando aparece el error */
+.form-group {
+  min-height: 80px;
+  /* Asegura un mínimo de altura para evitar saltos */
+}
