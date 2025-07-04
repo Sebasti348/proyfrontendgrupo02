@@ -15,7 +15,7 @@ import { AccessDeniedComponent } from './components/access-denied/access-denied.
 
 export const routes: Routes = [
     { path: 'gestion-usuarios', component: CrudusuariosComponent, canActivate: [AuthGuard], data: { roles: ['root'] } },
-    { path:'**',component: CarteleraComponent},
+    { path:'',component: CarteleraComponent},
     {path: 'gestion-peliculas',component: GestionPeliculasComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] } },
     {path: 'gestion-funciones',component: GestionFuncionesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] } },
     {path: 'funcion/activas',component: FuncionesComponent },
