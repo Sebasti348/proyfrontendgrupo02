@@ -44,5 +44,6 @@ export class AuthGuard implements CanActivate {
       console.warn(`Acceso denegado: El usuario con rol '${userRole}' no tiene permiso para acceder a esta ruta. Roles requeridos: ${requiredRoles.join(', ')}`);
       return this.router.createUrlTree(['/access-denied']);
     }
+    
   }
 }

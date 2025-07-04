@@ -19,6 +19,15 @@ export class UsuarioService {
     }
     return this.http.get('http://localhost:3000/api/usuario/');
   }
+  getUsuariosByRole(role: string):Observable<any> {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        
+      }),
+      params: new HttpParams()
+    }
+    return this.http.get(`http://localhost:3000/api/usuario/rol/${role}`);
+  }
 
   getUsuario(id: string) {
     let httpOptions = {
@@ -28,6 +37,15 @@ export class UsuarioService {
       params: new HttpParams()
     }
     return this.http.get(`http://localhost:3000/api/usuario/${id}`);
+  }
+  getUsuarioByEmail(email: string) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        
+      }),
+      params: new HttpParams()
+    }
+    return this.http.get(`http://localhost:3000/api/usuario/buscar/${email}`);
   }
 
   createUsuario(usuario: Usuario): Observable<any> {
@@ -60,5 +78,15 @@ export class UsuarioService {
     let body:any = JSON.stringify(usuario);
     
     return this.http.delete(`http://localhost:3000/api/usuario/${id}`, usuario);
+  }
+
+  getReservasByUser(id: string) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        
+      }),
+      params: new HttpParams()
+    }
+    return this.http.get(`http://localhost:3000/api/reserva/buscar/${id}`);
   }
 }

@@ -20,7 +20,8 @@ export class CrudusuariosComponent {
   idEditando: number | null = null;
   modo : boolean = false ;
   usuarioEliminar: Usuario = new Usuario();
-
+  emailFiltrar: string = '';
+  rolFiltrar: string = '';
   constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit() {
@@ -66,6 +67,39 @@ export class CrudusuariosComponent {
       }
     );
   }
+  filtrarUsuario(){
+    if(this.emailFiltrar == ''){
+      this.obtenerUsuarios();
+    }
+    else{
+      this.usuarioService.getUsuarioByEmail(this.emailFiltrar).subscribe(
+        (result: any) => {
+          console.log(result);
+          this.usuarios = result;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+  filtrarUsuarioRol(){
+    if(this.rolFiltrar == ''){
+      this.obtenerUsuarios();
+    }
+    else{
+      this.usuarioService.getUsuariosByRole(this.rolFiltrar).subscribe(
+        (result: any) => {
+          console.log(result);
+          this.usuarios = result;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+  
 
   editarUsuario(id : number) {
     

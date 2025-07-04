@@ -1,0 +1,81 @@
+<div class="container-fluid perfil-container">
+  <!-- Header Section -->
+  <div class="perfil-header">
+    <h1>Mi Perfil</h1>
+    <small>Bienvenido a tu perfil de usuario</small>
+  </div>
+
+  <!-- Two Column Layout -->
+  <div class="perfil-columns">
+    <!-- Left Column - User Information -->
+    <div class="perfil-info-card">
+      <div class="perfil-avatar">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      
+      <h2>{{ usuario?.username }}</h2>
+      <p class="perfil-info"><strong>Nombre Completo:</strong> {{ usuario?.nombre }} {{ usuario?.apellido }}</p>
+      <p class="perfil-info"><strong>Email:</strong> {{ usuario?.email }}</p>
+      <p class="perfil-info"><strong>Fecha de Registro:</strong> {{ usuario?.fechaRegistro | date:'medium' }}</p>
+      
+      <button class="edit-profile-btn" (click)="editarPerfil()">
+        <i class="fas fa-edit me-2"></i>Editar Información
+      </button>
+    </div>
+
+    <!-- Right Column - Reservations -->
+    <div class="reservations-container">
+      <h2 class="Context">Mis Reservas</h2>
+
+      <!-- Reservations Summary -->
+      <div class="reservations-summary">
+        <h3>Resumen de Reservas</h3>
+        <div class="stat">
+          <span>Reservas Totales:</span>
+          <span>{{ estadisticas.reservasTotales }}</span>
+        </div>
+        <!-- <div class="stat">
+          <span>Reservas Canceladas:</span>
+          <span>{{ estadisticas.reservasCanceladas }}</span>
+        </div> -->
+      </div>
+
+      <!-- Reservations List -->
+      <div class="reservations-list">
+        <div *ngFor="let reserva of reservas" class="reservation-card">
+          <div class="row align-items-center">
+            <!-- Movie Information -->
+            <div class="col-8 details">
+              <h3 class="movie-title">{{ reserva.funcion.pelicula.titulo }}</h3>
+              <p><strong>Fecha:</strong> {{ reserva.fecha | date:'medium' }}</p>
+              <p><strong>Sala:</strong> {{ reserva.funcion.sala }}</p>
+              <p><strong>Cantidad:</strong> {{ reserva.cantidadReservas }} entradas</p>
+              <p><strong>Butacas:</strong> {{ reserva.butacasReservadas }}</p>
+              <p><strong>Precio:</strong> {{ reserva.precioFinal }}</p>
+              <span [ngClass]="'status-' + reserva.estado">{{ reserva.estado | titlecase }}</span>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="col-2 action-buttons">
+              <button class="action-button btn-view-details" (click)="verDetalles(reserva)">
+                <i class="fas fa-eye"></i>
+              </button>
+              <!--*ngIf="reserva.estado === 'pendiente'"-->
+              <button  class="action-button btn-cancel" (click)="cancelarReserva(reserva)">
+                <i class="fas fa-times"></i>
+              </button>
+              <!--*ngIf="reserva.fecha > today.toISOString()"-->
+              <button  class="action-button btn-calendar" (click)="agregarCalendario(reserva)">
+                <i class="fas fa-calendar-plus"></i>
+              </button>
+              <!--*ngIf="reserva.estado === 'confirmada'"-->
+              <button  class="action-button btn-review" (click)="dejarResena(reserva)">
+                <i class="fas fa-star"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

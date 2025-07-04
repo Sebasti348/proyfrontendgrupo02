@@ -44,6 +44,36 @@
     
       <!-- Lista de usuarios existentes -->
       <div class="table-responsive rounded-3 shadow mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="d-flex gap-3">
+            <!-- Filtro por Email -->
+            <div class="d-flex flex-column">
+              <label class="text-warning mb-1">Filtrar por Email</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="email" name="email" [(ngModel)]="emailFiltrar" placeholder="Email" required>
+                <button class="btn btn-guardar" type="button" (click)="filtrarUsuario()">Filtrar</button>
+              </div>
+            </div>
+
+            <!-- Filtro por Rol -->
+            <div class="d-flex flex-column">
+              <label class="text-warning mb-1">Filtrar por Rol</label>
+              <div class="input-group">
+                <select class="form-select" id="rol" name="rol" [(ngModel)]="rolFiltrar" required>
+                  <option value="">Seleccionar</option>
+                  <option value="administrador">Administrador</option>
+                  <option value="auditor">Auditor</option>
+                  <option value="supervisor">Supervisor</option>
+                </select>
+                <button class="btn btn-guardar" type="button" (click)="filtrarUsuarioRol()">Filtrar</button>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-column">
+            <button class="btn btn-guardar" type="button" (click)="obtenerUsuarios()">Mostrar todos</button>
+          </div>
+        </div>
+
         <table class="table table-dark table-hover align-middle mb-0" style="background: #111;">
           <thead style="background: #0D47A1; color: #FFD600;">
             <tr>
