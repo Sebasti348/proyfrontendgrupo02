@@ -72,7 +72,39 @@ export class LoginregisterComponent implements OnInit {
 
   this.http.post('http://localhost:3000/api/usuario/google-login', { idToken })
     .subscribe({
-      next: (res: any) => console.log('Login backend OK', res),
+      next: (res: any) => {
+  console.log('Login backend OK', res);
+
+  if (res.status === '1') {
+    const googleUser = res.user;
+
+    // Cargamos los datos del usuario a nuestro modelo
+    this.usuario.nombre = googleUser.given_name;
+    this.usuario.apellido = googleUser.family_name;
+    this.usuario.username = googleUser.name;
+    this.usuario.password = googleUser.sub ?? googleUser.jti ?? googleUser.email;
+    this.usuario.email = googleUser.email;
+    this.usuario.rol = 'cliente';
+    this.usuario.estado = true;
+
+    // Validamos si existe
+    this.loginservice.validarNuevoUsuario(this.usuario).subscribe((validacion: any) => {
+      if (!validacion.existe) {
+        // Crear usuario si no existe
+        this.userservice.createUsuario(this.usuario).subscribe(() => {
+          console.log('Usuario creado con Google OK');
+          this.guardarEnSessionYRedirigir(this.usuario);
+        });
+      } else {
+        // Ya existe, simplemente redirigir
+        console.log('Usuario ya existe');
+        this.guardarEnSessionYRedirigir(this.usuario);
+      }
+    });
+  } else {
+    console.error('Error al hacer login con Google');
+  }
+},
       error: (err: any) => console.error('Error al verificar el token:', err)
     });
 }
@@ -155,4 +187,11 @@ register() {
       }
     );
   }
+
+  private guardarEnSessionYRedirigir(user: any) {
+  sessionStorage.setItem('user', user.username ?? user.email);
+  sessionStorage.setItem('userid', user.id ?? user.email); // asegurate de que venga el ID o algo único
+  sessionStorage.setItem('rol', user.rol ?? 'cliente');
+  this.ngZone.run(() => this.router.navigateByUrl('/main'));
+}
 }
