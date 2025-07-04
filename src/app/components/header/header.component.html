@@ -7,29 +7,26 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['cartelera']">Cartelera</a>
+          <a class="nav-link" [routerLink]="['']">Cartelera</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['pago']">Pagos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['funciones']">Funciones</a>
+          <a class="nav-link" [routerLink]="['funcion/activas']">Funciones</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['reservas']">Reservas</a>
+          <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isAdmin()" [routerLink]="['gestion-funciones']">Gestión Funciones</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['gestion-funciones']">Gestión Funciones</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['gestion-peliculas']">Gestión Peliculas</a>
+          <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isAdmin()" [routerLink]="['gestion-peliculas']">Gestión Peliculas</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" *ngIf="loginservice.userLoggedIn() && loginservice.isAdmin()" [routerLink]="['usuarios']" routerLinkActive="active">Usuarios</a>
         </li>
         <li class="nav-item dropdown" >
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-chart-line me-2"></i>Auditoría
+          <a class="nav-link dropdown-toggle" *ngIf="loginservice.userLoggedIn() && loginservice.isAuditor()" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-chart-line me-2" ></i>Auditoría
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/estadisticas']">

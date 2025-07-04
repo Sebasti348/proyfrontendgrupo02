@@ -55,6 +55,11 @@ export class LoginService {
     console.log('Rol actual:', rol);
     return rol && rol.toLowerCase() === 'administrador';
   }
+  public isAuditor() {
+    var rol = sessionStorage.getItem('rol');
+    console.log('Rol actual:', rol);
+    return rol && rol.toLowerCase() === 'auditor';
+  }
 
   validarNuevoUsuario(usuario: Usuario): Observable<any> {
     let httpOptions = {

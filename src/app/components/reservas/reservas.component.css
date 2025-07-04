@@ -188,4 +188,18 @@ strong{
     box-shadow: none;
     transform: none;
 }
-
+.btn-back {
+    background: linear-gradient(90deg, #FFD600 60%, #0D47A1 100%);
+    color: #111;
+    font-weight: bold;
+    border: 2px solid #FFD600;
+    border-radius: 2rem;
+    transition: 0.2s;
+    box-shadow: 0 2px 8px rgba(13,71,161,0.15);
+    font-size: 1.1rem;
+  }
+  .btn-back:hover {
+    background: #0D47A1;
+    color: #FFD600;
+    border-color: #0D47A1;
+  }
