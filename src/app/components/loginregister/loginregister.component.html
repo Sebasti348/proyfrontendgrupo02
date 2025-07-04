@@ -24,7 +24,7 @@
               <form autocomplete="off">
                 <div class="mb-3">
                   <label for="email" class="form-label fw-bold">Usuario o Email</label>
-                  <input type="text" [(ngModel)]="email" class="form-control login-input" name= "email" id="email" placeholder="Usuario o Email"  required>
+                  <input type="text" [(ngModel)]="emailOrUsername" class="form-control login-input" name= "email" id="email" placeholder="Usuario o Email"  required>
                 </div>
                 <div class="mb-3">
                   <label for="login-password" class="form-label fw-bold">Contraseña</label>
@@ -90,7 +90,7 @@
           <div class="d-flex flex-column align-items-center justify-content-center h-100">
             <div class=" p-4 shadow-sm text-center">
               <div id="g_id_onload"
-                data-client_id="657767929746-8quhhgu57q2bu7mqdokg8at2lk7k61ra.apps.googleusercontent.com"
+                data-client_id="866544580970-1jc6oknok8s8v7tcra1m8r93a78cgern.apps.googleusercontent.com"
                 data-context="signin"
                 data-ux_mode="popup"
                 data-callback="handleCredentialResponse"
@@ -110,7 +110,9 @@
         </div>
       </div>
     </div>
-    <div class="login-anim-bg"></div>
+    
+   
+    
   </div>
-  
+ 
   <script src="https://accounts.google.com/gsi/client" async defer></script>
