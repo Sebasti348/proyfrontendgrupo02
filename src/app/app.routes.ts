@@ -9,19 +9,21 @@ import { ReservasComponent } from './components/reservas/reservas.component';
 import { PrincipalComponent } from './components/auditorvistas/principal/principal.component';
 import { EstadisticasComponent } from './components/auditorvistas/estadisticas/estadisticas.component';
 import { ReportesComponent } from './components/auditorvistas/reportes/reportes.component';
+import { ListaReservasComponent } from './components/lista-reservas/lista-reservas.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 
 export const routes: Routes = [
-    { path: 'usuarios', component: CrudusuariosComponent },
+    { path: 'gestion-usuarios', component: CrudusuariosComponent, canActivate: [AuthGuard], data: { roles: ['root'] } },
     { path:'',component: CarteleraComponent},
-    {path: 'gestion-peliculas',component: GestionPeliculasComponent},
-    {path: 'gestion-funciones',component: GestionFuncionesComponent},
-    {path: 'funcion/activas',component: FuncionesComponent},
-    {path: 'reservas',component: ReservasComponent},
-    {path: 'reservas/:id',component: ReservasComponent},
-    { path: 'usuarios', component: CrudusuariosComponent },
+    {path: 'gestion-peliculas',component: GestionPeliculasComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] } },
+    {path: 'gestion-funciones',component: GestionFuncionesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] } },
+    {path: 'funcion/activas',component: FuncionesComponent },
+    {path: 'lista-reservas',component: ListaReservasComponent, canActivate: [AuthGuard], data: { roles: ['supervisor'] } },
+    {path: 'reservas/:id',component: ReservasComponent, canActivate: [AuthGuard], data: { roles: ['cliente'] } },
     { path: 'loginregister', component: LoginregisterComponent },
-    { path: 'auditor', component: PrincipalComponent },
-    { path: 'estadisticas', component: EstadisticasComponent },
-    { path: 'reportes', component: ReportesComponent }
-
+    { path: 'auditor', component: PrincipalComponent , canActivate: [AuthGuard], data: { roles: ['auditor'] }},
+    { path: 'estadisticas', component: EstadisticasComponent, canActivate: [AuthGuard], data: { roles: ['auditor'] } },
+    { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard], data: { roles: ['auditor'] } },
+    { path: 'access-denied', component:AccessDeniedComponent}
 ];

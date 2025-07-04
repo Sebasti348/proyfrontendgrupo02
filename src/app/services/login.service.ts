@@ -53,14 +53,23 @@ export class LoginService {
   public isAdmin() {
     var rol = sessionStorage.getItem('rol');
     console.log('Rol actual:', rol);
-    return rol && rol.toLowerCase() === 'administrador';
+    return rol && rol.toLowerCase() === 'administrador' ;
   }
   public isAuditor() {
     var rol = sessionStorage.getItem('rol');
     console.log('Rol actual:', rol);
     return rol && rol.toLowerCase() === 'auditor';
   }
-
+  public isRoot() {
+    var rol = sessionStorage.getItem('rol');
+    console.log('Rol actual:', rol);
+    return rol && rol.toLowerCase() === 'root';
+  }
+  public isSupervisor() {
+    var rol = sessionStorage.getItem('rol');
+    console.log('Rol actual:', rol);
+    return rol && rol.toLowerCase() === 'supervisor';
+  }
   validarNuevoUsuario(usuario: Usuario): Observable<any> {
     let httpOptions = {
       headers: new HttpHeaders({
