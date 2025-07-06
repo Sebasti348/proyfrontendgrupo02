@@ -29,13 +29,10 @@ export class CrudusuariosComponent {
   }
 
   agregarUsuario() {
-    console.log(this.usuario);
     this.usuario.estado= true;
     if (this.modo == false){
       this.usuarioService.createUsuario(this.usuario).subscribe(
         (result: any) => {
-          
-          console.log(result);
           this.obtenerUsuarios();
           this.usuario = new Usuario();
         },
@@ -47,7 +44,6 @@ export class CrudusuariosComponent {
     else{
       this.usuarioService.updateUsuario(this.usuario._id,this.usuario).subscribe(
         (result: any)=>{
-          console.log(result);
           this.obtenerUsuarios();
           this.usuario = new Usuario();
           this.modo = false;
@@ -59,7 +55,6 @@ export class CrudusuariosComponent {
   obtenerUsuarios() {
     this.usuarioService.getUsuarios().subscribe(
       (result: any) => {
-        console.log(result);
         this.usuarios = result;
       },
       (error: any) => {
@@ -74,7 +69,6 @@ export class CrudusuariosComponent {
     else{
       this.usuarioService.getUsuarioByEmail(this.emailFiltrar).subscribe(
         (result: any) => {
-          console.log(result);
           this.usuarios = result;
         },
         (error: any) => {
@@ -90,7 +84,6 @@ export class CrudusuariosComponent {
     else{
       this.usuarioService.getUsuariosByRole(this.rolFiltrar).subscribe(
         (result: any) => {
-          console.log(result);
           this.usuarios = result;
         },
         (error: any) => {
@@ -118,7 +111,6 @@ export class CrudusuariosComponent {
     if (usuarioEliminar){
       this.usuarioService.deleteUsuario(usuarioEliminar._id , usuarioEliminar).subscribe(
         (result: any ) =>{
-          console.log(result);
           this.obtenerUsuarios();
         }
       )

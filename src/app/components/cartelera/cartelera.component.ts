@@ -39,7 +39,6 @@ export class CarteleraComponent implements OnInit {
     this.peliculaService.getPeliculas().subscribe(
       result => {
         this.peliculas = result; 
-        console.log(this.peliculas); 
       },
       error => {
         console.error('Error al obtener películas:', error); 
@@ -71,7 +70,6 @@ export class CarteleraComponent implements OnInit {
     this.peliculaService.getNextMovies().subscribe(
       (result: { [key: string]: { date: string, titles: any[] } }) => {
         let todasLasPeliculas: any[] = [];
-        console.log(result);
         // Array temporal para almacenar todas las películas
         // Itera sobre el objeto de resultados para extraer todas las películas por fecha
         for (const key in result) {
@@ -84,8 +82,6 @@ export class CarteleraComponent implements OnInit {
         this.proximas = todasLasPeliculas.filter(pelicula =>
           pelicula.primaryImage && pelicula.primaryImage
         );
-
-        console.log('Películas próximas', this.proximas); // Muestra las próximas películas en consola
       },
       error => {
         console.error('Error al obtener películas próximas:', error);

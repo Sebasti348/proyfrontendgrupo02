@@ -24,7 +24,6 @@ export class EstadisticasComponent {
 
   ngOnInit(): void {
     this.estadisticasService.getVentasPorPelicula().subscribe((data: any) => {
-      console.log(data);
       this.chartData = data.data;
       this.chartLabels = data.labels;
       this.chartBackgroundColor = data.backgroundColor;
@@ -55,7 +54,6 @@ export class EstadisticasComponent {
     this.estadisticasService.getventasultimoMes().subscribe(
       (data:any)=>{
         this.datosMes=data;
-        console.log(this.datosMes);
         this.VentasBoletosMes=this.datosMes.totalBoletos;
         this.IngresosMes=this.datosMes.totalVentas;
       }
@@ -71,8 +69,6 @@ export class EstadisticasComponent {
       this.chartBackgroundColor = data.backgroundColor;
       this.RenderChart(this.chartData, this.chartLabels, this.chartBackgroundColor, 'piechart', 'pie', 'Venta de Boletos Diarios');
     });
-
-
 
   }
 
