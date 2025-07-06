@@ -30,4 +30,7 @@ export class EstadisticasService {
   getIngresosAnuales() {
     return this.http.get("http://localhost:3000/api/reserva/ingresosanuales");
   }
+  public getFuncionesDisponiblesCount(): Observable<any> {
+    return this.http.get("http://localhost:3000/api/funcion/activas/count");
+  }
 }

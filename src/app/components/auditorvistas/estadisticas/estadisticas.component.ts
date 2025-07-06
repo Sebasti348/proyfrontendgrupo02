@@ -23,6 +23,35 @@ export class EstadisticasComponent {
   constructor(private estadisticasService: EstadisticasService) { }
 
   ngOnInit(): void {
+    this.estadisticasService.getVentasPorPelicula().subscribe((data: any) => {
+      console.log(data);
+      this.chartData = data.data;
+      this.chartLabels = data.labels;
+      this.chartBackgroundColor = data.backgroundColor;
+      this.RenderChart(this.chartData, this.chartLabels, this.chartBackgroundColor, 'barchart', 'bar', 'Boletos Vendidos Por Función');
+    });
+
+    this.estadisticasService.getIngresosSemanales().subscribe((data: any) => {
+      this.chartData = data.data;
+      this.chartLabels = data.labels;
+      this.chartBackgroundColor = data.backgroundColor;
+      this.RenderChart(this.chartData, this.chartLabels, this.chartBackgroundColor, 'barchart2', 'bar', 'Ingresos Últimos 7 Días');
+    });
+
+    this.estadisticasService.getIngresosAnuales().subscribe((data: any) => {
+      this.chartData = data.data;
+      this.chartLabels = data.labels;
+      this.chartBackgroundColor = data.backgroundColor;
+      this.RenderChartLine(this.chartData, this.chartLabels, this.chartBackgroundColor, 'linechart', 'line', 'Ingresos Anuales');
+    });
+
+    this.estadisticasService.getAsistenciaFunciones().subscribe((data: any) => {
+      this.chartData = data.data;
+      this.chartLabels = data.labels;
+      this.chartBackgroundColor = data.backgroundColor;
+      this.RenderChart(this.chartData, this.chartLabels, this.chartBackgroundColor, 'piechart', 'pie', 'Asistencia a Funciones');
+    });
+
     this.estadisticasService.getventasultimoMes().subscribe(
       (data:any)=>{
         this.datosMes=data;
@@ -31,43 +60,19 @@ export class EstadisticasComponent {
         this.IngresosMes=this.datosMes.totalVentas;
       }
     )
-    this.estadisticasService.getfuncionesDisponibles().subscribe(
+    this.estadisticasService.getFuncionesDisponiblesCount().subscribe(
       (data:any)=>{
-        this.FuncionesDisponibles=data.funcionesActivas;
+        this.FuncionesDisponibles=data.count;
       }
     )
-
-    this.estadisticasService.getVentasPorPelicula().subscribe((data: any) => {
-      console.log(data);
-      this.chartData = data.data;
-      this.chartLabels = data.labels;
-      this.chartBackgroundColor = data.backgroundColor;
-      this.RenderChart(this.chartData, this.chartLabels, this.chartBackgroundColor, 'barchart', 'bar', 'Boletos Vendidos Por Película');
-    });
-    this.estadisticasService.getAsistenciaFunciones().subscribe((data: any) => {
-      this.chartData = data.data;
-      this.chartLabels = data.labels;
-      this.chartBackgroundColor = data.backgroundColor;
-      this.RenderChart(this.chartData, this.chartLabels, this.chartBackgroundColor, 'piechart', 'pie', 'Asistencia a Funciones');
-    });
     this.estadisticasService.getVentaBoletosSemanales().subscribe((data: any) => {
       this.chartData = data.data;
       this.chartLabels = data.labels;
       this.chartBackgroundColor = data.backgroundColor;
       this.RenderChart(this.chartData, this.chartLabels, this.chartBackgroundColor, 'piechart', 'pie', 'Venta de Boletos Diarios');
     });
-    this.estadisticasService.getIngresosSemanales().subscribe((data: any) => {
-      this.chartData = data.data;
-      this.chartLabels = data.labels;
-      this.chartBackgroundColor = data.backgroundColor;
-      this.RenderChart(this.chartData, this.chartLabels, this.chartBackgroundColor, 'barchart2', 'bar', 'Ingresos Últimos 7 Días');
-    });
-    this.estadisticasService.getIngresosAnuales().subscribe((data: any) => {
-      this.chartData = data.data;
-      this.chartLabels = data.labels;
-      this.chartBackgroundColor = data.backgroundColor;
-      this.RenderChartLine(this.chartData, this.chartLabels, this.chartBackgroundColor, 'linechart', 'line', 'Ingresos Anuales');
-    });
+
+
 
   }
 
