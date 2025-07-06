@@ -1,0 +1,55 @@
+.table {
+  background-color: rgba(17, 17, 17, 0.95);
+}
+
+.table th {
+  font-weight: 600;
+  padding: 1rem;
+}
+
+.table td {
+  padding: 0.8rem;
+  vertical-align: middle;
+}
+
+.table td i {
+  font-size: 1.1rem;
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 15px;
+}
+
+.btn-sm {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+.btn-sm i {
+  font-size: 1rem;
+}
+
+/* Custom hover effects for action buttons */
+.btn-gold:hover i,
+.btn-danger:hover i {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .table-responsive {
+    margin-bottom: 1rem;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.7rem;
+  }
+  
+  .btn-sm {
+    padding: 0.2rem 0.6rem;
+  }
+}
