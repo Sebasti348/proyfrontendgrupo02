@@ -35,7 +35,7 @@ h2 {
     color: #8cffc7;
 }
 
-strong{
+strong {
     color: white;
 }
 
@@ -85,19 +85,19 @@ strong{
     color: white;
     cursor: pointer;
     transition: background-color 0.25s ease-in-out, transform 0.15s ease-in-out, box-shadow 0.25s ease-in-out;
-    box-shadow: 3px 3px 8px rgba(0,0,0,0.4);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
     border: 2px solid transparent;
 }
 
 .seat:hover {
     transform: translateY(-3px);
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 }
 
 .seat.available {
-    background-color: #2ecc71; /* Verde brillante */
+    background-color: #2ecc71;
     cursor: pointer;
-    border-color: #1a924b; /* Borde más oscuro */
+    border-color: #1a924b;
 }
 
 .seat.available:hover {
@@ -105,60 +105,58 @@ strong{
 }
 
 .seat.selected {
-    background-color: #3498db; /* Azul */
-    border-color: #2980b9; /* Borde más oscuro */
+    background-color: #3498db;
+    border-color: #2980b9;
     transform: translateY(-3px);
-    box-shadow: 0 0 15px rgba(52, 152, 219, 0.8); /* Sombra azul */
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
 }
 
 .seat.occupied {
-    background-color: #e74c3c; /* Rojo para ocupadas */
+    background-color: #e74c3c;
     cursor: not-allowed;
-    opacity: 0.8; /* Ligeramente más opaco para que destaque */
-    box-shadow: inset 1px 1px 5px rgba(0,0,0,0.5);
-    border-color: #c0392b; /* Borde rojo más oscuro */
+    opacity: 0.8;
+    box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.5);
+    border-color: #c0392b;
     transform: none;
 }
 
 .seat.occupied:hover {
     transform: none;
-    box-shadow: inset 1px 1px 5px rgba(0,0,0,0.5);
+    box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 .legend {
     margin-top: 30px;
     display: flex;
     justify-content: center;
-    gap: 25px; /* Espacio entre los elementos de la leyenda */
+    gap: 25px;
     margin-bottom: 40px;
     font-size: 1em;
     color: #e0e0e0;
 }
 
 .seat-sample {
-    width: 25px; /* Define el ancho de la muestra de color */
-    height: 25px; /* Define el alto de la muestra de color */
-    border-radius: 6px; /* Bordes redondeados para la muestra */
-    display: inline-block; /* Crucial para que width/height funcionen y el background sea visible */
-    vertical-align: middle; /* Alinea verticalmente con el texto */
-    margin-right: 8px; /* Espacio entre la muestra y el texto */
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Colores específicos para cada estado en la leyenda */
-.seat-sample.available { 
-    background-color: #2ecc71; /* Verde para Disponible */
+.seat-sample.available {
+    background-color: #2ecc71;
 }
 
-.seat-sample.selected { 
-    background-color: #3498db; /* Azul para Seleccionada */
+.seat-sample.selected {
+    background-color: #3498db;
 }
 
-.seat-sample.occupied { 
-    background-color: #e74c3c; /* Rojo para Ocupada */
+.seat-sample.occupied {
+    background-color: #e74c3c;
 }
 
-/* Botón de reservar */
 #reserveButton {
     background-color: #1B263B;
     color: #FFD700;
@@ -188,4 +186,3 @@ strong{
     box-shadow: none;
     transform: none;
 }
-

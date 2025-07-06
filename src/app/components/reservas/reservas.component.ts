@@ -1,4 +1,3 @@
-// reservas.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,26 +7,28 @@ import { Funcion } from '../../models/funcion';
 import { Reserva } from '../../models/reserva';
 import { ReservasService } from '../../services/reserva.service';
 
+//Interfaz para la representación de las butacas en la UI
 interface ButacaUI {
-  id: string;
-  status: 'available' | 'selected' | 'occupied';
+  id: string; // Identificador único de la butaca (ej. "A1", "B5")
+  status: 'available' | 'selected' | 'occupied'; // Estado de la butaca: disponible, seleccionada o ocupada
 }
 
 @Component({
   selector: 'app-reservas',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './reservas.component.html',
   styleUrls: ['./reservas.component.css']
 })
-export class ReservasComponent implements OnInit {
-  funcionId: string | null = null;
-  funcionSeleccionada: Funcion = new Funcion();
 
-  rows: string[] = ['A', 'B', 'C', 'D', 'E'];
-  cols: number = 10;
-  butacas: ButacaUI[] = [];
-  butacaSeleccionada: Set<string> = new Set();
+export class ReservasComponent implements OnInit {
+  funcionId: string | null = null; // Almacena el ID de la función recibido de la ruta
+  funcionSeleccionada: Funcion = new Funcion(); // Objeto para almacenar los detalles de la función seleccionada
+
+  rows: string[] = ['A', 'B', 'C', 'D', 'E']; // Filas de butacas (letras)
+  cols: number = 10; // Número de columnas de butacas por fila
+  butacas: ButacaUI[] = []; // Array que representa el estado de todas las butacas en la UI
+  butacaSeleccionada: Set<string> = new Set(); // Conjunto para almacenar los IDs de las butacas seleccionadas por el usuario
+  reservaPendiente: Reserva | null = null; // Para almacenar la reserva creada en el backend antes del pago
 
   constructor(
     private route: ActivatedRoute,
@@ -38,26 +39,25 @@ export class ReservasComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.funcionId = params.get('id');
+      this.funcionId = params.get('id'); // Obtiene el parámetro 'id' de la URL (ID de la función)
       if (this.funcionId) {
         console.log('ID de la función recibido:', this.funcionId);
-        this.obtenerFuncion();
+        this.obtenerFuncion(); // Llama al método para obtener los detalles de la función
       } else {
         console.error('No se recibió ID de función en la ruta.');
         alert('Error: No se recibió el ID de la función. Por favor, intente de nuevo.');
-        this.router.navigate(['/']); // Redirigir o manejar el error
+        this.router.navigate(['cartelera']);
       }
     });
   }
 
   obtenerFuncion(): void {
-    if (!this.funcionId) return;
-
+    if (!this.funcionId) return; // Si no hay ID de función, sale del método
     this.funcionService.getFuncion(this.funcionId).subscribe(
       result => {
         this.funcionSeleccionada = result;
         console.log('Función seleccionada cargada:', this.funcionSeleccionada);
-        // Asegúrate de que butacasOcupadas sea un array, incluso si es null/undefined
+        // Genera las butacas en la UI, pasando las butacas ocupadas de la función (o un array vacío si no hay)
         this.generateSeats(this.funcionSeleccionada.butacasOcupadas || []);
       },
       error => {
@@ -67,31 +67,35 @@ export class ReservasComponent implements OnInit {
     );
   }
 
+  // Método para generar el mapa de butacas para la UI
   generateSeats(occupiedSeatsIds: string[]): void {
-    this.butacas = [];
-    this.butacaSeleccionada.clear();
+    this.butacas = []; // Limpia el array de butacas actual
+    this.butacaSeleccionada.clear(); // Limpia las butacas seleccionadas previamente
 
-    this.rows.forEach(rowLetter => {
-      for (let i = 1; i <= this.cols; i++) {
-        const seatId = `${rowLetter}${i}`;
+    this.rows.forEach(rowLetter => { // Itera sobre cada letra de fila (A, B, C...)
+      for (let i = 1; i <= this.cols; i++) { // Itera sobre cada número de columna (1, 2, 3...)
+        const seatId = `${rowLetter}${i}`; // Crea el ID de la butaca (ej. "A1", "B5")
+        // Determina el estado de la butaca: 'occupied' si está en la lista de ocupadas, 'available' de lo contrario
         const status = occupiedSeatsIds.includes(seatId) ? 'occupied' : 'available';
-        this.butacas.push({ id: seatId, status: status });
+        this.butacas.push({ id: seatId, status: status }); // Añade la butaca al array de butacas de la UI
       }
     });
   }
 
+  // Método para manejar el clic en una butaca
   handleSeatClick(seat: ButacaUI): void {
-    if (seat.status === 'available') {
-      seat.status = 'selected';
-      this.butacaSeleccionada.add(seat.id);
-    } else if (seat.status === 'selected') {
-      seat.status = 'available';
-      this.butacaSeleccionada.delete(seat.id);
+    if (seat.status === 'available') { // Si la butaca está disponible
+      seat.status = 'selected'; // Cambia su estado a seleccionada
+      this.butacaSeleccionada.add(seat.id); // Añade el ID de la butaca al conjunto de seleccionadas
+    } else if (seat.status === 'selected') { // Si la butaca ya estaba seleccionada
+      seat.status = 'available'; // Cambia su estado a disponible
+      this.butacaSeleccionada.delete(seat.id); // Elimina el ID de la butaca del conjunto de seleccionadas
     }
     console.log('Butacas seleccionadas actualmente:', Array.from(this.butacaSeleccionada));
   }
 
-  reservarButacas(): void {
+  // Método asíncrono para iniciar el proceso de reserva de butacas
+  async reservarButacas(): Promise<void> {
     if (this.butacaSeleccionada.size === 0) {
       alert('Por favor, selecciona al menos una butaca para reservar.');
       return;
@@ -102,45 +106,75 @@ export class ReservasComponent implements OnInit {
       return;
     }
 
-    const seatsToReserveArray = Array.from(this.butacaSeleccionada);
+    const seatsToReserveArray = Array.from(this.butacaSeleccionada); // Convierte el conjunto de butacas seleccionadas a un array
 
+    // Crea un nuevo objeto de Reserva con los datos necesarios
     const nuevaReserva = new Reserva();
-    nuevaReserva.usuario = 'ID_DEL_USUARIO_ACTUAL'; // <-- ¡IMPORTANTE! Reemplaza con el ID de usuario real (ej: desde un servicio de autenticación)
-    nuevaReserva.funcion = this.funcionSeleccionada; // Envía solo el ID de la función
-    nuevaReserva.cantidadReservas = seatsToReserveArray.length;
+    nuevaReserva.usuario = 'jfduyjghg3545g6'; // IMPORTANTE: Reemplazar con el ID de usuario real
+    nuevaReserva.funcion = this.funcionSeleccionada; // Asigna la función completa a la reserva
+    nuevaReserva.cantidadReservas = seatsToReserveArray.length; // Número de butacas reservadas
+    nuevaReserva.fecha = new Date(); // Fecha actual de la reserva
+    nuevaReserva.precioFinal = seatsToReserveArray.length * this.funcionSeleccionada.precio; // Calcula el precio final
+    nuevaReserva.butacasReservadas = seatsToReserveArray; // Asigna las butacas seleccionadas
+    nuevaReserva.qr = ''; // El QR se puede borrar, sin uso por ahora
+    nuevaReserva.pagado = 'pendiente'; // Estado inicial de la reserva: pendiente de pago
 
-    // Asigna la fecha y hora actuales al momento de la reserva
-    nuevaReserva.fecha = new Date();
+    console.log('Objeto Reserva a enviar:', nuevaReserva); // Log del objeto reserva antes de enviarlo
 
-    nuevaReserva.precioFinal = seatsToReserveArray.length * this.funcionSeleccionada.precio;
-    nuevaReserva.butacasReservadas = seatsToReserveArray;
-    nuevaReserva.qr = 'QR_GENERADO_EN_BACKEND_O_PLACEHOLDER'; // El QR probablemente lo genera el backend
+    try {
+      const response = await this.reservaService.createReserva(nuevaReserva).toPromise();
+      alert('¡Reserva creada con éxito! Ahora serás redirigido para el pago.');
+      console.log('Respuesta de la reserva:', response);
 
-    console.log('Objeto Reserva a enviar:', nuevaReserva);
+      this.reservaPendiente = response.reserva;
 
-    this.reservaService.createReserva(nuevaReserva).subscribe(
-      response => {
-        alert('¡Reserva realizada con éxito!');
-        console.log('Respuesta de la reserva:', response);
-
-        // Recargar la función para actualizar el estado de las butacas en la UI
-        this.obtenerFuncion();
-        this.butacaSeleccionada.clear(); // Limpia las selecciones en el front después de una reserva exitosa
-      },
-      error => {
-        console.error('Error al realizar la reserva:', error);
-        let errorMessage = 'No se pudo completar la reserva. Inténtalo de nuevo.';
-        if (error.error && error.error.msg) {
-          errorMessage = error.error.msg;
-        } else if (error.message) {
-          errorMessage = error.message;
-        }
-        alert(errorMessage);
+      // Procede al pago si la reserva se creó correctamente y tiene un ID
+      if (this.reservaPendiente && this.reservaPendiente._id) {
+        this.pagarReserva(this.reservaPendiente); // Llama al método para iniciar el proceso de pago
+      } else {
+        console.error('No se pudo obtener el ID de la reserva para el pago.');
+        alert('Error al procesar la reserva para el pago. Intente nuevamente.');
       }
-    );
+
+    } catch (error: any) {
+      console.error('Error al realizar la reserva:', error);
+      let errorMessage = 'No se pudo completar la reserva. Inténtalo de nuevo.';
+      if (error.error && error.error.msg) {
+        errorMessage = error.error.msg;
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      alert(errorMessage);
+    }
   }
 
-  pagarReserva() {
-    // Lógica para procesar el pago de la reserva
+  // Método para iniciar el proceso de pago con Mercado Pago
+  pagarReserva(reserva: Reserva): void {
+    // Prepara los detalles del pago para Mercado Pago
+    const paymentDetails = {
+      payer_email: 'test_user@example.com', //Reemplazar con el correo electrónico real del usuario
+      title: `Reserva de butacas para ${reserva.funcion.pelicula.originalTitle}`, // Título del pago
+      description: `Butacas: ${reserva.butacasReservadas.join(', ')} para la función del ${new Date(reserva.funcion.fecha).toLocaleDateString()}`, // Descripción del pago
+      quantity: reserva.cantidadReservas, // Cantidad de ítems (butacas)
+      unit_price: reserva.funcion.precio, // Precio unitario por butaca
+      category_id: 'tickets', // Categoría del pago (ejemplo para entradas de cine)
+      reservationId: reserva._id // Pasa el ID de tu reserva al backend para que Mercado Pago lo devuelva como external_reference
+    };
+
+    // Llama al servicio para obtener el link de pago de Mercado Pago
+    this.reservaService.getPaymentLinkMercadoPago(paymentDetails).subscribe(
+      (mpResponse: any) => {
+        if (mpResponse && mpResponse.init_point) { // Si la respuesta contiene el punto de inicio de pago
+          window.location.href = mpResponse.init_point; // Redirige al usuario al checkout de Mercado Pago
+        } else {
+          alert('No se pudo obtener el link de pago de Mercado Pago.'); // Alerta si no se obtiene el link
+          console.error('Respuesta inesperada de Mercado Pago:', mpResponse); // Log de la respuesta inesperada
+        }
+      },
+      (error: any) => {
+        console.error('Error al generar el link de pago con Mercado Pago:', error); // Log del error
+        alert('Error al conectar con Mercado Pago. Inténtalo de nuevo.'); // Alerta al usuario
+      }
+    );
   }
 }

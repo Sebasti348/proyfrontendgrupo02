@@ -17,21 +17,18 @@ import { ReportesComponent } from './components/auditorvistas/reportes/reportes.
 export const routes: Routes = [
     { path: 'usuarios', component: CrudusuariosComponent },
     { path: '', component: LoginregisterComponent },
-    { path:'main', component: MainComponent},
-    { path:'cartelera', component: CarteleraComponent},
-    {path: 'gestion-peliculas',component: GestionPeliculasComponent},
-    {path: 'gestion-funciones',component: GestionFuncionesComponent},
-    {path: 'funcion/activas',component: FuncionesComponent},
-    {path: 'reservas',component: ReservasComponent},
-    {path: 'reservas/:id',component: ReservasComponent},
-    {path: 'pago/exitoso', component: PagoExitosoComponent},
-    {path: 'pago/pendiente', component: PagoPendienteComponent},
-    {path: 'pago/fallido', component: PagoFallidoComponent},
-    { path: 'usuarios', component: CrudusuariosComponent },
-    { path: 'loginregister', component: LoginregisterComponent },
     { path: 'main', component: MainComponent },
-    { path: 'auditor', component: PrincipalComponent },
-    { path: 'estadisticas', component: EstadisticasComponent },
-    { path: 'reportes', component: ReportesComponent }
-
+    { path: 'cartelera', component: CarteleraComponent },
+    { path: 'gestion-peliculas', component: GestionPeliculasComponent },
+    { path: 'gestion-funciones', component: GestionFuncionesComponent },
+    //Funciones Activas
+    { path: 'funcion/activas', component: FuncionesComponent },
+    //Funciones por Nombre de Película
+    { path: 'funciones/:nombrePelicula', component: FuncionesComponent },
+    //Reserva de Funciones por ID
+    { path: 'reservas/:id', component: ReservasComponent },
+    //Rutas de Pago, solo exitoso tiene contenido extra
+    { path: 'pago/exitoso', component: PagoExitosoComponent },
+    { path: 'pago/fallido', component: PagoFallidoComponent },
+    { path: 'pago/pendiente', component: PagoPendienteComponent },
 ];

@@ -1,6 +1,20 @@
 {
   "name": "proyfrontendgrupo02",
   "version": "0.0.0",
+  "private": true,
+  "description": "This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.8.",
+  "homepage": "https://github.com/Sebasti348/proyfrontendgrupo02#readme",
+  "bugs": {
+    "url": "https://github.com/Sebasti348/proyfrontendgrupo02/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sebasti348/proyfrontendgrupo02.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,7 +22,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
-  "private": true,
   "dependencies": {
     "@angular/common": "^19.2.0",
     "@angular/compiler": "^19.2.0",
@@ -18,7 +31,6 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "bootstrap": "^5.3.7",
-    "chart.js": "^4.5.0",
     "ngx-facebook": "^3.0.0-0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
