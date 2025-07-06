@@ -133,7 +133,11 @@ export class LoginregisterComponent implements OnInit {
             sessionStorage.setItem('userid', user.userid);
             sessionStorage.setItem('rol', user.rol);
             this.loginservice.usuarioLogueado = user;
-            this.router.navigateByUrl('/');
+            if(user.rol == 'cliente'){
+              this.router.navigateByUrl('/');
+            }else{
+              this.router.navigateByUrl('auditor');
+            }
             this.isLoading = false;
           }, 1500);
         } else {
