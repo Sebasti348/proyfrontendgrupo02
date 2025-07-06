@@ -1,1 +1,88 @@
-<p>reportes works!</p>
+<div class="container-fluid p-4">
+    <!-- Título y selección de reporte -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-gold">Reportes del Sistema</h2>
+        <div class="btn-group">
+            <button *ngFor="let report of reports" 
+                    class="btn btn-outline-gold" 
+                    [class.active]="selectedReport === report.id"
+                    (click)="onReportChange(report.id)">
+                {{report.name}}
+            </button>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                <input type="date" class="form-control" id="fechaInicio" [(ngModel)]="fechaInicio">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                <input type="date" class="form-control" id="fechaFin" [(ngModel)]="fechaFin">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-gold w-100" (click)="filtrar()">
+                <i class="fas fa-filter me-1"></i>Filtrar
+            </button>
+        </div>
+    </div>
+
+    <!-- Contenido del reporte -->
+    <div class="row">
+        <!-- Gráfico Principal -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <ng-container [ngSwitch]="selectedReport">
+                        <canvas *ngSwitchCase="'ventas'" id="ventasChart"></canvas>
+                        <canvas *ngSwitchCase="'peliculas'" id="peliculasChart"></canvas>
+                        <canvas *ngSwitchCase="'funciones'" id="funcionesChart"></canvas>
+                        <canvas *ngSwitchCase="'reservas'" id="reservasChart"></canvas>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas Secundarias -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Resumen</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Total Ventas</span>
+                        <span class="text-gold fw-bold">{{totalVentas | number}}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Promedio Diario</span>
+                        <span class="text-gold fw-bold">{{promedioDiario | number}}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Ocupación</span>
+                        <span class="text-gold fw-bold">{{ocupacion | number:'1.0-0'}}%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Top Películas</h5>
+                    <div class="list-group">
+                        <div *ngFor="let pelicula of topPeliculas" class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>{{pelicula.nombre}}</span>
+                                <span class="badge bg-gold rounded-pill">{{pelicula.ventas}}</span>
+                                <span class="badge bg-gold rounded-pill">{{pelicula.totalReservas}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

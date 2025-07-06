@@ -36,4 +36,6 @@ export class FuncionesService {
   public getFuncion(funcionId: any): Observable<any> {
     return this._http.get(`${this.apiUrl}/funcion/` + funcionId);
   }
+
+  
 }
