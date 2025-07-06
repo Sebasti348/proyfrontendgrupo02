@@ -9,6 +9,7 @@ export class Funcion {
     butacasOcupadas: string[];
     precio: number;
     pelicula: Pelicula;
+    //Agregué este campo
     estado: string;
 
     constructor() {
@@ -17,7 +18,7 @@ export class Funcion {
         this.fecha = new Date();
         this.numeroButacas = 50;
         this.butacasOcupadas = [];
-        this.precio = 5000;
+        this.precio = 1;
         this.pelicula = new Pelicula();
         this.estado = '';
     }

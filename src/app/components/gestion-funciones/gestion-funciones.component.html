@@ -95,4 +95,37 @@
       </button>
     </form>
   </div>
+  <div class="funciones-container pb-3">
+    <div *ngIf="funcionesActivas.length > 0" class="tabla-funciones mt-5">
+      <h4 class="text-center mb-3">Funciones Activas</h4>
+      <table class="tabla-funciones-personalizada">
+        <thead>
+          <tr>
+            <th>Película</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Sala</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let funcion of funcionesActivas">
+            <td>{{ funcion.pelicula.originalTitle || 'Sin título' }}</td>
+            <td>{{ funcion.fecha | date:'dd/MM/yyyy' }}</td>
+            <td>{{ funcion.hora }}</td>
+            <td>{{ funcion.sala }}</td>
+            <td>
+              <button class="btn-eliminar-funcion" (click)="eliminarFuncion(funcion._id!)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div *ngIf="funcionesActivas.length === 0" class="text-center text-light mt-4">
+      No hay funciones activas.
+    </div>
+
+  </div>
 </div>
