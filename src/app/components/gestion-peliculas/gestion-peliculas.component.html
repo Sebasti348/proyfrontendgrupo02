@@ -2,12 +2,13 @@
     <h2 class="text-center mb-4 pt-2">Gestión Películas</h2>
     <div class="gestion-peliculas-container">
         <button class="btn mb-3" (click)="obtenerPeliculas()">Obtener Películas</button>
+        <button class="btn mb-3 ms-2" (click)="mostrarPeliculasBD()">Recargar Películas Agregadas</button>
 
         <div class="row">
             <div class="col-md-6">
-                <div *ngIf="peliculas.length > 0" class="movie-list-section">
-                    <h3>Lista de Películas</h3>
-                    <ul class="list-group">
+                <div *ngIf="peliculas.length > 0" class="movie-list-section card">
+                    <h3 class="card-title">Lista de Películas</h3>
+                    <ul class="list-group list-group-flush">
                         <li *ngFor="let pelicula of peliculas"
                             class="list-group-item d-flex justify-content-between align-items-center">
                             {{ pelicula.originalTitle }}
@@ -20,20 +21,77 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="added-movies-section">
-                    <h3>Películas Agregadas</h3>
-                    <ul class="list-group">
+                <div class="added-movies-section card-peliculas-agregadas">
+                    <h3 class="card-title">Películas Agregadas</h3>
+                    <ul class="list-group list-group-flush">
                         <li *ngFor="let pelicula of peliculasAgregadas"
                             class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ pelicula.originalTitle }} ({{ pelicula.releaseDate }})
-                            <button class="btn btn-danger btn-sm" (click)="eliminarPelicula(pelicula)">Eliminar</button>
+                            <div>
+                                <strong>{{ pelicula.originalTitle }}</strong>
+                            </div>
+                            <div class="d-none d-sm-block">
+                                <button class="btn btn-warning btn-sm me-2"
+                                    (click)="editarPelicula(pelicula)">Editar</button>
+                                <button class="btn btn-danger btn-sm"
+                                    (click)="eliminarPelicula(pelicula)">Eliminar</button>
+                            </div>
                         </li>
                     </ul>
-                    <div *ngIf="peliculasAgregadas.length === 0" class="alert alert-warning mt-3">
+                    <div *ngIf="peliculasAgregadas.length === 0" class="alert mt-3">
                         Aún no has agregado ninguna película.
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="editMovieModal" tabindex="-1" aria-labelledby="editMovieModalLabel"
+            aria-hidden="true" [class.show]="peliculaAEditar" [style.display]="peliculaAEditar ? 'block' : 'none'">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editMovieModalLabel">Editar Película: {{
+                            peliculaAEditar?.originalTitle }}</h5>
+                        <button type="button" class="btn-close" aria-label="Close" (click)="cancelarEdicion()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form *ngIf="peliculaAEditar as peliEdit" (ngSubmit)="guardarEdicion()">
+                            <div class="mb-3">
+                                <label for="editOriginalTitle" class="form-label">Título Original</label>
+                                <input type="text" class="form-control" id="editOriginalTitle"
+                                    [(ngModel)]="peliEdit.originalTitle" name="originalTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editDescription" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="editDescription" [(ngModel)]="peliEdit.description"
+                                    name="description" rows="3"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editReleaseDate" class="form-label">Fecha de Lanzamiento</label>
+                                <input type="date" class="form-control" id="editReleaseDate"
+                                    [(ngModel)]="peliEdit.releaseDate" name="releaseDate">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editTrailer" class="form-label">Trailer (URL)</label>
+                                <input type="url" class="form-control" id="editTrailer" [(ngModel)]="peliEdit.trailer"
+                                    name="trailer">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editPrimaryImage" class="form-label">Imagen Principal (URL)</label>
+                                <input type="url" class="form-control" id="editPrimaryImage"
+                                    [(ngModel)]="peliEdit.primaryImage" name="primaryImage">
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                <button type="submit" class="btn btn-success btn-lg me-md-2">Guardar Cambios</button>
+                                <button type="button" class="btn btn-secondary btn-lg"
+                                    (click)="cancelarEdicion()">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="peliculaAEditar" class="modal-backdrop fade show"></div>
+
     </div>
 </div>

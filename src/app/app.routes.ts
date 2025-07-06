@@ -18,12 +18,20 @@ export const routes: Routes = [
     { path:'',component: CarteleraComponent},
     {path: 'gestion-peliculas',component: GestionPeliculasComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] } },
     {path: 'gestion-funciones',component: GestionFuncionesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] } },
+      //Funciones Activas
     {path: 'funcion/activas',component: FuncionesComponent },
+      //Funciones por Nombre de Película
+    { path: 'funciones/:nombrePelicula', component: FuncionesComponent },
     {path: 'lista-reservas',component: ListaReservasComponent, canActivate: [AuthGuard], data: { roles: ['supervisor'] } },
+      //Reserva de Funciones por ID
     {path: 'reservas/:id',component: ReservasComponent, canActivate: [AuthGuard], data: { roles: ['cliente'] } },
     { path: 'loginregister', component: LoginregisterComponent },
     { path: 'auditor', component: PrincipalComponent , canActivate: [AuthGuard], data: { roles: ['auditor'] }},
     { path: 'estadisticas', component: EstadisticasComponent, canActivate: [AuthGuard], data: { roles: ['auditor'] } },
     { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard], data: { roles: ['auditor'] } },
-    { path: 'access-denied', component:AccessDeniedComponent}
+      //Rutas de Pago, solo exitoso tiene contenido extra
+    { path: 'access-denied', component:AccessDeniedComponent},
+    { path: 'pago/exitoso', component: PagoExitosoComponent },
+    { path: 'pago/fallido', component: PagoFallidoComponent },
+    { path: 'pago/pendiente', component: PagoPendienteComponent },
 ];

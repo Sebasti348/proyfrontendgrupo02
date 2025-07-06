@@ -1,0 +1,17 @@
+<div class="d-flex align-items-center justify-content-center min-vh-100 p-3">
+    <div class="card shadow-lg p-4 text-center border-top border-danger border-5"
+        style="max-width: 400px; width: 100%;">
+        <div class="card-body">
+            <div class="mb-4">
+                <i class="fas fa-times-circle text-danger" style="font-size: 5rem;"></i>
+            </div>
+            <h1 class="card-title text-dark mb-3">¡Pago Rechazado!</h1>
+            <p class="card-text text-muted lead mb-4">
+                {{ message }}
+            </p>
+            <button (click)="router.navigate(['cartelera'])" class="btn btn-danger btn-lg w-100">
+                Intentar de Nuevo o Volver al Inicio
+            </button>
+        </div>
+    </div>
+</div>

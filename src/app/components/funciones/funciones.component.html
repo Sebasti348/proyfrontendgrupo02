@@ -1,9 +1,54 @@
 <div class="container-fluid">
     <section class="funciones-container">
         <h2 class="text-center pt-2 fw-bold">Funciones Disponibles</h2>
-        <div *ngIf="funciones && funciones.length > 0; else noPeliculas" class="row g-4">
+        <div class="text-center mb-4">
+            <button class="btn btn-info rounded-md" (click)="mostrarFiltros = !mostrarFiltros">
+                {{ mostrarFiltros ? 'Ocultar Filtros' : 'Mostrar Filtros' }}
+            </button>
+        </div>
+
+        <div *ngIf="mostrarFiltros" class="card p-3 mb-4 shadow-sm rounded-lg">
+            <h3 class="card-title text-center mb-3">Filtrar Funciones</h3>
+
+            <div class="mb-3 text-center">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filtroTipo" id="filtroNombre" value="nombre"
+                        [(ngModel)]="filtroSeleccionado">
+                    <label class="form-check-label" for="filtroNombre">Por Nombre de Película</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filtroTipo" id="filtroFecha" value="fecha"
+                        [(ngModel)]="filtroSeleccionado">
+                    <label class="form-check-label" for="filtroFecha">Por Fecha</label>
+                </div>
+            </div>
+
+            <div class="row g-3 align-items-end">
+                <div class="col-md-6" *ngIf="filtroSeleccionado === 'nombre'">
+                    <label for="filterNombrePelicula" class="form-label">Nombre de Película:</label>
+                    <input type="text" class="form-control rounded-md" id="filterNombrePelicula"
+                        [(ngModel)]="filterNombrePelicula" placeholder="Ej: El Señor de los Anillos">
+                </div>
+                <div class="col-md-6" *ngIf="filtroSeleccionado === 'fecha'">
+                    <label for="filterFecha" class="form-label">Fecha (AAAA-MM-DD):</label>
+                    <input type="date" class="form-control rounded-md" id="filterFecha" [(ngModel)]="filterFecha">
+                </div>
+
+                <div class="col-md-6 d-flex justify-content-end">
+                    <button class="btn btn-primary me-2 rounded-md" (click)="aplicarFiltros()">Aplicar Filtros</button>
+                    <button class="btn btn-secondary rounded-md" (click)="limpiarFiltros()">Limpiar</button>
+                </div>
+            </div>
+            <p class="text-muted mt-2 text-center">Selecciona un tipo de filtro y luego ingresa el valor.</p>
+        </div>
+
+        <div *ngIf="mensajeNoFunciones" class="alert alert-warning text-center mt-3 rounded-md" role="alert">
+            {{ mensajeNoFunciones }}
+        </div>
+
+        <div *ngIf="funciones && funciones.length > 0; else noFunciones" class="row g-4">
             <div *ngFor="let funcion of funciones" class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
-                <div class="card custom-horizontal-card shadow-sm h-100">
+                <div class="card custom-horizontal-card shadow-sm h-100 rounded-lg">
                     <div class="row g-0 h-100">
                         <div class="col-md-4">
                             <img [src]="funcion.pelicula.primaryImage"
@@ -12,21 +57,23 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body d-flex flex-column h-100">
-                                <h2 class="card-title">{{ funcion.pelicula.originalTitle }}</h2>
+                                <h2 class="card-title text-lg font-bold">{{ funcion.pelicula.originalTitle }}</h2>
                                 <div class="mt-auto">
                                     <div class="fecha mb-2">
-                                        <h4>Fecha: {{ funcion.fecha | date:'dd/MM/yyyy' }}</h4>
+                                        <h4 class="text-base">Fecha: {{ funcion.fecha | date:'dd/MM/yyyy' }}</h4>
                                     </div>
                                     <div class="horarios mb-2">
-                                        <h4>Horario: {{ funcion.hora }}</h4>
+                                        <h4 class="text-base">Horario: {{ funcion.hora }}</h4>
                                     </div>
                                     <div class="salas mb-3">
-                                        <h4>Sala: {{ funcion.sala }}</h4>
+                                        <h4 class="text-base">Sala: {{ funcion.sala }}</h4>
                                     </div>
                                     <div class="precio mb-3">
-                                        <h4>Precio: ${{ funcion.precio }}</h4>
+                                        <h4 class="text-base">Precio: ${{ funcion.precio }}</h4>
                                     </div>
-                                    <button class="btn w-100"  (click)="reservarPelicula(funcion._id)">
+                                    <button class="btn btn-success w-100 rounded-md"
+                                        (click)="reservarPelicula(funcion._id)">
+
                                         Reservar
                                     </button>
                                 </div>
@@ -37,8 +84,10 @@
             </div>
         </div>
 
-        <ng-template #noPeliculas>
-            <p class="text-center mt-4 no-peliculas-msg">No hay películas disponibles</p>
+        <ng-template #noFunciones>
+            <!-- Este mensaje solo se mostrará si no hay funciones Y no hay un mensaje específico de 'mensajeNoFunciones' -->
+            <p *ngIf="!mensajeNoFunciones" class="text-center mt-4 no-peliculas-msg alert alert-info rounded-md">No hay
+                funciones disponibles.</p>
         </ng-template>
     </section>
 </div>
