@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FuncionesService } from '../../services/funciones.service';
 import { Funcion } from '../../models/funcion';
 import { Reserva } from '../../models/reserva';
+import { Usuario } from '../../models/usuario';
 import { ReservasService } from '../../services/reserva.service';
 import { LoginService } from '../../services/login.service';
 import { Location } from '@angular/common';
