@@ -2,15 +2,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../models/usuario';
+import { UsuarioService } from './usuario.service';
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   hostBase: string;
-  constructor(private _http: HttpClient) {
+  usuarioLogueado: Usuario | null = null;
+
+  constructor(private _http: HttpClient,private usuarioService: UsuarioService) {
     this.hostBase = 'http://localhost:3000/api/usuario/';
   }
-
+  
   public login(login: string, password: string): Observable<any> {
   const httpOption = {
     headers: new HttpHeaders({
