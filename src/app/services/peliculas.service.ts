@@ -89,7 +89,7 @@ export class PeliculasService {
   public getNextMovies(): Observable<any> { 
     const httpOptions = {
       headers: new HttpHeaders({
-        'X-RapidAPI-Key': '464cbdd516msh188ba69cecd6233p1f9d05jsnac4f9d82c946',  
+        'X-RapidAPI-Key': '5d856c9addmshc1bc9ebdd3df635p1db278jsn67517ecf5d99',  
         'X-RapidAPI-Host': 'imdb236.p.rapidapi.com' 
       })
     }; 

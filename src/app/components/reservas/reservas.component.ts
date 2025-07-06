@@ -22,6 +22,7 @@ interface ButacaUI {
 })
 
 export class ReservasComponent implements OnInit {
+  
   funcionId: string | null = null; // Almacena el ID de la función recibido de la ruta
   funcionSeleccionada: Funcion = new Funcion(); // Objeto para almacenar los detalles de la función seleccionada
 
@@ -30,7 +31,7 @@ export class ReservasComponent implements OnInit {
   butacas: ButacaUI[] = []; // Array que representa el estado de todas las butacas en la UI
   butacaSeleccionada: Set<string> = new Set(); // Conjunto para almacenar los IDs de las butacas seleccionadas por el usuario
   reservaPendiente: Reserva | null = null; // Para almacenar la reserva creada en el backend antes del pago
-
+  
   constructor(
     private route: ActivatedRoute,
     private funcionService: FuncionesService,
@@ -39,7 +40,7 @@ export class ReservasComponent implements OnInit {
     private loginservice: LoginService,
     private location: Location
   ) { }
-
+  
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.funcionId = params.get('id'); // Obtiene el parámetro 'id' de la URL (ID de la función)
@@ -117,7 +118,8 @@ export class ReservasComponent implements OnInit {
 
     // Crea un nuevo objeto de Reserva con los datos necesarios
     const nuevaReserva = new Reserva();
-    nuevaReserva.usuario = this.loginservice.idLogged(); // IMPORTANTE: Reemplazar con el ID de usuario real
+    let loggedInUserId: any=this.loginservice.userLogged();
+    nuevaReserva.usuario = loggedInUserId;
     nuevaReserva.funcion = this.funcionSeleccionada; // Asigna la función completa a la reserva
     nuevaReserva.cantidadReservas = seatsToReserveArray.length; // Número de butacas reservadas
     nuevaReserva.fecha = new Date(); // Fecha actual de la reserva

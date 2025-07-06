@@ -14,6 +14,9 @@ import { AuthGuard } from './guards/auth.guard';
 import { notAuthGuard } from './guards/not-auth.guard';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { PerfilusuarioComponent } from './components/perfilusuario/perfilusuario.component';
+import { PagoExitosoComponent } from './components/pago-exitoso/pago-exitoso.component';
+import { PagoFallidoComponent } from './components/pago-fallido/pago-fallido.component';
+import { PagoPendienteComponent } from './components/pago-pendiente/pago-pendiente.component';
 
 export const routes: Routes = [
     { path: 'gestion-usuarios', component: CrudusuariosComponent, canActivate: [AuthGuard], data: { roles: ['root'] } },
