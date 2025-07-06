@@ -7,6 +7,8 @@ import { Funcion } from '../../models/funcion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { LoginService } from '../../services/login.service';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -29,7 +31,8 @@ export class FuncionesComponent implements OnInit {
     private http: HttpClient,
     private funcionService: FuncionesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loginservice: LoginService
   ) { }
 
   ngOnInit(): void {
@@ -168,10 +171,11 @@ export class FuncionesComponent implements OnInit {
   }
 
   reservarPelicula(funcionSeleccionada: string | undefined) {
-    if (funcionSeleccionada) {
+    if (funcionSeleccionada && this.loginservice.userLoggedIn()) {
       this.router.navigate(['reservas', funcionSeleccionada]);
     } else {
       console.error('No se seleccionó ninguna función para reservar.');
+      this.router.navigate(['loginregister']);
     }
   }
 

@@ -6,9 +6,10 @@ import { FuncionesService } from '../../services/funciones.service';
 import { Funcion } from '../../models/funcion';
 import { Reserva } from '../../models/reserva';
 import { ReservasService } from '../../services/reserva.service';
+import { LoginService } from '../../services/login.service';
+import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 
-//Interfaz para la representación de las butacas en la UI
 interface ButacaUI {
   id: string; // Identificador único de la butaca (ej. "A1", "B5")
   status: 'available' | 'selected' | 'occupied'; // Estado de la butaca: disponible, seleccionada o ocupada
@@ -35,7 +36,9 @@ export class ReservasComponent implements OnInit {
     private route: ActivatedRoute,
     private funcionService: FuncionesService,
     private reservaService: ReservasService,
-    private router: Router
+    private router: Router,
+    private loginservice: LoginService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -68,7 +71,11 @@ export class ReservasComponent implements OnInit {
     );
   }
 
-  // Método para generar el mapa de butacas para la UI
+  goBack(): void {
+    this.location.back();
+  }
+
+ // Método para generar el mapa de butacas para la UI
   generateSeats(occupiedSeatsIds: string[]): void {
     this.butacas = []; // Limpia el array de butacas actual
     this.butacaSeleccionada.clear(); // Limpia las butacas seleccionadas previamente
@@ -113,7 +120,7 @@ export class ReservasComponent implements OnInit {
 
     // Crea un nuevo objeto de Reserva con los datos necesarios
     const nuevaReserva = new Reserva();
-    nuevaReserva.usuario = 'jfduyjghg3545g6'; // IMPORTANTE: Reemplazar con el ID de usuario real
+    nuevaReserva.usuario = this.loginservice.idLogged(); // IMPORTANTE: Reemplazar con el ID de usuario real
     nuevaReserva.funcion = this.funcionSeleccionada; // Asigna la función completa a la reserva
     nuevaReserva.cantidadReservas = seatsToReserveArray.length; // Número de butacas reservadas
     nuevaReserva.fecha = new Date(); // Fecha actual de la reserva
@@ -138,6 +145,7 @@ export class ReservasComponent implements OnInit {
         console.error('No se pudo obtener el ID de la reserva para el pago.');
         this.mostrarMensaje('Error al procesar la reserva para el pago. Intente nuevamente.', true);
       }
+
 
     } catch (error: any) {
       console.error('Error al realizar la reserva:', error);

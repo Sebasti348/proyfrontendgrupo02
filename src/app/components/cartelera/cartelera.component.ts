@@ -46,7 +46,7 @@ export class CarteleraComponent implements OnInit {
       }
     );
   }
-
+  
   // Método para agrupar las películas en "slides" para el carrusel
   verCarruselPeliculas(): Pelicula[][] {
     const groups: Pelicula[][] = []; // Array para almacenar los grupos de películas
@@ -106,6 +106,9 @@ export class CarteleraComponent implements OnInit {
   setSelectedSinopsis(title: string | null | undefined, description: string | null | undefined): void {
     this.tituloPeliSeleccionada = title || 'Sinopsis no disponible'; 
     this.descripcionPeliSeleccionada = description || 'Lo sentimos, la sinopsis para esta película no se encuentra disponible.'; 
+    
+  verFunciones() {
+    this.router.navigate(['funcion/activas']);
   }
 
   // Método para mostrar el trailer de una película en un modal

@@ -14,6 +14,6 @@ export class HeaderComponent {
   logout(){
     this.loginservice.logout();
     // Redirigir al usuario a la página de login después de cerrar sesión
-    this.router.navigateByUrl('/loginregister');
+    this.router.navigateByUrl('');
   }
 }
