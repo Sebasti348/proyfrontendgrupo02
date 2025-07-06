@@ -6,6 +6,7 @@ import { FuncionesService } from '../../services/funciones.service';
 import { Funcion } from '../../models/funcion';
 import { Reserva } from '../../models/reserva';
 import { ReservasService } from '../../services/reserva.service';
+import Swal from 'sweetalert2';
 
 //Interfaz para la representación de las butacas en la UI
 interface ButacaUI {
@@ -61,8 +62,8 @@ export class ReservasComponent implements OnInit {
         this.generateSeats(this.funcionSeleccionada.butacasOcupadas || []);
       },
       error => {
+        this.mostrarMensaje('Error al obtener la función. Por favor, inténtalo de nuevo.', true);
         console.error('Error al obtener la función:', error);
-        alert('No se pudo cargar la información de la función. Inténtalo de nuevo.');
       }
     );
   }
@@ -97,11 +98,13 @@ export class ReservasComponent implements OnInit {
   // Método asíncrono para iniciar el proceso de reserva de butacas
   async reservarButacas(): Promise<void> {
     if (this.butacaSeleccionada.size === 0) {
+      this.mostrarMensaje('Por favor, selecciona al menos una butaca para reservar.', true);
       alert('Por favor, selecciona al menos una butaca para reservar.');
       return;
     }
 
     if (!this.funcionId || !this.funcionSeleccionada || !this.funcionSeleccionada._id) {
+      this.mostrarMensaje('Error: No se ha cargado la información completa de la función.', true);
       alert('Error: No se ha cargado la información completa de la función.');
       return;
     }
@@ -123,7 +126,7 @@ export class ReservasComponent implements OnInit {
 
     try {
       const response = await this.reservaService.createReserva(nuevaReserva).toPromise();
-      alert('¡Reserva creada con éxito! Ahora serás redirigido para el pago.');
+      this.mostrarMensaje('Reserva creada con éxito. Ahora serás redirigido para el pago.', false);
       console.log('Respuesta de la reserva:', response);
 
       this.reservaPendiente = response.reserva;
@@ -133,7 +136,7 @@ export class ReservasComponent implements OnInit {
         this.pagarReserva(this.reservaPendiente); // Llama al método para iniciar el proceso de pago
       } else {
         console.error('No se pudo obtener el ID de la reserva para el pago.');
-        alert('Error al procesar la reserva para el pago. Intente nuevamente.');
+        this.mostrarMensaje('Error al procesar la reserva para el pago. Intente nuevamente.', true);
       }
 
     } catch (error: any) {
@@ -144,7 +147,7 @@ export class ReservasComponent implements OnInit {
       } else if (error.message) {
         errorMessage = error.message;
       }
-      alert(errorMessage);
+      this.mostrarMensaje(errorMessage, true);
     }
   }
 
@@ -167,14 +170,38 @@ export class ReservasComponent implements OnInit {
         if (mpResponse && mpResponse.init_point) { // Si la respuesta contiene el punto de inicio de pago
           window.location.href = mpResponse.init_point; // Redirige al usuario al checkout de Mercado Pago
         } else {
+          this.mostrarMensaje('No se pudo obtener el link de pago de Mercado Pago.', true);
           alert('No se pudo obtener el link de pago de Mercado Pago.'); // Alerta si no se obtiene el link
           console.error('Respuesta inesperada de Mercado Pago:', mpResponse); // Log de la respuesta inesperada
         }
       },
       (error: any) => {
         console.error('Error al generar el link de pago con Mercado Pago:', error); // Log del error
+        this.mostrarMensaje('Error al conectar con Mercado Pago. Inténtalo de nuevo.', true);
         alert('Error al conectar con Mercado Pago. Inténtalo de nuevo.'); // Alerta al usuario
       }
     );
+  }
+
+  private mostrarMensaje(mensaje: string, esError: boolean = false) {
+    if (esError) {
+      console.error('Mensaje de error:', mensaje);
+      Swal.fire({
+        icon: 'error',
+        title: '¡Oops...',
+        text: mensaje,
+        confirmButtonText: 'Entendido'
+      });
+    } else {
+      console.log('Mensaje de éxito:', mensaje);
+      Swal.fire({
+        icon: 'success',
+        title: '¡Éxito!',
+        text: mensaje,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      });
+    }
   }
 }

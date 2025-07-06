@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PeliculasService } from '../../services/peliculas.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-gestion-peliculas',
@@ -86,7 +87,7 @@ export class GestionPeliculasComponent implements OnInit {
       next: (result) => {
         console.log('Respuesta del servidor al agregar película:', result);
         if (result.status === '1') {
-          this.mostrarMensaje('¡Película agregada con éxito!');
+          this.mostrarMensaje('¡Película agregada con éxito!', false);
           this.mostrarPeliculasBD();
           console.log('Película agregada:', pelicula);
         } else {
@@ -114,7 +115,7 @@ export class GestionPeliculasComponent implements OnInit {
       if (confirm(`¿Estás seguro de que quieres eliminar la película "${pelicula.originalTitle}"?`)) {
         this.peliculaService.deletePelicula(pelicula._id).subscribe({
           next: () => {
-            this.mostrarMensaje('Película eliminada con éxito.');
+            this.mostrarMensaje('Película eliminada con éxito.', false);
             this.mostrarPeliculasBD();
           },
           error: (err: HttpErrorResponse) => {
@@ -142,7 +143,7 @@ export class GestionPeliculasComponent implements OnInit {
       this.peliculaService.editPelicula(this.peliculaAEditar).subscribe({
         next: (result) => {
           console.log('Película actualizada exitosamente:', result);
-          this.mostrarMensaje('¡Película actualizada con éxito!');
+          this.mostrarMensaje('¡Película actualizada con éxito!', false);
           this.mostrarPeliculasBD();
           this.peliculaAEditar = null;
         },
@@ -163,16 +164,28 @@ export class GestionPeliculasComponent implements OnInit {
 
   cancelarEdicion() {
     this.peliculaAEditar = null;
-    this.mostrarMensaje('Edición cancelada.');
+    this.mostrarMensaje('Edición cancelada.',true);
   }
 
   private mostrarMensaje(mensaje: string, esError: boolean = false) {
     if (esError) {
       console.error('Mensaje de error:', mensaje);
-      alert('Error: ' + mensaje);
+      Swal.fire({
+        icon: 'error',
+        title: '¡Oops...',
+        text: mensaje,
+        confirmButtonText: 'Entendido'
+      });
     } else {
       console.log('Mensaje de éxito:', mensaje);
-      alert(mensaje);
+      Swal.fire({
+        icon: 'success',
+        title: '¡Éxito!',
+        text: mensaje,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      });
     }
   }
 }
