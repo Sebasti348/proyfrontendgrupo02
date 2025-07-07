@@ -39,7 +39,6 @@ export class CarteleraComponent implements OnInit {
     this.peliculaService.getPeliculas().subscribe(
       result => {
         this.peliculas = result;
-        console.log(this.peliculas);
       },
       error => {
         console.error('Error al obtener películas:', error);
@@ -70,7 +69,8 @@ export class CarteleraComponent implements OnInit {
   verProximosEstrenos() {
     this.peliculaService.getNextMovies().subscribe(
       (result: { [key: string]: { date: string, titles: any[] } }) => {
-        let todasLasPeliculas: any[] = []; // Array temporal para almacenar todas las películas
+        let todasLasPeliculas: any[] = [];
+        // Array temporal para almacenar todas las películas
         // Itera sobre el objeto de resultados para extraer todas las películas por fecha
         for (const key in result) {
           if (Object.prototype.hasOwnProperty.call(result, key)) {
@@ -82,8 +82,6 @@ export class CarteleraComponent implements OnInit {
         this.proximas = todasLasPeliculas.filter(pelicula =>
           pelicula.primaryImage && pelicula.primaryImage
         );
-
-        console.log('Películas próximas', this.proximas); // Muestra las próximas películas en consola
       },
       error => {
         console.error('Error al obtener películas próximas:', error);
@@ -106,9 +104,13 @@ export class CarteleraComponent implements OnInit {
   setSelectedSinopsis(title: string | null | undefined, description: string | null | undefined): void {
     this.tituloPeliSeleccionada = title || 'Sinopsis no disponible';
     this.descripcionPeliSeleccionada = description || 'Lo sentimos, la sinopsis para esta película no se encuentra disponible.';
+
+  // Método para ver todas las funciones
+  verFuncionesActivas() {
+    this.router.navigate(['funcion/activas']);
   }
 
-    verFunciones() {
+  verFunciones() {
       this.router.navigate(['funcion/activas']);
     }
 

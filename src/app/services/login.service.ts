@@ -2,15 +2,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../models/usuario';
+import { UsuarioService } from './usuario.service';
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  hostBase: string;
-  constructor(private _http: HttpClient) {
-    this.hostBase = 'http://localhost:3000/api/usuario/';
+  usuarioLogueado: Usuario | null = null;
+  private apiUrl = 'http://localhost:3000'
+  constructor(private _http: HttpClient,private usuarioService: UsuarioService) {
   }
-
+  
   public login(login: string, password: string): Observable<any> {
   const httpOption = {
     headers: new HttpHeaders({
@@ -19,7 +20,7 @@ export class LoginService {
   };
   let body = JSON.stringify({ login: login, password: password });
   console.log(body);
-  return this._http.post(this.hostBase + 'login', body, httpOption);
+  return this._http.post(`${this.apiUrl}/api/usuario/login`, body, httpOption);
 }
 
   public logout() {
@@ -52,22 +53,22 @@ export class LoginService {
   
   public isAdmin() {
     var rol = sessionStorage.getItem('rol');
-    console.log('Rol actual:', rol);
+    
     return rol && rol.toLowerCase() === 'administrador' ;
   }
   public isAuditor() {
     var rol = sessionStorage.getItem('rol');
-    console.log('Rol actual:', rol);
+    
     return rol && rol.toLowerCase() === 'auditor';
   }
   public isRoot() {
     var rol = sessionStorage.getItem('rol');
-    console.log('Rol actual:', rol);
+    
     return rol && rol.toLowerCase() === 'root';
   }
   public isSupervisor() {
     var rol = sessionStorage.getItem('rol');
-    console.log('Rol actual:', rol);
+    
     return rol && rol.toLowerCase() === 'supervisor';
   }
   validarNuevoUsuario(usuario: Usuario): Observable<any> {
@@ -78,7 +79,7 @@ export class LoginService {
     }
 
     let body:any = JSON.stringify(usuario);
-    return this._http.post('http://localhost:3000/api/usuario/validator', body, httpOptions);
+    return this._http.post(`${this.apiUrl}/api/usuario/validator`, body, httpOptions);
   }
 
   verifyGoogleToken(token: string): Observable<any> {
@@ -87,7 +88,7 @@ export class LoginService {
             'Content-Type': 'application/json',
         }),
     };
-    return this._http.post(this.hostBase + 'google-login', { id_token: token }, httpOption);
+    return this._http.post(`${this.apiUrl}/api/usuario/google-login`, { id_token: token }, httpOption);
 }
 
 }

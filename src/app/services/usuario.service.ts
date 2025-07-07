@@ -7,7 +7,7 @@ import { Usuario } from '../models/usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-
+  private apiUrl = 'http://localhost:3000'
   constructor(private http: HttpClient) { }
 
   getUsuarios():Observable<any> {
@@ -17,7 +17,16 @@ export class UsuarioService {
       }),
       params: new HttpParams()
     }
-    return this.http.get('http://localhost:3000/api/usuario/');
+    return this.http.get(`${this.apiUrl}/api/usuario/`);
+  }
+  getUsuariosByRole(role: string):Observable<any> {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        
+      }),
+      params: new HttpParams()
+    }
+    return this.http.get(`${this.apiUrl}/api/usuario/rol/${role}`);
   }
 
   getUsuario(id: string) {
@@ -27,7 +36,16 @@ export class UsuarioService {
       }),
       params: new HttpParams()
     }
-    return this.http.get(`http://localhost:3000/api/usuario/${id}`);
+    return this.http.get(`${this.apiUrl}/api/usuario/${id}`);
+  }
+  getUsuarioByEmail(email: string) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        
+      }),
+      params: new HttpParams()
+    }
+    return this.http.get(`${this.apiUrl}/api/usuario/buscar/${email}`);
   }
 
   createUsuario(usuario: Usuario): Observable<any> {
@@ -38,7 +56,7 @@ export class UsuarioService {
     }
 
     let body:any = JSON.stringify(usuario);
-    return this.http.post('http://localhost:3000/api/usuario/', body, httpOptions);
+    return this.http.post(`${this.apiUrl}/api/usuario/`, body, httpOptions);
   }
 
   updateUsuario(id: number, usuario: any) {
@@ -48,7 +66,7 @@ export class UsuarioService {
       })
     }
     let body:any = JSON.stringify(usuario);
-    return this.http.put(`http://localhost:3000/api/usuario/${id}`, usuario);
+    return this.http.put(`${this.apiUrl}/api/usuario/${id}`, usuario);
   }
 
   deleteUsuario(id: number, usuario : any) {
@@ -59,6 +77,16 @@ export class UsuarioService {
     }
     let body:any = JSON.stringify(usuario);
     
-    return this.http.delete(`http://localhost:3000/api/usuario/${id}`, usuario);
+    return this.http.delete(`${this.apiUrl}/api/usuario/${id}`, usuario);
+  }
+
+  getReservasByUser(id  : string) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        
+      }),
+      params: new HttpParams()
+    }
+    return this.http.get(`${this.apiUrl}/api/reserva/buscar/${id}`);
   }
 }

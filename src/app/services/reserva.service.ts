@@ -8,8 +8,7 @@ import { Reserva } from '../models/reserva';
 })
 export class ReservasService {
 
-  // URL base de la API de nuestro backend local
-  apiUrl: string = 'http://localhost:3000/api';
+  private apiUrl = 'http://localhost:3000'
   // UUID de una plantilla de Placid.app, probablemente usada para generar tickets.
   templateUUID: string = '23ue9vqiif2ss';
 
@@ -22,7 +21,7 @@ export class ReservasService {
     const httpOptions = {
       headers: new HttpHeaders()
     };
-    return this._http.get(`${this.apiUrl}/reserva`, httpOptions);
+    return this._http.get(`${this.apiUrl}/api/reserva`, httpOptions);
   }
 
   //Envía una solicitud GET para obtener una reserva específica de la base de datos local por su ID 
@@ -30,7 +29,7 @@ export class ReservasService {
     const httpOptions = {
       headers: new HttpHeaders()
     };
-    return this._http.get(`${this.apiUrl}/reserva/${id}`, httpOptions);
+    return this._http.get(`${this.apiUrl}/api/reserva/${id}`, httpOptions);
   }
 
   //Envía una solicitud POST para crear una nueva reserva en la base de datos local 
@@ -40,7 +39,7 @@ export class ReservasService {
         'Content-Type': 'application/json'
       })
     };
-    return this._http.post(`${this.apiUrl}/reserva/`, JSON.stringify(reserva), httpOptions);
+    return this._http.post(`${this.apiUrl}/api/reserva/`, JSON.stringify(reserva), httpOptions);
   }
 
   //Envía una solicitud PUT para actualizar una reserva existente en la base de datos local 
@@ -52,7 +51,7 @@ export class ReservasService {
     };
     // Realiza la solicitud PUT a la URL de la API para una reserva específica por su ID,
     // enviando el objeto reserva completo como cuerpo de la solicitud.
-    return this._http.put(`${this.apiUrl}/reserva/${id}`, JSON.stringify(reserva), httpOptions);
+    return this._http.put(`${this.apiUrl}/api/reserva/${id}`, JSON.stringify(reserva), httpOptions);
   }
 
   //Envía una solicitud DELETE para eliminar una reserva de la base de datos local por su ID 
@@ -60,7 +59,7 @@ export class ReservasService {
     const httpOptions = {
       headers: new HttpHeaders()
     };
-    return this._http.delete(`${this.apiUrl}/reserva/${id}`, httpOptions);
+    return this._http.delete(`${this.apiUrl}/api/reserva/${id}`, httpOptions);
   }
 
   // Envía una solicitud POST a tu backend para obtener un enlace de pago de Mercado Pago. Un objeto con los detalles necesarios para el pago (ej. email del pagador, título, descripción, cantidad, precio unitario, ID de la reserva)
@@ -70,7 +69,7 @@ export class ReservasService {
         'Content-Type': 'application/json'
       })
     };
-    return this._http.post(`${this.apiUrl}/mp/payment`, paymentDetails, httpOptions);
+    return this._http.post(`${this.apiUrl}/api/mp/payment`, paymentDetails, httpOptions);
   }
 
   //Envía una solicitud POST a tu backend para generar un ticket visual utilizando Placid.app 
@@ -84,6 +83,6 @@ export class ReservasService {
 
     // Llama a tu endpoint de backend para generar el ticket Placid.
     // La ruta esperada en el backend es `/reserva/generar-ticket-placid`.
-    return this._http.post(`${this.apiUrl}/reserva/generar-ticket-placid`, bodyToSend, httpOptions);
+    return this._http.post(`${this.apiUrl}/api/reserva/generar-ticket-placid`, bodyToSend, httpOptions);
   }
 }
