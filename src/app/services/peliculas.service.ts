@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class PeliculasService {
  peliculasAgregadas: Pelicula[] = [];
-private apiUrl = 'http://localhost:3000'
+private apiUrl = 'https://backtestbeta.onrender.com'
 
  constructor(private _http: HttpClient) { }
 

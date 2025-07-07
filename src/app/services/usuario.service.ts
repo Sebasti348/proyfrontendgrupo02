@@ -7,7 +7,7 @@ import { Usuario } from '../models/usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:3000'
+  private apiUrl = 'https://backtestbeta.onrender.com'
   constructor(private http: HttpClient) { }
 
   getUsuarios():Observable<any> {
