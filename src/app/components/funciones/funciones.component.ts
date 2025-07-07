@@ -9,6 +9,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { LoginService } from '../../services/login.service';
 
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-funciones',
@@ -58,6 +59,7 @@ export class FuncionesComponent implements OnInit {
       if (this.filterNombrePelicula.trim() !== '') {
         this.cargarFuncionesPorNombre(this.filterNombrePelicula);
       } else {
+        this.mostrarMensaje('No se ingresó nombre de película. Cargando todas las funciones activas.', true);
         console.log('No se ingresó nombre de película. Cargando todas las funciones activas.');
         this.cargarFuncionesActivas();
       }
@@ -65,25 +67,26 @@ export class FuncionesComponent implements OnInit {
       if (this.filterFecha.trim() !== '') {
         this.cargarFuncionesPorFecha(this.filterFecha);
       } else {
+        this.mostrarMensaje('No se ingresó fecha. Cargando todas las funciones activas.', true);
         console.log('No se ingresó fecha. Cargando todas las funciones activas.');
         this.cargarFuncionesActivas();
       }
     } else {
+      this.mostrarMensaje('No se seleccionó tipo de filtro. Cargando todas las funciones activas.', true);
       console.log('No se seleccionó tipo de filtro. Cargando todas las funciones activas.');
       this.cargarFuncionesActivas();
     }
   }
 
-  // Método para cargar funciones filtradas por nombre de película
   cargarFuncionesPorNombre(nombre: string): void {
     this.funcionService.getFuncionByName(nombre).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 404) {
-          this.mensajeNoFunciones = `No se encontraron funciones para la película "${nombre}".`;
+          this.mostrarMensaje(`No se encontraron funciones para la película "${nombre}".`, true); 
           return of([]);
         } else {
-          console.error('Error al cargar funciones por nombre:', error);
-          this.mensajeNoFunciones = 'Ocurrió un error al buscar funciones por nombre.';
+          this.mostrarMensaje('Error al cargar funciones por nombre.', true);
+          console.error('Error al cargar funciones por nombre:', error); 
           return of([]);
         }
       })
@@ -92,13 +95,14 @@ export class FuncionesComponent implements OnInit {
         this.funciones = data;
         if (this.funciones.length === 0 && !this.mensajeNoFunciones) {
           this.mensajeNoFunciones = `No se encontraron funciones para la película "${nombre}".`;
+          this.mostrarMensaje(`No se encontraron funciones para la película "${nombre}".`, true); 
         }
         console.log('Funciones cargadas por nombre:', this.funciones);
       },
       error: (error) => {
         console.error('Error no manejado en suscripción de funciones por nombre:', error);
         this.funciones = [];
-        this.mensajeNoFunciones = 'Ocurrió un error inesperado al cargar las funciones.';
+        this.mostrarMensaje('Ocurrió un error inesperado al cargar las funciones.', true);
       }
     });
   }
@@ -107,6 +111,7 @@ export class FuncionesComponent implements OnInit {
     this.funcionService.getFuncionByDate(fecha).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 404) {
+          this.mostrarMensaje(`No se encontraron funciones para la fecha ${fecha}.`, true);
           this.mensajeNoFunciones = `No se encontraron funciones para la fecha ${fecha}.`;
           return of([]);
         } else {
@@ -119,6 +124,7 @@ export class FuncionesComponent implements OnInit {
       next: (data) => {
         this.funciones = data;
         if (this.funciones.length === 0 && !this.mensajeNoFunciones) {
+          this.mostrarMensaje(`No se encontraron funciones para la fecha ${fecha}.`, true);
           this.mensajeNoFunciones = `No se encontraron funciones para la fecha ${fecha}.`;
         }
         console.log('Funciones cargadas por fecha:', this.funciones);
@@ -134,6 +140,7 @@ export class FuncionesComponent implements OnInit {
   cargarFuncionesActivas(): void {
     this.funcionService.getFuncionesActivas().pipe(
       catchError((error: HttpErrorResponse) => {
+        this.mostrarMensaje('Error al cargar todas las funciones activas.', true);
         console.error('Error al cargar todas las funciones activas:', error);
         this.mensajeNoFunciones = 'Ocurrió un error al cargar las funciones activas.';
         return of([]);
@@ -142,6 +149,7 @@ export class FuncionesComponent implements OnInit {
       next: (data) => {
         this.funciones = data;
         if (this.funciones.length === 0) {
+          this.mostrarMensaje('No hay funciones disponibles en este momento.', true);
           this.mensajeNoFunciones = 'No hay funciones activas disponibles en este momento.';
         }
         console.log('Todas las funciones activas cargadas:', this.funciones);
@@ -170,4 +178,26 @@ export class FuncionesComponent implements OnInit {
       this.router.navigate(['loginregister']);
     }
   }
+
+  private mostrarMensaje(mensaje: string, esError: boolean = false) {
+      if (esError) {
+        console.error('Mensaje de error:', mensaje);
+        Swal.fire({
+          icon: 'error',
+          title: '¡Oops...',
+          text: mensaje,
+          confirmButtonText: 'Entendido'
+        });
+      } else {
+        console.log('Mensaje de éxito:', mensaje);
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: mensaje,
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
+      }
+    }
 }

@@ -7,7 +7,7 @@ import { Usuario } from '../models/usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:3000'
+  private apiUrl = 'https://backtestrender.onrender.com'
   constructor(private http: HttpClient) { }
 
   getUsuarios():Observable<any> {
@@ -80,7 +80,7 @@ export class UsuarioService {
     return this.http.delete(`${this.apiUrl}/api/usuario/${id}`, usuario);
   }
 
-  getReservasByUser(id: string) {
+  getReservasByUser(id  : string) {
     let httpOptions = {
       headers: new HttpHeaders({
         

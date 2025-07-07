@@ -1,111 +1,134 @@
 
-<div class="usuarioscrud-bg d-flex align-items-center justify-content-center min-vh-100">
-  <div class="container py-4 position-relative w-100">
-    <div class="usuarioscrud-anim-bg"></div>
-    <h2 class="mb-4 fw-bold" style="color: #FFD600;">Gestión de Usuarios</h2>
-    <div class="usuarioscrud-content p-4 rounded-4">
-      <!-- Formulario para cargar usuarios -->
-      <div class="p-4 mb-4 user-form-box">
-        <form class="row g-3 align-items-end"  #usuarioForm="ngForm">
-          <div class="col-md-4">
-            <label for="nombre" class="form-label fw-bold">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="usuario.nombre" placeholder="Nombre" required>
-          </div>
-          <div class="col-md-4">
-            <label for="apellido" class="form-label fw-bold">Apellido</label>
-            <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="usuario.apellido" placeholder="Apellido" required>
-          </div>
-          <div class="col-md-4">
-            <label for="username" class="form-label fw-bold">Username</label>
-            <input type="text" class="form-control" id="username" name="username" [(ngModel)]="usuario.username" placeholder="Username" required>
-          </div>
-          <div class="col-md-4">
-            <label for="email" class="form-label fw-bold">Email</label>
-            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="usuario.email" placeholder="Email" required>
-          </div>
-          <div class="col-md-4">
-            <label for="password" class="form-label fw-bold">Password</label>
-            <input type="password" class="form-control" id="password" name="password" [(ngModel)]="usuario.password" placeholder="Password" required>
-          </div>
-          <div class="col-md-3">
-            <label for="rol" class="form-label fw-bold">Rol</label>
-            <select class="form-select" id="rol" name="rol" [(ngModel)]="usuario.rol" required>
-              <option value="">Seleccionar</option>
-              <option value="administrador">Administrador</option>
-              <option value="auditor">Auditor</option>
-              <option value="supervisor">Supervisor</option>
-            </select>
-          </div>
-          <div class="col-md-1 d-grid">
-            <button type="submit" class="btn btn-guardar" [disabled]="!usuarioForm.form.valid" (click)="agregarUsuario()">Guardar</button>
-          </div>
-        </form>
-      </div>
+<div class="container-fluid">
+  <h2 class="text-center mb-4 pt-2">Gestión de Usuarios</h2>
+  
+  <!-- Formulario de Usuarios -->
+  <div class="form-container" id="form-container">
+    <h4 class="text-center">Alta de Usuarios</h4>
     
-      <!-- Lista de usuarios existentes -->
-      <div class="table-responsive rounded-3 shadow mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <div class="d-flex gap-3">
-            <!-- Filtro por Email -->
-            <div class="d-flex flex-column">
-              <label class="text-warning mb-1">Filtrar por Email</label>
-              <div class="input-group">
-                <input type="text" class="form-control" id="email" name="email" [(ngModel)]="emailFiltrar" placeholder="Email" required>
-                <button class="btn btn-guardar" type="button" (click)="filtrarUsuario()">Filtrar</button>
-              </div>
-            </div>
-
-            <!-- Filtro por Rol -->
-            <div class="d-flex flex-column">
-              <label class="text-warning mb-1">Filtrar por Rol</label>
-              <div class="input-group">
-                <select class="form-select" id="rol" name="rol" [(ngModel)]="rolFiltrar" required>
-                  <option value="">Seleccionar</option>
-                  <option value="administrador">Administrador</option>
-                  <option value="auditor">Auditor</option>
-                  <option value="supervisor">Supervisor</option>
-                  <option value="cliente">Cliente</option>
-                </select>
-                <button class="btn btn-guardar" type="button" (click)="filtrarUsuarioRol()">Filtrar</button>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex flex-column">
-            <button class="btn btn-guardar" type="button" (click)="obtenerUsuarios()">Mostrar todos</button>
-          </div>
+    <form #usuarioForm="ngForm" [ngClass]="{'form-visible': modo}">
+      <div class="grupo-formulario">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="usuario.nombre" required class="form-control">
+        <div *ngIf="usuarioForm.controls['nombre']?.invalid && (usuarioForm.controls['nombre']?.dirty || usuarioForm.controls['nombre']?.touched)" class="mensaje-error">
+          El nombre es obligatorio.
         </div>
-
-        <table class="table table-dark table-hover align-middle mb-0" style="background: #111;">
-          <thead style="background: #0D47A1; color: #FFD600;">
-            <tr>
-              <th>#</th>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Rol</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let u of usuarios; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ u.nombre }}</td>
-              <td>{{ u.apellido }}</td>
-              <td>{{ u.username }}</td>
-              <td>{{ u.email }}</td>
-              <td>{{ u.rol | titlecase }}</td>
-              <td>
-                <button class="btn btn-modificar me-2" title="Modificar" (click)="editarUsuario(u._id!)">Modificar</button>
-                <button class="btn btn-eliminar" title="Eliminar" (click)="eliminarUsuario(u._id!)">Eliminar</button>
-              </td>
-            </tr>
-            <tr *ngIf="usuarios.length === 0">
-              <td colspan="7" class="text-center">No hay usuarios registrados.</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
+
+      <div class="grupo-formulario">
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" [(ngModel)]="usuario.apellido" required class="form-control">
+        <div *ngIf="usuarioForm.controls['apellido']?.invalid && (usuarioForm.controls['apellido']?.dirty || usuarioForm.controls['apellido']?.touched)" class="mensaje-error">
+          El apellido es obligatorio.
+        </div>
+      </div>
+
+      <div class="grupo-formulario">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" [(ngModel)]="usuario.username" required class="form-control">
+        <div *ngIf="usuarioForm.controls['username']?.invalid && (usuarioForm.controls['username']?.dirty || usuarioForm.controls['username']?.touched)" class="mensaje-error">
+          El username es obligatorio.
+        </div>
+      </div>
+
+      <div class="grupo-formulario">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" [(ngModel)]="usuario.email" required class="form-control">
+        <div *ngIf="usuarioForm.controls['email']?.invalid && (usuarioForm.controls['email']?.dirty || usuarioForm.controls['email']?.touched)" class="mensaje-error">
+          El email es obligatorio y debe ser válido.
+        </div>
+      </div>
+
+      <div class="grupo-formulario">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" [(ngModel)]="usuario.password" required class="form-control">
+        <div *ngIf="usuarioForm.controls['password']?.invalid && (usuarioForm.controls['password']?.dirty || usuarioForm.controls['password']?.touched)" class="mensaje-error">
+          La contraseña es obligatoria.
+        </div>
+      </div>
+
+      <div class="grupo-formulario">
+        <label for="rol">Rol:</label>
+        <select id="rol" name="rol" [(ngModel)]="usuario.rol" required class="form-control">
+          <option value="">Seleccionar</option>
+          <option value="administrador">Administrador</option>
+          <option value="auditor">Auditor</option>
+          <option value="supervisor">Supervisor</option>
+          <option value="cliente">Cliente</option>
+        </select>
+        <div *ngIf="usuarioForm.controls['rol']?.invalid && (usuarioForm.controls['rol']?.dirty || usuarioForm.controls['rol']?.touched)" class="mensaje-error">
+          El rol es obligatorio.
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary" [disabled]="!usuarioForm.form.valid" (click)="agregarUsuario()">
+        {{modo ? 'Guardar' : 'Nuevo Usuario'}}
+      </button>
+    </form>
+  </div>
+
+  <!-- Filtros -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <form class="row g-3">
+        <div class="col-md-4">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombre" [(ngModel)]="filtro.nombre" name="nombre">
+        </div>
+        <div class="col-md-4">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" [(ngModel)]="filtro.email" name="email">
+        </div>
+        <div class="col-md-4">
+          <label for="rol" class="form-label">Rol</label>
+          <select class="form-select" id="rol" [(ngModel)]="filtro.rol" name="rol">
+            <option value="">Todos</option>
+            <option value="administrador">Administrador</option>
+            <option value="auditor">Auditor</option>
+            <option value="supervisor">Supervisor</option>
+            <option value="cliente">Cliente</option>
+          </select>
+          <button class="btn btn-primary mt-3" type="button" (click)="filtrarUsuarios()">Filtrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tabla de Usuarios -->
+  <div class="funciones-container pb-3">
+    <div *ngIf="usuariosFiltrados.length > 0" class="tabla-funciones mt-5">
+      <h4 class="text-center mb-3">Lista de Usuarios</h4>
+      <table class="tabla-funciones-personalizada">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuariosFiltrados">
+            <td>{{ usuario.nombre }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.rol }}</td>
+            <td>
+              <button class="btn btn-warning btn-sm" (click)="editarUsuario(usuario)">Editar</button>
+              <button class="btn btn-danger btn-sm" 
+              [swal]="{title: '¿Estás seguro de eliminar este usuario?', text: 'Se eliminará permanentemente el usuario', icon: 'warning', showCancelButton: true, confirmButtonText: 'Sí, eliminar', cancelButtonText: 'Cancelar'}"
+              (confirm)="eliminarUsuario(usuario._id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="usuariosFiltrados.length === 0" class="text-center text-light mt-4">
+      No hay usuarios que coincidan con los filtros.
+    </div>
+
+    <div class="text-center mt-3">
+      <button class="btn btn-primary" (click)="abrirModal()">Nuevo Usuario</button>
     </div>
   </div>
 </div>

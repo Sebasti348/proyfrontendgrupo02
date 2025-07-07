@@ -5,6 +5,7 @@ import { Funcion } from '../../models/funcion';
 import { PeliculasService } from '../../services/peliculas.service';
 import { Pelicula } from '../../models/pelicula';
 import { FuncionesService } from '../../services/funciones.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-gestion-funciones',
@@ -173,10 +174,22 @@ export class GestionFuncionesComponent implements OnInit {
   private mostrarMensaje(mensaje: string, esError: boolean = false) {
     if (esError) {
       console.error('Mensaje de error:', mensaje);
-      alert('Error: ' + mensaje);
+      Swal.fire({
+        icon: 'error',
+        title: '¡Oops...',
+        text: mensaje,
+        confirmButtonText: 'Entendido'
+      });
     } else {
       console.log('Mensaje de éxito:', mensaje);
-      alert(mensaje);
+      Swal.fire({
+        icon: 'success',
+        title: '¡Éxito!',
+        text: mensaje,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      });
     }
   }
 

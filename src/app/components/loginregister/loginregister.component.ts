@@ -7,6 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Usuario } from '../../models/usuario';
 import { LoginService } from '../../services/login.service';
 import { UsuarioService } from '../../services/usuario.service';
+import Swal from 'sweetalert2';
 
 declare var FB: any;
 declare var google: any;
@@ -27,7 +28,7 @@ export class LoginregisterComponent implements OnInit {
   msglogin!: string; // mensaje que indica si no paso el loguin
   response!: any;
   isLoading: boolean = false; // Variable para controlar el spinner
-
+  userGoogle: Usuario = new Usuario();
 
 
   constructor(
@@ -70,7 +71,7 @@ export class LoginregisterComponent implements OnInit {
   handleCredentialResponse(response: any) {
     const idToken = response.credential;  // este es el token que envías al backend
 
-    this.http.post('http://localhost:3000/api/usuario/google-login', { idToken })
+    this.http.post('https://backtestrender.onrender.com/api/usuario/google-login', { idToken })
       .subscribe({
         next: (res: any) => {
           console.log('Login backend OK', res);
@@ -125,29 +126,40 @@ export class LoginregisterComponent implements OnInit {
     this.loginservice.login(this.emailOrUsername, this.password).subscribe(
       (result) => {
         var user = result;
-        console.log('Respuesta completa del backend:', user);
 
         if (user.status == 1) {
           setTimeout(() => {
+            Swal.fire({
+              title: 'Login exitoso',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            });
             sessionStorage.setItem('user', user.username);
             sessionStorage.setItem('userid', user.userid);
             sessionStorage.setItem('rol', user.rol);
+            sessionStorage.setItem('token', user.token);
             this.loginservice.usuarioLogueado = user;
-            if(user.rol == 'cliente'){
-              this.router.navigateByUrl('/');
+            if(user.rol == 'cliente' || user.rol == 'supervisor' || user.rol == 'administrador' || user.rol == 'root'){
+              this.router.navigateByUrl('');
             }else{
               this.router.navigateByUrl('auditor');
             }
             this.isLoading = false;
           }, 1500);
         } else {
+          
           this.msglogin = 'Credenciales incorrectas..';
           this.isLoading = false;
         }
       },
       (error) => {
-        alert('Error de conexion');
-        console.log('error en conexion', error);
+        Swal.fire({
+          title: 'Credenciales incorrectas',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1500
+        });
         this.isLoading = false;
       }
     );
@@ -155,7 +167,7 @@ export class LoginregisterComponent implements OnInit {
 
   register() {
     this.usuario.estado = true;
-    this.usuario.rol = 'cliente';
+    this.usuario.rol = 'Cliente';
     console.log(this.usuario);
 
     if (!this.usuario.email || !this.usuario.password || !this.usuario.nombre) {
@@ -176,6 +188,12 @@ export class LoginregisterComponent implements OnInit {
               if (this.usuario.email || this.usuario.username && this.usuario.password) {
                 this.emailOrUsername = this.usuario.email ?? this.usuario.username ?? '';
                 this.password = this.usuario.password ?? '';
+                Swal.fire({
+                  title: 'Te has registrado exitosamente',
+                  icon: 'success',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
                 this.login();
               }
             },
@@ -188,15 +206,37 @@ export class LoginregisterComponent implements OnInit {
         }
       },
       (error: any) => {
+        Swal.fire({
+          title: 'Error al registrar usuario',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1500
+        });
         console.log('Error al validar usuario:', error);
       }
     );
   }
 
   private guardarEnSessionYRedirigir(user: any) {
-    sessionStorage.setItem('user', user.username ?? user.email);
-    sessionStorage.setItem('userid', user.id ?? user.email); // asegurate de que venga el ID o algo único
-    sessionStorage.setItem('rol', user.rol ?? 'cliente');
-    this.ngZone.run(() => this.router.navigateByUrl(''));
+    // First, get the complete user data using the email
+    this.userservice.getUsuarioByEmail(user.email).subscribe(
+      (completeUser: any) => {
+        if (completeUser && completeUser.length > 0) {
+          const fullUserData = completeUser[0];
+          // Store the complete user data in session
+          sessionStorage.setItem('user', fullUserData.username);
+          sessionStorage.setItem('userid', fullUserData._id); // Use the actual MongoDB ID
+          sessionStorage.setItem('rol', fullUserData.rol ?? 'cliente');
+          this.ngZone.run(() => this.router.navigateByUrl(''));
+        } else {
+          console.error('No se encontró el usuario completo');
+          this.ngZone.run(() => this.router.navigateByUrl(''));
+        }
+      },
+      (error) => {
+        console.error('Error al obtener datos completos del usuario:', error);
+        this.ngZone.run(() => this.router.navigateByUrl(''));
+      }
+    );
   }
 }

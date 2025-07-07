@@ -8,7 +8,7 @@ import { Pelicula } from '../models/pelicula';
 })
 export class PeliculasService {
  peliculasAgregadas: Pelicula[] = [];
-private apiUrl = 'http://localhost:3000'
+private apiUrl = 'https://backtestrender.onrender.com'
 
  constructor(private _http: HttpClient) { }
 

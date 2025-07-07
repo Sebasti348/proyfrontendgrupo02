@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PeliculasService } from '../../services/peliculas.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-gestion-peliculas',
@@ -86,7 +87,7 @@ export class GestionPeliculasComponent implements OnInit {
       next: (result) => {
         console.log('Respuesta del servidor al agregar película:', result);
         if (result.status === '1') {
-          this.mostrarMensaje('¡Película agregada con éxito!');
+          this.mostrarMensaje('¡Película agregada con éxito!', false);
           this.mostrarPeliculasBD();
           console.log('Película agregada:', pelicula);
         } else {
@@ -111,18 +112,29 @@ export class GestionPeliculasComponent implements OnInit {
 
   eliminarPelicula(pelicula: Pelicula) {
     if (pelicula._id) {
-      if (confirm(`¿Estás seguro de que quieres eliminar la película "${pelicula.originalTitle}"?`)) {
-        this.peliculaService.deletePelicula(pelicula._id).subscribe({
-          next: () => {
-            this.mostrarMensaje('Película eliminada con éxito.');
-            this.mostrarPeliculasBD();
-          },
-          error: (err: HttpErrorResponse) => {
-            console.error('Error al eliminar película:', err);
-            this.mostrarMensaje('Error al eliminar la película. Consulte la consola para más detalles.', true);
-          }
-        });
-      }
+      // Usamos la función mostrarConfirmacion
+      this.mostrarConfirmacion(
+        '¿Estás seguro?',
+        `¡No podrás revertir la eliminación de "${pelicula.originalTitle}"!`,
+        'warning'
+      ).then((confirmado) => {
+        if (confirmado) {
+          // Si el usuario confirma, procedemos con la eliminación
+          this.peliculaService.deletePelicula(pelicula._id!).subscribe({
+            next: () => {
+              this.mostrarMensaje('Película eliminada con éxito.', false);
+              this.mostrarPeliculasBD();
+            },
+            error: (err: HttpErrorResponse) => {
+              console.error('Error al eliminar película:', err);
+              this.mostrarMensaje('Error al eliminar la película. Consulte la consola para más detalles.', true);
+            }
+          });
+        } else {
+          this.mostrarMensaje(`La eliminación de "${pelicula.originalTitle}" ha sido cancelada.`, false); 
+          console.log(`Eliminación de ${pelicula.originalTitle} cancelada.`);
+        }
+      });
     } else {
       this.mostrarMensaje('Error: ID de la película no disponible para eliminar.', true);
       console.error('No se puede eliminar la película porque _id es undefined:', pelicula);
@@ -142,7 +154,7 @@ export class GestionPeliculasComponent implements OnInit {
       this.peliculaService.editPelicula(this.peliculaAEditar).subscribe({
         next: (result) => {
           console.log('Película actualizada exitosamente:', result);
-          this.mostrarMensaje('¡Película actualizada con éxito!');
+          this.mostrarMensaje('¡Película actualizada con éxito!', false);
           this.mostrarPeliculasBD();
           this.peliculaAEditar = null;
         },
@@ -163,16 +175,47 @@ export class GestionPeliculasComponent implements OnInit {
 
   cancelarEdicion() {
     this.peliculaAEditar = null;
-    this.mostrarMensaje('Edición cancelada.');
+    this.mostrarMensaje('Edición cancelada.', true);
   }
 
   private mostrarMensaje(mensaje: string, esError: boolean = false) {
     if (esError) {
       console.error('Mensaje de error:', mensaje);
-      alert('Error: ' + mensaje);
+      Swal.fire({
+        icon: 'error',
+        title: '¡Oops...',
+        text: mensaje,
+        confirmButtonText: 'Entendido'
+      });
     } else {
       console.log('Mensaje de éxito:', mensaje);
-      alert(mensaje);
+      Swal.fire({
+        icon: 'success',
+        title: '¡Éxito!',
+        text: mensaje,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      });
     }
+  }
+
+  private mostrarConfirmacion(
+    title: string,
+    text: string,
+    icon: 'warning' | 'question' = 'question'
+  ): Promise<boolean> {
+    return Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar', // Texto más específico para esta acción
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      return result.isConfirmed;
+    });
   }
 }
