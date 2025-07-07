@@ -7,11 +7,9 @@ import { UsuarioService } from './usuario.service';
   providedIn: 'root',
 })
 export class LoginService {
-  hostBase: string;
   usuarioLogueado: Usuario | null = null;
-
+  private apiUrl = 'http://localhost:3000'
   constructor(private _http: HttpClient,private usuarioService: UsuarioService) {
-    this.hostBase = 'http://localhost:3000/api/usuario/';
   }
   
   public login(login: string, password: string): Observable<any> {
@@ -22,7 +20,7 @@ export class LoginService {
   };
   let body = JSON.stringify({ login: login, password: password });
   console.log(body);
-  return this._http.post(this.hostBase + 'login', body, httpOption);
+  return this._http.post(`${this.apiUrl}/api/usuario/login`, body, httpOption);
 }
 
   public logout() {
@@ -81,7 +79,7 @@ export class LoginService {
     }
 
     let body:any = JSON.stringify(usuario);
-    return this._http.post('http://localhost:3000/api/usuario/validator', body, httpOptions);
+    return this._http.post(`${this.apiUrl}/api/usuario/validator`, body, httpOptions);
   }
 
   verifyGoogleToken(token: string): Observable<any> {
@@ -90,7 +88,7 @@ export class LoginService {
             'Content-Type': 'application/json',
         }),
     };
-    return this._http.post(this.hostBase + 'google-login', { id_token: token }, httpOption);
+    return this._http.post(`${this.apiUrl}/api/usuario/google-login`, { id_token: token }, httpOption);
 }
 
 }

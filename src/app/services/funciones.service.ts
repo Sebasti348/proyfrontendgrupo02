@@ -8,18 +8,18 @@ import { Funcion } from '../models/funcion';
 })
 export class FuncionesService {
 
-  apiUrl: string = 'http://localhost:3000/api';
+  private apiUrl = 'http://localhost:3000'
 
   constructor(private _http: HttpClient) { }
 
   //Obtiene todas las funciones
   public getFunciones(): Observable<any> {
-    return this._http.get(`${this.apiUrl}/funcion/`);
+    return this._http.get(`${this.apiUrl}/api/funcion/`);
   }
 
   //Obtiene todas las funciones que están activas
   public getFuncionesActivas(): Observable<any> {
-    return this._http.get(`${this.apiUrl}/funcion/activas/`);
+    return this._http.get(`${this.apiUrl}/api/funcion/activas/`);
   }
 
   //El objeto Funcion a crear
@@ -29,7 +29,7 @@ export class FuncionesService {
         'Content-Type': 'application/json'
       })
     };
-    return this._http.post(`${this.apiUrl}/funcion/`, funcion, httpOptions);
+    return this._http.post(`${this.apiUrl}/api/funcion/`, funcion, httpOptions);
   }
 
   //Edita una función existente
@@ -37,26 +37,26 @@ export class FuncionesService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this._http.put(`${this.apiUrl}/funcion/${funcion._id}`, funcion, httpOptions);
+    return this._http.put(`${this.apiUrl}/api/funcion/${funcion._id}`, funcion, httpOptions);
   }
 
   //Elimina una función por su ID
   deleteFuncion(id: string): Observable<any> {
-    return this._http.delete(`${this.apiUrl}/funcion/${id}`);
+    return this._http.delete(`${this.apiUrl}/api/funcion/${id}`);
   }
 
   //Obtiene una función específica por su ID
   public getFuncion(funcionId: any): Observable<any> {
-    return this._http.get(`${this.apiUrl}/funcion/` + funcionId);
+    return this._http.get(`${this.apiUrl}/api/funcion/` + funcionId);
   }
 
  //Obtiene funciones filtradas por nombre de película
   public getFuncionByName(funcionName: any): Observable<any> {
-    return this._http.get(`${this.apiUrl}/funcion/pelicula/` + funcionName);
+    return this._http.get(`${this.apiUrl}/api/funcion/pelicula/` + funcionName);
   }
 
   //Obtiene funciones filtradas por fecha
   public getFuncionByDate(fecha: string): Observable<any> {
-    return this._http.get(`${this.apiUrl}/funcion/por-fecha/${fecha}`);
+    return this._http.get(`${this.apiUrl}/api/funcion/por-fecha/${fecha}`);
   }
 }

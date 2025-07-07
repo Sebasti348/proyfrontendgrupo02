@@ -6,31 +6,31 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class EstadisticasService {
-
+  private apiUrl = 'http://localhost:3000'
   constructor(private http: HttpClient) { }
 
   getVentaBoletosSemanales() {
-    return this.http.get("http://localhost:3000/api/reserva/resumensemanal");
+    return this.http.get(`${this.apiUrl}/api/reserva/resumensemanal`);
   }
   getIngresosSemanales() {
-    return this.http.get("http://localhost:3000/api/reserva/ingresossemanal");
+    return this.http.get(`${this.apiUrl}/api/reserva/ingresossemanal`);
   }
   getAsistenciaFunciones() {
-    return this.http.get("http://localhost:3000/api/reserva/asistenciafuncion");
+    return this.http.get(`${this.apiUrl}/api/reserva/asistenciafuncion`);
   }
   getVentasPorPelicula() {
-    return this.http.get("http://localhost:3000/api/reserva/ventaspelicula");
+    return this.http.get(`${this.apiUrl}/api/reserva/ventaspelicula`);
   }
   getventasultimoMes() {
-    return this.http.get("http://localhost:3000/api/reserva/ventasultimomes");
+    return this.http.get(`${this.apiUrl}/api/reserva/ventasultimomes`);
   }
   getfuncionesDisponibles() {
-    return this.http.get("http://localhost:3000/api/funcion/countactivas");
+    return this.http.get(`${this.apiUrl}/api/funcion/countactivas`);
   }
   getIngresosAnuales() {
-    return this.http.get("http://localhost:3000/api/reserva/ingresosanuales");
+    return this.http.get(`${this.apiUrl}/api/reserva/ingresosanuales`);
   }
   public getFuncionesDisponiblesCount(): Observable<any> {
-    return this.http.get("http://localhost:3000/api/funcion/activas/count");
+    return this.http.get(`${this.apiUrl}/api/funcion/activas/count`);
   }
 }

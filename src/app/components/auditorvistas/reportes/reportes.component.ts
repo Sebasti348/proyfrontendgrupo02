@@ -119,7 +119,7 @@ export class ReportesComponent implements OnInit {
       this.reservasData = data.data;
       this.reservasLabels = data.labels;
       this.reservasBackgroundColor = data.backgroundColor;
-      this.RenderChart(this.reservasData, this.reservasLabels, this.reservasBackgroundColor, 'reservasChart', 'bar', 'Reservas por Hora');
+      this.RenderChart(this.reservasData, this.reservasLabels, this.reservasBackgroundColor, 'reservasChart', 'bar', 'Reservas por Dia');
     });
   }
 

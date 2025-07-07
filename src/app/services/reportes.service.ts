@@ -6,33 +6,33 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ReportesService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'http://localhost:3000'
 
   constructor(private http: HttpClient) { }
 
   // Reporte de Ventas
   getVentasReport(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/reserva/reporte`);
+    return this.http.get<any>(`${this.apiUrl}/api/reserva/reporte`);
   }
 
   // Reporte de Películas
   getPeliculasReport(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/reserva/reporte-peliculas`);
+    return this.http.get<any>(`${this.apiUrl}/api/reserva/reporte-peliculas`);
   }
 
   // Reporte de Funciones
   getFuncionesReport(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/reserva/reporte-funciones`);
+    return this.http.get<any>(`${this.apiUrl}/api/reserva/reporte-funciones`);
   }
 
   // Reporte de Reservas
   getReservasReport(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/reserva/reporte-reservas`);
+    return this.http.get<any>(`${this.apiUrl}/api/reserva/reporte-reservas`);
   }
 
   // Filtros
   filtrarReporte(fechaInicio: string, fechaFin: string, tipo: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/reporte/filtrar`, {
+    return this.http.get<any>(`${this.apiUrl}/api/reserva/reporte/filtrar`, {
       params: {
         fechaInicio,
         fechaFin,

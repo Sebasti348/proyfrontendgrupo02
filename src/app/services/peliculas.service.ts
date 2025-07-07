@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class PeliculasService {
  peliculasAgregadas: Pelicula[] = [];
-  apiUrl: string = 'http://localhost:3000/api';
+private apiUrl = 'http://localhost:3000'
 
  constructor(private _http: HttpClient) { }
 
@@ -21,7 +21,7 @@ export class PeliculasService {
     };
     // Convierte el objeto Pelicula a una cadena JSON.
     let body: any = JSON.stringify(pelicula);
-    return this._http.post(`${this.apiUrl}/pelicula/`, body, httpOptions);
+    return this._http.post(`${this.apiUrl}/api/pelicula/`, body, httpOptions);
   }
 
   //Envía una solicitud GET para obtener todas las películas de la base de datos local
@@ -29,7 +29,7 @@ export class PeliculasService {
     let httpOptions = {
       headers: new HttpHeaders()
     }
-    return this._http.get(`${this.apiUrl}/pelicula/`, httpOptions);
+    return this._http.get(`${this.apiUrl}/api/pelicula/`, httpOptions);
   }
 
   //Envía una solicitud DELETE para eliminar una película de la base de datos local por su ID  
@@ -39,7 +39,7 @@ export class PeliculasService {
         'Content-Type': 'application/json'
       })
     }; 
-    return this._http.delete(`${this.apiUrl}/pelicula/${id}`, httpOptions);
+    return this._http.delete(`${this.apiUrl}/api/pelicula/${id}`, httpOptions);
   }
 
   // Envía una solicitud PUT para actualizar una película existente en la base de datos local 
@@ -51,7 +51,7 @@ export class PeliculasService {
     };
     // Realiza la solicitud PUT a la URL de la API para una película específica por su ID,
     // enviando el objeto película completo como cuerpo de la solicitud.
-    return this._http.put(`${this.apiUrl}/pelicula/${pelicula._id}`, pelicula, httpOptions);
+    return this._http.put(`${this.apiUrl}/api/pelicula/${pelicula._id}`, pelicula, httpOptions);
   }
 
   // Envía una solicitud GET a una API externa (RapidAPI - IMDb) para obtener películas de taquilla 
