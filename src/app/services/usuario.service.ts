@@ -80,7 +80,7 @@ export class UsuarioService {
     return this.http.delete(`${this.apiUrl}/api/usuario/${id}`, usuario);
   }
 
-  getReservasByUser(id: string) {
+  getReservasByUser(id  : string) {
     let httpOptions = {
       headers: new HttpHeaders({
         

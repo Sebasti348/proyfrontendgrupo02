@@ -13,10 +13,10 @@
         <i class="fas fa-user-circle"></i>
       </div>
       
-      <h2>{{ usuario?.username }}</h2>
-      <p class="perfil-info"><strong>Nombre Completo:</strong> {{ usuario?.nombre }} {{ usuario?.apellido }}</p>
-      <p class="perfil-info"><strong>Email:</strong> {{ usuario?.email }}</p>
-      <p class="perfil-info"><strong>Fecha de Registro:</strong> {{ usuario?.fechaRegistro | date:'medium' }}</p>
+      <h2>{{ usuario.username }}</h2>
+      <p class="perfil-info"><strong>Nombre Completo:</strong> {{ usuario.nombre }} {{ usuario.apellido }}</p>
+      <p class="perfil-info"><strong>Email:</strong> {{ usuario.email }}</p>
+      <p class="perfil-info"><strong>Fecha de Registro:</strong> {{ usuario.fechaRegistro | date:'medium' }}</p>
       
       <button class="edit-profile-btn" (click)="editarPerfil()">
         <i class="fas fa-edit me-2"></i>Editar Información

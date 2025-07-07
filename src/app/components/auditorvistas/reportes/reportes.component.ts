@@ -95,6 +95,7 @@ export class ReportesComponent implements OnInit {
 
   loadPeliculasReport(): void {
     this.reportesService.getPeliculasReport().subscribe((data: any) => {
+      console.log(data);
       this.peliculasData = data.data;
       this.peliculasLabels = data.labels;
       this.peliculasBackgroundColor = data.backgroundColor;

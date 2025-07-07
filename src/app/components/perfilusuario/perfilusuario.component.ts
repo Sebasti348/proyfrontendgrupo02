@@ -30,7 +30,7 @@ interface Reserva {
   imports: [CommonModule]
 })
 export class PerfilusuarioComponent implements OnInit {
-  usuario: Usuario | null = null;
+  usuario: any;
   reservas: Reserva[] = [];
   estadisticas = {
     peliculasVistas: 0,
@@ -45,42 +45,32 @@ export class PerfilusuarioComponent implements OnInit {
 
   ngOnInit(): void {
     // Get logged in user
-    this.usuario = new Usuario();
-    // Load user reservations
-    this.cargarReservas();
     this.cargarUsuario();
+    this.cargarReservas();
     
   }
   cargarUsuario(): void {
+    console.log(this.loginService.idLogged());
     this.usuarioService.getUsuario(this.loginService.idLogged() as string).subscribe(
-      (usuario:any) => {
-        this.usuario = usuario;
+      (result:any) => {
+        this.usuario = result;
         console.log(this.usuario);
+        
       },
       (error: any) => {
         console.log('Error al cargar usuario:', error);
       }
     );
-
-    
-    
   }
 
   cargarReservas(): void {
-    if (this.loginService.idLogged() == null) {
-      return;
-    }
-    let id = this.loginService.idLogged() as string;
-    this.usuarioService.getReservasByUser(id).subscribe(
+    this.usuarioService.getReservasByUser(this.loginService.idLogged() as string).subscribe(
       (reservas:any) => {
         this.reservas = reservas;
         console.log('Reservas recibidas:', this.reservas);
         
         // Calculate statistics
         this.estadisticas.reservasTotales = this.reservas.length;
-        
-        // Calculate total tickets
-        this.estadisticas.peliculasVistas = this.reservas.reduce((total, reserva) => total + (reserva.cantidadReservas || 0), 0);
       },
       (error: any) => {
         console.log('Error al cargar reservas:', error);

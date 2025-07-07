@@ -118,7 +118,7 @@ export class ReservasComponent implements OnInit {
 
     // Crea un nuevo objeto de Reserva con los datos necesarios
     const nuevaReserva = new Reserva();
-    let loggedInUserId: any=this.loginservice.userLogged();
+    let loggedInUserId: any=this.loginservice.idLogged();
     nuevaReserva.usuario = loggedInUserId;
     nuevaReserva.funcion = this.funcionSeleccionada; // Asigna la función completa a la reserva
     nuevaReserva.cantidadReservas = seatsToReserveArray.length; // Número de butacas reservadas
