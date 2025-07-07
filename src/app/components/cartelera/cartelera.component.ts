@@ -1,30 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'; 
-import { Pelicula } from '../../models/pelicula'; 
-import { PeliculasService } from '../../services/peliculas.service'; 
+import { Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Pelicula } from '../../models/pelicula';
+import { PeliculasService } from '../../services/peliculas.service';
 
 @Component({
   selector: 'app-cartelera',
-  standalone: true, 
-  imports: [CommonModule], 
-  templateUrl: './cartelera.component.html', 
-  styleUrl: './cartelera.component.css' 
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './cartelera.component.html',
+  styleUrl: './cartelera.component.css'
 })
 
 export class CarteleraComponent implements OnInit {
 
   peliculas: Pelicula[] = [];
   proximas: any[] = [];
-  trailerEmbedUrl: SafeResourceUrl | null = null; 
-  tituloPeliSeleccionada: string = ''; 
-  descripcionPeliSeleccionada: string = ''; 
-  moviesPerSlide: number = 3; 
+  trailerEmbedUrl: SafeResourceUrl | null = null;
+  tituloPeliSeleccionada: string = '';
+  descripcionPeliSeleccionada: string = '';
+  moviesPerSlide: number = 3;
 
   constructor(
     private router: Router,
-    private peliculaService: PeliculasService, 
+    private peliculaService: PeliculasService,
     private sanitizer: DomSanitizer // Inyección del servicio DomSanitizer para la seguridad de URLs
   ) { }
 
@@ -38,14 +38,14 @@ export class CarteleraComponent implements OnInit {
   mostrarCartelera() {
     this.peliculaService.getPeliculas().subscribe(
       result => {
-        this.peliculas = result; 
+        this.peliculas = result;
       },
       error => {
-        console.error('Error al obtener películas:', error); 
+        console.error('Error al obtener películas:', error);
       }
     );
   }
-  
+
   // Método para agrupar las películas en "slides" para el carrusel
   verCarruselPeliculas(): Pelicula[][] {
     const groups: Pelicula[][] = []; // Array para almacenar los grupos de películas
@@ -56,10 +56,10 @@ export class CarteleraComponent implements OnInit {
     return groups;
   }
 
- 
-  verFunciones(nombrePelicula: string) {
+
+  verFuncionesPorNombre(nombrePelicula: string) {
     if (nombrePelicula) {
-      this.router.navigate(['funciones', nombrePelicula]); 
+      this.router.navigate(['funciones', nombrePelicula]);
     } else {
       console.error('No se seleccionó ninguna función');
     }
@@ -95,49 +95,53 @@ export class CarteleraComponent implements OnInit {
       return 'Descripción no disponible.';
     }
     if (description.length <= limit) {
-      return description; 
+      return description;
     }
     return description.substring(0, limit) + '...'; // Corta la descripción y añade puntos suspensivos
   }
 
   // Método para establecer el título y la descripción de la película seleccionada para la sinopsis
   setSelectedSinopsis(title: string | null | undefined, description: string | null | undefined): void {
-    this.tituloPeliSeleccionada = title || 'Sinopsis no disponible'; 
-    this.descripcionPeliSeleccionada = description || 'Lo sentimos, la sinopsis para esta película no se encuentra disponible.'; 
-  }
+    this.tituloPeliSeleccionada = title || 'Sinopsis no disponible';
+    this.descripcionPeliSeleccionada = description || 'Lo sentimos, la sinopsis para esta película no se encuentra disponible.';
 
   // Método para ver todas las funciones
   verFuncionesActivas() {
     this.router.navigate(['funcion/activas']);
   }
 
-  // Método para mostrar el trailer de una película en un modal
-  verTrailer(trailerUrl: string) {
-    if (trailerUrl) {
-      const embedUrl = this.convertirYoutubeEmbed(trailerUrl); // Convierte la URL de YouTube a un formato de incrustación
-      this.trailerEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl); // Sanitiza la URL para incrustarla de forma segura
-    } else {
-      console.warn('No hay URL de trailer disponible para esta película.');
+  verFunciones() {
+      this.router.navigate(['funcion/activas']);
     }
-  }
 
-  cerrarModal() {
-    this.trailerEmbedUrl = null; 
-  }
+    // Método para mostrar el trailer de una película en un modal
+    verTrailer(trailerUrl: string) {
+      if (trailerUrl) {
+        const embedUrl = this.convertirYoutubeEmbed(trailerUrl); // Convierte la URL de YouTube a un formato de incrustación
+        this.trailerEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl); // Sanitiza la URL para incrustarla de forma segura
+      } else {
+        console.warn('No hay URL de trailer disponible para esta película.');
+      }
+    }
 
-  // Decorador @HostListener para escuchar eventos del teclado (Escape)
-  @HostListener('document:keydown.escape', ['$event'])
-  cerrarConEsc() {
-    this.cerrarModal(); // Llama a cerrarModal cuando se presiona la tecla Escape
-  }
+    cerrarModal() {
+      this.trailerEmbedUrl = null;
+    }
 
-  // Método para convertir una URL de YouTube en una URL de incrustación (embed)
-  convertirYoutubeEmbed(url: string): string {
-    // Expresión regular para extraer el ID del video de una URL de YouTube
-    const match = url.match(/(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/);
-    // Extrae el ID del video si se encuentra, de lo contrario, una cadena vacía
-    const videoId = match && match[1] ? match[1] : '';
-    // Retorna la URL de incrustación de YouTube con el autoplay activado (hay un pequeño error en la URL original: '0{videoId}' en lugar de '${videoId}')
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1`; // Corrección de la URL de incrustación
+    // Decorador @HostListener para escuchar eventos del teclado (Escape)
+    @HostListener('document:keydown.escape', ['$event'])
+    cerrarConEsc() {
+      this.cerrarModal(); // Llama a cerrarModal cuando se presiona la tecla Escape
+    }
+
+    // Método para convertir una URL de YouTube en una URL de incrustación (embed)
+    convertirYoutubeEmbed(url: string): string {
+      // Expresión regular para extraer el ID del video de una URL de YouTube
+      const match = url.match(/(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/);
+      // Extrae el ID del video si se encuentra, de lo contrario, una cadena vacía
+      const videoId = match && match[1] ? match[1] : '';
+      // Retorna la URL de incrustación de YouTube con el autoplay activado (hay un pequeño error en la URL original: '0{videoId}' en lugar de '${videoId}')
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1`; // Corrección de la URL de incrustación
+    }
+
   }
-}

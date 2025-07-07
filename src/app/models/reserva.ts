@@ -2,7 +2,7 @@ import { Funcion } from "./funcion";
 
 export class Reserva {
     _id?: string;
-    usuario: string;
+    usuario: string | null ;
     funcion: Funcion;
     cantidadReservas: number;
     fecha: Date;
