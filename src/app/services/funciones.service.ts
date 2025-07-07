@@ -8,7 +8,7 @@ import { Funcion } from '../models/funcion';
 })
 export class FuncionesService {
 
-  private apiUrl = 'https://backtestbeta.onrender.com'
+  private apiUrl = 'https://backtestrender.onrender.com'
 
   constructor(private _http: HttpClient) { }
 

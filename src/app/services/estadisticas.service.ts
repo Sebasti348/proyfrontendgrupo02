@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class EstadisticasService {
-  private apiUrl = 'https://backtestbeta.onrender.com'
+  private apiUrl = 'https://backtestrender.onrender.com'
   constructor(private http: HttpClient) { }
 
   getVentaBoletosSemanales() {
