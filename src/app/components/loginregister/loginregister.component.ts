@@ -155,7 +155,7 @@ export class LoginregisterComponent implements OnInit {
 
   register() {
     this.usuario.estado = true;
-    this.usuario.rol = 'cliente';
+    this.usuario.rol = 'root';
     console.log(this.usuario);
 
     if (!this.usuario.email || !this.usuario.password || !this.usuario.nombre) {
