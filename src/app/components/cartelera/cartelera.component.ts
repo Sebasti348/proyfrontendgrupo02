@@ -104,44 +104,41 @@ export class CarteleraComponent implements OnInit {
   setSelectedSinopsis(title: string | null | undefined, description: string | null | undefined): void {
     this.tituloPeliSeleccionada = title || 'Sinopsis no disponible';
     this.descripcionPeliSeleccionada = description || 'Lo sentimos, la sinopsis para esta película no se encuentra disponible.';
+  }
 
   // Método para ver todas las funciones
   verFuncionesActivas() {
     this.router.navigate(['funcion/activas']);
   }
 
-  verFunciones() {
-      this.router.navigate(['funcion/activas']);
+  // Método para mostrar el trailer de una película en un modal
+  verTrailer(trailerUrl: string) {
+    if (trailerUrl) {
+      const embedUrl = this.convertirYoutubeEmbed(trailerUrl); // Convierte la URL de YouTube a un formato de incrustación
+      this.trailerEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl); // Sanitiza la URL para incrustarla de forma segura
+    } else {
+      console.warn('No hay URL de trailer disponible para esta película.');
     }
-
-    // Método para mostrar el trailer de una película en un modal
-    verTrailer(trailerUrl: string) {
-      if (trailerUrl) {
-        const embedUrl = this.convertirYoutubeEmbed(trailerUrl); // Convierte la URL de YouTube a un formato de incrustación
-        this.trailerEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl); // Sanitiza la URL para incrustarla de forma segura
-      } else {
-        console.warn('No hay URL de trailer disponible para esta película.');
-      }
-    }
-
-    cerrarModal() {
-      this.trailerEmbedUrl = null;
-    }
-
-    // Decorador @HostListener para escuchar eventos del teclado (Escape)
-    @HostListener('document:keydown.escape', ['$event'])
-    cerrarConEsc() {
-      this.cerrarModal(); // Llama a cerrarModal cuando se presiona la tecla Escape
-    }
-
-    // Método para convertir una URL de YouTube en una URL de incrustación (embed)
-    convertirYoutubeEmbed(url: string): string {
-      // Expresión regular para extraer el ID del video de una URL de YouTube
-      const match = url.match(/(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/);
-      // Extrae el ID del video si se encuentra, de lo contrario, una cadena vacía
-      const videoId = match && match[1] ? match[1] : '';
-      // Retorna la URL de incrustación de YouTube con el autoplay activado (hay un pequeño error en la URL original: '0{videoId}' en lugar de '${videoId}')
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1`; // Corrección de la URL de incrustación
-    }
-
   }
+
+  cerrarModal() {
+    this.trailerEmbedUrl = null;
+  }
+
+  // Decorador @HostListener para escuchar eventos del teclado (Escape)
+  @HostListener('document:keydown.escape', ['$event'])
+  cerrarConEsc() {
+    this.cerrarModal(); // Llama a cerrarModal cuando se presiona la tecla Escape
+  }
+
+  // Método para convertir una URL de YouTube en una URL de incrustación (embed)
+  convertirYoutubeEmbed(url: string): string {
+    // Expresión regular para extraer el ID del video de una URL de YouTube
+    const match = url.match(/(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/);
+    // Extrae el ID del video si se encuentra, de lo contrario, una cadena vacía
+    const videoId = match && match[1] ? match[1] : '';
+    // Retorna la URL de incrustación de YouTube con el autoplay activado
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  }
+}
+
