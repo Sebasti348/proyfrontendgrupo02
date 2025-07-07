@@ -5,11 +5,13 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../services/usuario.service';
-
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import Swal from 'sweetalert2';
 @Component({
   standalone: true,
   selector: 'app-crudusuarios',
-  imports: [ FormsModule, CommonModule, HttpClientModule],
+  imports: [ FormsModule, CommonModule, HttpClientModule, SweetAlert2Module],
   templateUrl: './crudusuarios.component.html',
   styleUrl: './crudusuarios.component.css'
 })
@@ -37,6 +39,12 @@ export class CrudusuariosComponent {
     if (this.modo == false) {
       this.usuarioService.createUsuario(this.usuario).subscribe(
         (result: any) => {
+          Swal.fire({
+            title: 'Usuario creado exitosamente',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.obtenerUsuarios();
           this.usuario = new Usuario();
           this.modo = false;
@@ -49,6 +57,12 @@ export class CrudusuariosComponent {
     } else {
       this.usuarioService.updateUsuario(this.usuario._id, this.usuario).subscribe(
         (result: any) => {
+          Swal.fire({
+            title: 'Usuario actualizado exitosamente',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.obtenerUsuarios();
           this.usuario = new Usuario();
           this.modo = false;

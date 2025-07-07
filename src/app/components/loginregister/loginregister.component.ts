@@ -7,6 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Usuario } from '../../models/usuario';
 import { LoginService } from '../../services/login.service';
 import { UsuarioService } from '../../services/usuario.service';
+import Swal from 'sweetalert2';
 
 declare var FB: any;
 declare var google: any;
@@ -128,6 +129,12 @@ export class LoginregisterComponent implements OnInit {
 
         if (user.status == 1) {
           setTimeout(() => {
+            Swal.fire({
+              title: 'Login exitoso',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            });
             sessionStorage.setItem('user', user.username);
             sessionStorage.setItem('userid', user.userid);
             sessionStorage.setItem('rol', user.rol);
@@ -141,13 +148,23 @@ export class LoginregisterComponent implements OnInit {
             this.isLoading = false;
           }, 1500);
         } else {
+          Swal.fire({
+            title: 'Credenciales incorrectas',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.msglogin = 'Credenciales incorrectas..';
           this.isLoading = false;
         }
       },
       (error) => {
-        alert('Error de conexion');
-        console.log('error en conexion', error);
+        Swal.fire({
+          title: 'Error de conexion',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1500
+        });
         this.isLoading = false;
       }
     );
@@ -155,7 +172,7 @@ export class LoginregisterComponent implements OnInit {
 
   register() {
     this.usuario.estado = true;
-    this.usuario.rol = 'root';
+    this.usuario.rol = 'Cliente';
     console.log(this.usuario);
 
     if (!this.usuario.email || !this.usuario.password || !this.usuario.nombre) {
@@ -176,6 +193,12 @@ export class LoginregisterComponent implements OnInit {
               if (this.usuario.email || this.usuario.username && this.usuario.password) {
                 this.emailOrUsername = this.usuario.email ?? this.usuario.username ?? '';
                 this.password = this.usuario.password ?? '';
+                Swal.fire({
+                  title: 'Te has registrado exitosamente',
+                  icon: 'success',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
                 this.login();
               }
             },
@@ -188,6 +211,12 @@ export class LoginregisterComponent implements OnInit {
         }
       },
       (error: any) => {
+        Swal.fire({
+          title: 'Error al registrar usuario',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1500
+        });
         console.log('Error al validar usuario:', error);
       }
     );

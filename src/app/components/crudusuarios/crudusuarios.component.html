@@ -114,7 +114,9 @@
             <td>{{ usuario.rol }}</td>
             <td>
               <button class="btn btn-warning btn-sm" (click)="editarUsuario(usuario)">Editar</button>
-              <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(usuario._id)">Eliminar</button>
+              <button class="btn btn-danger btn-sm" 
+              [swal]="{title: '¿Estás seguro de eliminar este usuario?', text: 'Se eliminará permanentemente el usuario', icon: 'warning', showCancelButton: true, confirmButtonText: 'Sí, eliminar', cancelButtonText: 'Cancelar'}"
+              (confirm)="eliminarUsuario(usuario._id)">Eliminar</button>
             </td>
           </tr>
         </tbody>
