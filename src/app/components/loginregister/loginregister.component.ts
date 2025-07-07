@@ -134,7 +134,7 @@ export class LoginregisterComponent implements OnInit {
             sessionStorage.setItem('token', user.token);
             this.loginservice.usuarioLogueado = user;
             if(user.rol == 'cliente' || user.rol == 'supervisor' || user.rol == 'administrador' || user.rol == 'root'){
-              this.router.navigateByUrl('/');
+              this.router.navigateByUrl('');
             }else{
               this.router.navigateByUrl('auditor');
             }
