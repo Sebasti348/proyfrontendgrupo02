@@ -148,19 +148,14 @@ export class LoginregisterComponent implements OnInit {
             this.isLoading = false;
           }, 1500);
         } else {
-          Swal.fire({
-            title: 'Credenciales incorrectas',
-            icon: 'error',
-            showConfirmButton: false,
-            timer: 1500
-          });
+          
           this.msglogin = 'Credenciales incorrectas..';
           this.isLoading = false;
         }
       },
       (error) => {
         Swal.fire({
-          title: 'Error de conexion',
+          title: 'Credenciales incorrectas',
           icon: 'error',
           showConfirmButton: false,
           timer: 1500

@@ -20,21 +20,21 @@ import { PagoPendienteComponent } from './components/pago-pendiente/pago-pendien
 
 export const routes: Routes = [
     { path: 'gestion-usuarios', component: CrudusuariosComponent, canActivate: [AuthGuard], data: { roles: ['root'] } },
-    { path: 'perfil', component: PerfilusuarioComponent, canActivate: [AuthGuard], data: { roles: ['cliente'] } },
+    { path: 'perfil', component: PerfilusuarioComponent, canActivate: [AuthGuard], data: { roles: ['cliente' , 'root'] } },
     { path:'',component: CarteleraComponent},
-    {path: 'gestion-peliculas',component: GestionPeliculasComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] } },
-    {path: 'gestion-funciones',component: GestionFuncionesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] } },
+    {path: 'gestion-peliculas',component: GestionPeliculasComponent, canActivate: [AuthGuard], data: { roles: ['administrador', 'root'] } },
+    {path: 'gestion-funciones',component: GestionFuncionesComponent, canActivate: [AuthGuard], data: { roles: ['administrador', 'root'] } },
       //Funciones Activas
     {path: 'funcion/activas',component: FuncionesComponent },
       //Funciones por Nombre de Película
     { path: 'funciones/:nombrePelicula', component: FuncionesComponent },
-    {path: 'lista-reservas',component: ListaReservasComponent, canActivate: [AuthGuard], data: { roles: ['supervisor'] } },
+    {path: 'lista-reservas',component: ListaReservasComponent, canActivate: [AuthGuard], data: { roles: ['supervisor', 'root'] } },
       //Reserva de Funciones por ID
-    {path: 'reservas/:id',component: ReservasComponent, canActivate: [AuthGuard], data: { roles: ['cliente'] } },
+    {path: 'reservas/:id',component: ReservasComponent, canActivate: [AuthGuard], data: { roles: ['cliente', 'root'] } },
     { path: 'loginregister', component: LoginregisterComponent, canActivate: [notAuthGuard] },
-    { path: 'auditor', component: PrincipalComponent , canActivate: [AuthGuard], data: { roles: ['auditor'] }},
-    { path: 'estadisticas', component: EstadisticasComponent, canActivate: [AuthGuard], data: { roles: ['auditor'] } },
-    { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard], data: { roles: ['auditor'] } },
+    { path: 'auditor', component: PrincipalComponent , canActivate: [AuthGuard], data: { roles: ['auditor', 'root'] }},
+    { path: 'estadisticas', component: EstadisticasComponent, canActivate: [AuthGuard], data: { roles: ['auditor', 'root'] } },
+    { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard], data: { roles: ['auditor', 'root'] } },
       //Rutas de Pago, solo exitoso tiene contenido extra
     { path: 'access-denied', component:AccessDeniedComponent},
     { path: 'pago/exitoso', component: PagoExitosoComponent },
