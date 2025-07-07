@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core'; 
-import { Pelicula } from '../models/pelicula'; 
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'; 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Pelicula } from '../models/pelicula';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +58,7 @@ private apiUrl = 'http://localhost:3000'
   public getMovies(): Observable<any> { 
     const httpOptions = {
       headers: new HttpHeaders({
-        'X-RapidAPI-Key': 'f7ac652b81msh31de2978fe077e9p130f83jsne6b600a1a991',  
+        'X-RapidAPI-Key': '1156718707msh929558a351701ecp12a973jsn103a0129a06d',  
         'X-RapidAPI-Host': 'imdb236.p.rapidapi.com' 
       })
     };
@@ -89,7 +89,7 @@ private apiUrl = 'http://localhost:3000'
   public getNextMovies(): Observable<any> { 
     const httpOptions = {
       headers: new HttpHeaders({
-        'X-RapidAPI-Key': '5d856c9addmshc1bc9ebdd3df635p1db278jsn67517ecf5d99',  
+        'X-RapidAPI-Key': '1156718707msh929558a351701ecp12a973jsn103a0129a06d',  
         'X-RapidAPI-Host': 'imdb236.p.rapidapi.com' 
       })
     }; 

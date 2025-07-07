@@ -52,7 +52,7 @@ export class LoginregisterComponent implements OnInit {
     script.defer = true;
     script.onload = () => {
       google.accounts.id.initialize({
-        client_id: "657767929746-8quhhgu57q2bu7mqdokg8at2lk7k61ra.apps.googleusercontent.com", // Reemplaza con tu Client ID
+        client_id: "866544580970-1jc6oknok8s8v7tcra1m8r93a78cgern.apps.googleusercontent.com",
         callback: this.handleCredentialResponse.bind(this),
       });
       google.accounts.id.renderButton(
