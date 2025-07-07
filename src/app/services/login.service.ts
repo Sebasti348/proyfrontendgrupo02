@@ -28,6 +28,7 @@ export class LoginService {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('rol');
     sessionStorage.removeItem('userid');
+    sessionStorage.removeItem('token');
   }
   public userLoggedIn() {
     var resultado = false;
@@ -90,5 +91,13 @@ export class LoginService {
     };
     return this._http.post(`${this.apiUrl}/api/usuario/google-login`, { id_token: token }, httpOption);
 }
+
+  getToken(): string {
+    if (sessionStorage.getItem("token") != null) {
+      return sessionStorage.getItem("token")!;
+    } else {
+      return "";
+    }
+  }
 
 }
