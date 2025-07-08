@@ -58,7 +58,16 @@ export class UsuarioService {
     let body:any = JSON.stringify(usuario);
     return this.http.post(`${this.apiUrl}/api/usuario/`, body, httpOptions);
   }
+  createUsuarioGoogle(usuario: Usuario): Observable<any> {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
 
+    let body:any = JSON.stringify(usuario);
+    return this.http.post(`${this.apiUrl}/api/usuario/`, body, httpOptions);
+  }
   updateUsuario(id: number, usuario: any) {
     let httpOptions = {
       headers: new HttpHeaders({

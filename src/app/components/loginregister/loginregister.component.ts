@@ -29,7 +29,8 @@ export class LoginregisterComponent implements OnInit {
   response!: any;
   isLoading: boolean = false; // Variable para controlar el spinner
   userGoogle: Usuario = new Usuario();
-
+  tokenGoogle: string = '';
+  googleUser: boolean = false;
 
   constructor(
     private ngZone: NgZone,
@@ -87,7 +88,7 @@ export class LoginregisterComponent implements OnInit {
             this.usuario.email = googleUser.email;
             this.usuario.rol = 'cliente';
             this.usuario.estado = true;
-
+            this.tokenGoogle = res.tokenGugul;
             // Validamos si existe
             this.loginservice.validarNuevoUsuario(this.usuario).subscribe((validacion: any) => {
               if (!validacion.existe) {
@@ -167,7 +168,7 @@ export class LoginregisterComponent implements OnInit {
 
   register() {
     this.usuario.estado = true;
-    this.usuario.rol = 'Cliente';
+    this.usuario.rol = 'cliente';
     console.log(this.usuario);
 
     if (!this.usuario.email || !this.usuario.password || !this.usuario.nombre) {
@@ -227,6 +228,9 @@ export class LoginregisterComponent implements OnInit {
           sessionStorage.setItem('user', fullUserData.username);
           sessionStorage.setItem('userid', fullUserData._id); // Use the actual MongoDB ID
           sessionStorage.setItem('rol', fullUserData.rol ?? 'cliente');
+          if(this.googleUser){
+            sessionStorage.setItem('token', this.tokenGoogle);
+          }
           this.ngZone.run(() => this.router.navigateByUrl(''));
         } else {
           console.error('No se encontró el usuario completo');
@@ -235,7 +239,7 @@ export class LoginregisterComponent implements OnInit {
       },
       (error) => {
         console.error('Error al obtener datos completos del usuario:', error);
-        this.ngZone.run(() => this.router.navigateByUrl(''));
+        this.ngZone.run(() => this.router.navigateByUrl('/loginregister'));
       }
     );
   }
