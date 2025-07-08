@@ -23,6 +23,6 @@ export class Reserva {
         this.butacasReservadas = [];
         this.qr = '';
         this.imagen = ''; 
-        this.pagado = 'pendiente'; // Estado inicial de la reserva antes del pago
+        this.pagado = 'pagado'; // Estado inicial de la reserva antes del pago
     }
 }
