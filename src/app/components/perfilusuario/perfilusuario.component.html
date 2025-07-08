@@ -52,7 +52,7 @@
               <p><strong>Cantidad:</strong> {{ reserva.cantidadReservas }} entradas</p>
               <p><strong>Butacas:</strong> {{ reserva.butacasReservadas }}</p>
               <p><strong>Precio:</strong> {{ reserva.precioFinal }}</p>
-              <span [ngClass]="'status-' + reserva.estado">{{ reserva.estado | titlecase }}</span>
+              <span [ngClass]="'status-' + reserva.pagado">{{ reserva.pagado | titlecase }}</span>
             </div>
             
             <!-- Action Buttons -->
