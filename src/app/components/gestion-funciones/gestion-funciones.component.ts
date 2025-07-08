@@ -6,10 +6,11 @@ import { PeliculasService } from '../../services/peliculas.service';
 import { Pelicula } from '../../models/pelicula';
 import { FuncionesService } from '../../services/funciones.service';
 import Swal from 'sweetalert2';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-gestion-funciones',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,SweetAlert2Module],
   templateUrl: './gestion-funciones.component.html',
   styleUrl: './gestion-funciones.component.css'
 })
@@ -192,6 +193,7 @@ export class GestionFuncionesComponent implements OnInit {
       });
     }
   }
+  
 
   cargarFuncionesActivas() {
     this.funcionService.getFuncionesActivas().subscribe(

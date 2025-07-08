@@ -115,7 +115,9 @@
             <td>{{ funcion.hora }}</td>
             <td>{{ funcion.sala }}</td>
             <td>
-              <button class="btn-eliminar-funcion" (click)="eliminarFuncion(funcion._id!)">Eliminar</button>
+              <button class="btn-eliminar-funcion" 
+              [swal]="{title: '¿Estás seguro de eliminar esta función?', text: 'Se eliminará permanentemente la función', icon: 'warning', showCancelButton: true, confirmButtonText: 'Sí, eliminar', cancelButtonText: 'Cancelar'}"
+              (click)="eliminarFuncion(funcion._id!)">Eliminar</button>
             </td>
           </tr>
         </tbody>
