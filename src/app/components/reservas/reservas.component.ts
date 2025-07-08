@@ -168,7 +168,7 @@ export class ReservasComponent implements OnInit {
   pagarReserva(reserva: Reserva): void {
     // Prepara los detalles del pago para Mercado Pago
     const paymentDetails = {
-      payer_email: 'vegafer1999@gmail.com', //Reemplazar con el correo electrónico real del usuario
+      payer_email: 'test_user_1178905345@testuser.com', //Reemplazar con el correo electrónico real del usuario
       title: `Reserva de butacas para ${reserva.funcion.pelicula.originalTitle}`, // Título del pago
       description: `Butacas: ${reserva.butacasReservadas.join(', ')} para la función del ${new Date(reserva.funcion.fecha).toLocaleDateString()}`, // Descripción del pago
       quantity: reserva.cantidadReservas, // Cantidad de ítems (butacas)
