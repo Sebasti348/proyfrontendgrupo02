@@ -76,7 +76,7 @@ export class LoginregisterComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           console.log('Login backend OK', res);
-
+          this.googleUser = true;
           if (res.status === '1') {
             const googleUser = res.user;
 
