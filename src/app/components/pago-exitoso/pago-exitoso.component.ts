@@ -33,35 +33,34 @@ export class PagoExitosoComponent implements OnInit {
     // Código comentado que originalmente manejaba los parámetros de la URL de Mercado Pago.
     // Se ha comentado para permitir la llamada directa a generarTicketPlacid con un ID fijo para pruebas.
 
-    // this.route.queryParams.subscribe(params => {
-    //   this.paymentId = params['collection_id'] || params['payment_id'];
-    //   this.paymentStatus = params['collection_status'] || params['status'];
-    //   this.externalReference = params['external_reference']; // Captura la referencia externa (reservaId)
+     this.route.queryParams.subscribe(params => {
+       this.paymentId = params['collection_id'] || params['payment_id'];
+       this.paymentStatus = params['collection_status'] || params['status'];
+       this.externalReference = params['external_reference']; // Captura la referencia externa (reservaId)
 
-    //   if (this.paymentId && this.paymentStatus === 'approved') {
-    //     this.message = '¡Tu pago ha sido aprobado!';
-    //     // Si el pago es aprobado y tenemos la referencia externa (ID de la reserva),
-    //     // procedemos a cargar los detalles de la reserva y luego a generar el ticket Placid.
-    //     if (this.externalReference) {
-    //       this.cargarDetallesReserva(this.externalReference); // Llama a la función para cargar detalles
-    //     } else {
-    //       this.message = 'Pago aprobado, pero no se encontró la referencia de la reserva.';
-    //       this.loading = false;
-    //       this.error = 'No se pudo procesar: ID de reserva faltante.';
-    //     }
-    //   } else if (this.paymentStatus === 'pending') {
-    //     this.message = 'Tu pago está pendiente. Te notificaremos cuando se complete.';
-    //     this.loading = false;
-    //   } else if (this.paymentStatus === 'rejected' || this.paymentStatus === 'failure') {
-    //     this.message = 'Tu pago ha sido rechazado. Por favor, intenta de nuevo.';
-    //     this.loading = false;
-    //   } else {
-    //     this.message = 'No se pudo determinar el estado del pago.';
-    //     this.loading = false;
-    //   }
-    // });
-
-    // this.generarTicketPlacid(); // Llamada inicial para generar el ticket Placid (con ID fijo para pruebas)
+       if (this.paymentId && this.paymentStatus === 'approved') {
+        this.message = '¡Tu pago ha sido aprobado!';
+        // Si el pago es aprobado y tenemos la referencia externa (ID de la reserva),
+        // procedemos a cargar los detalles de la reserva y luego a generar el ticket Placid.
+        if (this.externalReference) {
+          this.cargarDetallesReserva(this.externalReference); // Llama a la función para cargar detalles
+        } else {
+          this.message = 'Pago aprobado, pero no se encontró la referencia de la reserva.';
+          this.loading = false;
+          this.error = 'No se pudo procesar: ID de reserva faltante.';
+        }
+      } else if (this.paymentStatus === 'pending') {
+        this.message = 'Tu pago está pendiente. Te notificaremos cuando se complete.';
+        this.loading = false;
+      } else if (this.paymentStatus === 'rejected' || this.paymentStatus === 'failure') {
+        this.message = 'Tu pago ha sido rechazado. Por favor, intenta de nuevo.';
+        this.loading = false;
+      } else {
+        this.message = 'No se pudo determinar el estado del pago.';
+        this.loading = false;
+      }
+    });
+ // Llamada inicial para generar el ticket Placid (con ID fijo para pruebas)
   }
 
   // Método para cargar los detalles de una reserva específica
@@ -88,7 +87,7 @@ export class PagoExitosoComponent implements OnInit {
   }
 
   // UsO un ID de reserva fijo para pruebas si no se proporciona uno, luego con los pagos reales se debe borrar
-  generarTicketPlacid(reservaId: string = "6869837b14841f114f60f08c"): void {
+  generarTicketPlacid(reservaId: string): void {
     this.message = 'Generando tu ticket...'; // Actualiza el mensaje al usuario
     this.error = null; // Limpia errores previos
 

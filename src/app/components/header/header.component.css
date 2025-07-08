@@ -13,4 +13,13 @@ nav a:hover {
     color: #1B263B;
     background-color: #FFD700;
 }
+
+.btn-outline-info:hover {
+    background-color: #0088cc;
+    color: white;
+    border-color: #0088cc;
+  }
   
+  img[alt="Telegram"] {
+    filter: brightness(1.1);
+}

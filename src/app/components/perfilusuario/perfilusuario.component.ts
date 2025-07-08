@@ -19,7 +19,7 @@ interface Reserva {
   fecha: string;
   butacasReservadas: string[];
   precioFinal: number;
-  estado: 'pendiente' | 'confirmada' | 'cancelada' | 'utilizada';
+  pagado: 'pendiente' | 'confirmada' | 'cancelada' | 'utilizada';
 }
 
 @Component({

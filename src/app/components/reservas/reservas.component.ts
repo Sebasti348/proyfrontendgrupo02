@@ -131,7 +131,7 @@ export class ReservasComponent implements OnInit {
     nuevaReserva.fecha = new Date(); // Fecha actual de la reserva
     nuevaReserva.precioFinal = seatsToReserveArray.length * this.funcionSeleccionada.precio; // Calcula el precio final
     nuevaReserva.butacasReservadas = seatsToReserveArray; // Asigna las butacas seleccionadas
-    nuevaReserva.qr = ''; // El QR se puede borrar, sin uso por ahora
+    //nuevaReserva.qr = ''; // El QR se puede borrar, sin uso por ahora
     nuevaReserva.pagado = 'pendiente'; // Estado inicial de la reserva: pendiente de pago
 
     console.log('Objeto Reserva a enviar:', nuevaReserva); // Log del objeto reserva antes de enviarlo
@@ -167,8 +167,14 @@ export class ReservasComponent implements OnInit {
   // Método para iniciar el proceso de pago con Mercado Pago
   pagarReserva(reserva: Reserva): void {
     // Prepara los detalles del pago para Mercado Pago
-    const paymentDetails = {
-      payer_email: 'test_user_1178905345@testuser.com', //Reemplazar con el correo electrónico real del usuario
+     let usuarioReserva : any;
+    this.userservice.getUsuario(this.loginservice.idLogged()as string).subscribe((usuario) => {
+      usuarioReserva = usuario;
+      console.log('Usuario encontrado:', usuarioReserva);
+    })
+      const paymentDetails = {
+
+      payer_email: usuarioReserva.email, //Reemplazar con el correo electrónico real del usuario
       title: `Reserva de butacas para ${reserva.funcion.pelicula.originalTitle}`, // Título del pago
       description: `Butacas: ${reserva.butacasReservadas.join(', ')} para la función del ${new Date(reserva.funcion.fecha).toLocaleDateString()}`, // Descripción del pago
       quantity: reserva.cantidadReservas, // Cantidad de ítems (butacas)
