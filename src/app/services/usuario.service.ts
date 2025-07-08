@@ -56,7 +56,7 @@ export class UsuarioService {
     }
 
     let body:any = JSON.stringify(usuario);
-    return this.http.post(`${this.apiUrl}/api/usuario/`, body, httpOptions);
+    return this.http.post(`${this.apiUrl}/api/usuario/register`, body, httpOptions);
   }
   createUsuarioGoogle(usuario: Usuario): Observable<any> {
     let httpOptions = {

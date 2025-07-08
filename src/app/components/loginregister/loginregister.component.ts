@@ -222,8 +222,8 @@ export class LoginregisterComponent implements OnInit {
     // First, get the complete user data using the email
     this.userservice.getUsuarioByEmail(user.email).subscribe(
       (completeUser: any) => {
-        if (completeUser && completeUser.length > 0) {
-          const fullUserData = completeUser[0];
+        if (completeUser != null) {
+          const fullUserData = completeUser;
           // Store the complete user data in session
           sessionStorage.setItem('user', fullUserData.username);
           sessionStorage.setItem('userid', fullUserData._id); // Use the actual MongoDB ID
