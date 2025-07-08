@@ -75,7 +75,7 @@ export class PagoExitosoComponent implements OnInit {
         this.reservaDetalles = reserva; // Almacena los detalles de la reserva
         this.message = 'Detalles de la reserva cargados. Generando tu ticket...'; // Actualiza el mensaje
         // Una vez que los detalles de la reserva se han cargado, procede a generar el ticket Placid
-        //this.generarTicketPlacid(reservaId);
+        this.generarTicketPlacid(reservaId);
         reserva.estado = 'pagada';
         this.reservasService.editReserva(reservaId, reserva).subscribe({
           next: () => {

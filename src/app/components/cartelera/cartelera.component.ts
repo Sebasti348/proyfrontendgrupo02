@@ -31,7 +31,7 @@ export class CarteleraComponent implements OnInit {
   ngOnInit(): void {
     this.mostrarCartelera();
     //Descomentar para la presentación
-    //this.verProximosEstrenos(); // Descomentar para cargar también los próximos estrenos (posiblemente para una presentación)
+    this.verProximosEstrenos(); // Descomentar para cargar también los próximos estrenos (posiblemente para una presentación)
   }
 
   // Método para obtener y mostrar las películas de cartelera
