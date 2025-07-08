@@ -28,7 +28,7 @@
         <span class="seat-sample occupied"></span> Ocupada
       </div>
 
-      <button id="reserveButton" (click)="reservarButacas()" [disabled]="butacaSeleccionada.size === 0"
+      <button id="reserveButton" (click)="reservarButacas()" [disabled]="butacaSeleccionada.size === 0 || isReserving"
         class="btn btn-primary mt-3">
         Reservar Butacas ({{ butacaSeleccionada.size }})
       </button>

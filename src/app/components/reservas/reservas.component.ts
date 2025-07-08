@@ -34,7 +34,8 @@ export class ReservasComponent implements OnInit {
   butacas: ButacaUI[] = []; // Array que representa el estado de todas las butacas en la UI
   butacaSeleccionada: Set<string> = new Set(); // Conjunto para almacenar los IDs de las butacas seleccionadas por el usuario
   reservaPendiente: Reserva | null = null; // Para almacenar la reserva creada en el backend antes del pago
-  
+  isReserving: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private funcionService: FuncionesService,
@@ -119,7 +120,7 @@ export class ReservasComponent implements OnInit {
       alert('Error: No se ha cargado la información completa de la función.');
       return;
     }
-
+    this.isReserving = true;
     const seatsToReserveArray = Array.from(this.butacaSeleccionada); // Convierte el conjunto de butacas seleccionadas a un array
 
     // Crea un nuevo objeto de Reserva con los datos necesarios
@@ -139,6 +140,7 @@ export class ReservasComponent implements OnInit {
     try {
       const response = await this.reservaService.createReserva(nuevaReserva).toPromise();
       this.mostrarMensaje('Reserva creada con éxito. Ahora serás redirigido para el pago.', false);
+      this.isReserving = false;
       console.log('Respuesta de la reserva:', response);
 
       this.reservaPendiente = response.reserva;
@@ -153,15 +155,18 @@ export class ReservasComponent implements OnInit {
 
 
     } catch (error: any) {
+      this.isReserving = false;
       console.error('Error al realizar la reserva:', error);
       let errorMessage = 'No se pudo completar la reserva. Inténtalo de nuevo.';
       if (error.error && error.error.msg) {
         errorMessage = error.error.msg;
       } else if (error.message) {
+
         errorMessage = error.message;
       }
       this.mostrarMensaje(errorMessage, true);
     }
+    this.isReserving = false;
   }
 
   // Método para iniciar el proceso de pago con Mercado Pago
