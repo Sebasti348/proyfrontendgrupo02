@@ -10,6 +10,7 @@ import { ReservasService } from '../../services/reserva.service';
 import { LoginService } from '../../services/login.service';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+import { UsuarioService } from '../../services/usuario.service';
 
 interface ButacaUI {
   id: string; // Identificador único de la butaca (ej. "A1", "B5")
@@ -40,7 +41,8 @@ export class ReservasComponent implements OnInit {
     private reservaService: ReservasService,
     private router: Router,
     private loginservice: LoginService,
-    private location: Location
+    private location: Location,
+    private userservice: UsuarioService
   ) { }
   
   ngOnInit(): void {
@@ -166,7 +168,7 @@ export class ReservasComponent implements OnInit {
   pagarReserva(reserva: Reserva): void {
     // Prepara los detalles del pago para Mercado Pago
     const paymentDetails = {
-      payer_email: 'test_user@example.com', //Reemplazar con el correo electrónico real del usuario
+      payer_email: 'vegafer1999@gmail.com', //Reemplazar con el correo electrónico real del usuario
       title: `Reserva de butacas para ${reserva.funcion.pelicula.originalTitle}`, // Título del pago
       description: `Butacas: ${reserva.butacasReservadas.join(', ')} para la función del ${new Date(reserva.funcion.fecha).toLocaleDateString()}`, // Descripción del pago
       quantity: reserva.cantidadReservas, // Cantidad de ítems (butacas)
