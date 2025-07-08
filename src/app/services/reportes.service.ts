@@ -32,7 +32,7 @@ export class ReportesService {
 
   // Filtros
   filtrarReporte(fechaInicio: string, fechaFin: string, tipo: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/api/reserva/reporte/filtrar`, {
+    return this.http.get<any>(`${this.apiUrl}/api/reporte/filtrar`, {
       params: {
         fechaInicio,
         fechaFin,
