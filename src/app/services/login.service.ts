@@ -8,7 +8,7 @@ import { UsuarioService } from './usuario.service';
 })
 export class LoginService {
   usuarioLogueado: Usuario | null = null;
-  private apiUrl = 'https://backtestrender.onrender.com'
+  private apiUrl = 'https://proybackendgrupo02.onrender.com'
   constructor(private _http: HttpClient,private usuarioService: UsuarioService) {
   }
   

@@ -71,7 +71,7 @@ export class LoginregisterComponent implements OnInit {
   handleCredentialResponse(response: any) {
     const idToken = response.credential;  // este es el token que envías al backend
 
-    this.http.post('https://backtestrender.onrender.com/api/usuario/google-login', { idToken })
+    this.http.post('https://proybackendgrupo02.onrender.com/api/usuario/google-login', { idToken })
       .subscribe({
         next: (res: any) => {
           console.log('Login backend OK', res);

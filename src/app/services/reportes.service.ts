@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ReportesService {
-  private apiUrl = 'https://backtestrender.onrender.com'
+  private apiUrl = 'https://proybackendgrupo02.onrender.com'
 
   constructor(private http: HttpClient) { }
 

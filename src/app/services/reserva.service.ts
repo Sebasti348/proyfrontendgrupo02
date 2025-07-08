@@ -8,7 +8,7 @@ import { Reserva } from '../models/reserva';
 })
 export class ReservasService {
 
-  private apiUrl = 'https://backtestrender.onrender.com'
+  private apiUrl = 'https://proybackendgrupo02.onrender.com'
   // UUID de una plantilla de Placid.app, probablemente usada para generar tickets.
   templateUUID: string = '23ue9vqiif2ss';
 
