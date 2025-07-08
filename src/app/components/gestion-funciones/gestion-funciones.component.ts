@@ -216,18 +216,17 @@ export class GestionFuncionesComponent implements OnInit {
     }
 
     // Pide confirmación al usuario antes de eliminar
-    // if (confirm('¿Estás seguro de que querés eliminar esta función?')) { // Considerar reemplazar con un modal personalizado
-      
-    // }
-    this.funcionService.deleteFuncion(id).subscribe(
-      res => {
-        this.mostrarMensaje('Función eliminada correctamente.');
-        this.cargarFuncionesActivas();
-      },
-      error => {
-        console.error('Error al eliminar función:', error);
-        this.mostrarMensaje('No se pudo eliminar la función.', true);
-      }
-    );
+    if (confirm('¿Estás seguro de que querés eliminar esta función?')) { // Considerar reemplazar con un modal personalizado
+      this.funcionService.deleteFuncion(id).subscribe(
+        res => {
+          this.mostrarMensaje('Función eliminada correctamente.');
+          this.cargarFuncionesActivas();
+        },
+        error => {
+          console.error('Error al eliminar función:', error);
+          this.mostrarMensaje('No se pudo eliminar la función.', true);
+        }
+      );
+    }
   }
 }
