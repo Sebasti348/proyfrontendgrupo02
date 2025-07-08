@@ -76,6 +76,19 @@ export class PagoExitosoComponent implements OnInit {
         this.message = 'Detalles de la reserva cargados. Generando tu ticket...'; // Actualiza el mensaje
         // Una vez que los detalles de la reserva se han cargado, procede a generar el ticket Placid
         //this.generarTicketPlacid(reservaId);
+        reserva.estado = 'pagada';
+        this.reservasService.editReserva(reservaId, reserva).subscribe({
+          next: () => {
+            this.message = 'Reserva actualizada con éxito.'; // Mensaje de éxito
+            this.loading = false; // Desactiva el indicador de carga
+          },
+          error: (err) => {
+            console.error('Error al actualizar la reserva:', err); // Log del error
+            this.error = err.error?.msg || 'Error al actualizar la reserva.'; // Mensaje de error para el usuario
+            this.message = 'Ocurrió un error al actualizar la reserva.'; // Mensaje de estado
+            this.loading = false; // Desactiva el indicador de carga
+          }
+        });
       },
       error: (err) => {
         console.error('Error al cargar los detalles de la reserva:', err); // Log del error
