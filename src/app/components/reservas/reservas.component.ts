@@ -167,14 +167,14 @@ export class ReservasComponent implements OnInit {
   // Método para iniciar el proceso de pago con Mercado Pago
   pagarReserva(reserva: Reserva): void {
     // Prepara los detalles del pago para Mercado Pago
-     let usuarioReserva : any;
-    this.userservice.getUsuario(this.loginservice.idLogged()as string).subscribe((usuario) => {
-      usuarioReserva = usuario;
-      console.log('Usuario encontrado:', usuarioReserva);
-    })
+    //  let usuarioReserva : any;
+    // this.userservice.getUsuario(this.loginservice.idLogged()as string).subscribe((usuario) => {
+    //   usuarioReserva = usuario;
+    //   console.log('Usuario encontrado:', usuarioReserva);
+    // })
       const paymentDetails = {
 
-      payer_email: usuarioReserva.email, //Reemplazar con el correo electrónico real del usuario
+      payer_email: 'test_user_1178905345@testuser.com', //Reemplazar con el correo electrónico real del usuario
       title: `Reserva de butacas para ${reserva.funcion.pelicula.originalTitle}`, // Título del pago
       description: `Butacas: ${reserva.butacasReservadas.join(', ')} para la función del ${new Date(reserva.funcion.fecha).toLocaleDateString()}`, // Descripción del pago
       quantity: reserva.cantidadReservas, // Cantidad de ítems (butacas)
