@@ -56,15 +56,15 @@ export class ListaReservasComponent {
 
   CargarReservas(){
     this.reservasService.getReservas().subscribe((data:any) => {
-      console.log("Reservas",data);
+
       this.reservas = data;
     });
     this.funcionService.getFunciones().subscribe((data:any) => {
-      console.log("Funciones",data);
+
       this.funciones = data;
     });
     this.PeliculasService.getPeliculas().subscribe((data:any) => {
-      console.log("Peliculas",data);
+
       this.Peliculas = data;
     });
     

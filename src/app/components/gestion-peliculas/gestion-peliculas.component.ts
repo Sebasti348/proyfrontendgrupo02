@@ -51,7 +51,7 @@ export class GestionPeliculasComponent implements OnInit {
             }
           );
         });
-        console.log('Películas obtenidas de la API externa:', this.peliculas);
+
       },
       error => {
         console.error('Error al obtener películas de la API externa:', error);
@@ -73,7 +73,7 @@ export class GestionPeliculasComponent implements OnInit {
           peli.primaryImage = item.primaryImage;
           return peli;
         });
-        console.log('Películas obtenidas de la BD:', this.peliculasAgregadas);
+
       },
       error => {
         console.error('Error al obtener películas de la BD:', error);
@@ -85,11 +85,11 @@ export class GestionPeliculasComponent implements OnInit {
   agregarPelicula(pelicula: Pelicula) {
     this.peliculaService.postPelicula(pelicula).subscribe({
       next: (result) => {
-        console.log('Respuesta del servidor al agregar película:', result);
+
         if (result.status === '1') {
           this.mostrarMensaje('¡Película agregada con éxito!', false);
           this.mostrarPeliculasBD();
-          console.log('Película agregada:', pelicula);
+
         } else {
           this.mostrarMensaje('Algo salió mal al agregar la película. Por favor, inténtelo de nuevo.', true);
         }
@@ -105,7 +105,7 @@ export class GestionPeliculasComponent implements OnInit {
         }
       },
       complete: () => {
-        console.log('Operación de agregar película completada.');
+
       }
     });
   }
@@ -132,7 +132,7 @@ export class GestionPeliculasComponent implements OnInit {
           });
         } else {
           this.mostrarMensaje(`La eliminación de "${pelicula.originalTitle}" ha sido cancelada.`, false); 
-          console.log(`Eliminación de ${pelicula.originalTitle} cancelada.`);
+
         }
       });
     } else {
@@ -146,14 +146,14 @@ export class GestionPeliculasComponent implements OnInit {
     // Crea una copia de la película para evitar modificar directamente el objeto en la lista
     // y para que los cambios en el formulario no afecten la lista hasta que se guarden.
     this.peliculaAEditar = { ...pelicula };
-    console.log('Editando película:', this.peliculaAEditar);
+
   }
 
   guardarEdicion() {
     if (this.peliculaAEditar && this.peliculaAEditar._id) {
       this.peliculaService.editPelicula(this.peliculaAEditar).subscribe({
         next: (result) => {
-          console.log('Película actualizada exitosamente:', result);
+
           this.mostrarMensaje('¡Película actualizada con éxito!', false);
           this.mostrarPeliculasBD();
           this.peliculaAEditar = null;
@@ -188,7 +188,7 @@ export class GestionPeliculasComponent implements OnInit {
         confirmButtonText: 'Entendido'
       });
     } else {
-      console.log('Mensaje de éxito:', mensaje);
+
       Swal.fire({
         icon: 'success',
         title: '¡Éxito!',

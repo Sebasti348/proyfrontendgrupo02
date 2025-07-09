@@ -50,15 +50,15 @@ export class PerfilusuarioComponent implements OnInit {
     
   }
   cargarUsuario(): void {
-    console.log(this.loginService.idLogged());
+
     this.usuarioService.getUsuario(this.loginService.idLogged() as string).subscribe(
       (result:any) => {
         this.usuario = result;
-        console.log(this.usuario);
+
         
       },
       (error: any) => {
-        console.log('Error al cargar usuario:', error);
+
       }
     );
   }
@@ -67,39 +67,39 @@ export class PerfilusuarioComponent implements OnInit {
     this.usuarioService.getReservasByUser(this.loginService.idLogged() as string).subscribe(
       (reservas:any) => {
         this.reservas = reservas;
-        console.log('Reservas recibidas:', this.reservas);
+
         
         // Calculate statistics
         this.estadisticas.reservasTotales = this.reservas.length;
       },
       (error: any) => {
-        console.log('Error al cargar reservas:', error);
+
       }
     );
   }
 
   editarPerfil(): void {
     // TODO: Implement profile edit functionality
-    console.log('Editar perfil');
+
   }
 
   verDetalles(reserva: Reserva): void {
     // TODO: Navigate to reservation details page
-    console.log('Ver detalles de la reserva:', reserva);
+
   }
 
   cancelarReserva(reserva: Reserva): void {
     // TODO: Implement reservation cancellation
-    console.log('Cancelar reserva:', reserva);
+
   }
 
   agregarCalendario(reserva: Reserva): void {
     // TODO: Implement calendar integration
-    console.log('Agregar a calendario:', reserva);
+
   }
 
   dejarResena(reserva: Reserva): void {
     // TODO: Navigate to review page
-    console.log('Dejar reseña:', reserva);
+
   }
 }

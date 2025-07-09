@@ -50,7 +50,7 @@ export class ReservasComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.funcionId = params.get('id'); // Obtiene el parámetro 'id' de la URL (ID de la función)
       if (this.funcionId) {
-        console.log('ID de la función recibido:', this.funcionId);
+
         this.obtenerFuncion(); // Llama al método para obtener los detalles de la función
       } else {
         console.error('No se recibió ID de función en la ruta.');
@@ -65,7 +65,7 @@ export class ReservasComponent implements OnInit {
     this.funcionService.getFuncion(this.funcionId).subscribe(
       result => {
         this.funcionSeleccionada = result;
-        console.log('Función seleccionada cargada:', this.funcionSeleccionada);
+
         // Genera las butacas en la UI, pasando las butacas ocupadas de la función (o un array vacío si no hay)
         this.generateSeats(this.funcionSeleccionada.butacasOcupadas || []);
       },
@@ -104,7 +104,7 @@ export class ReservasComponent implements OnInit {
       seat.status = 'available'; // Cambia su estado a disponible
       this.butacaSeleccionada.delete(seat.id); // Elimina el ID de la butaca del conjunto de seleccionadas
     }
-    console.log('Butacas seleccionadas actualmente:', Array.from(this.butacaSeleccionada));
+
   }
 
   // Método asíncrono para iniciar el proceso de reserva de butacas
@@ -135,13 +135,13 @@ export class ReservasComponent implements OnInit {
     //nuevaReserva.qr = ''; // El QR se puede borrar, sin uso por ahora
     nuevaReserva.pagado = 'pendiente'; // Estado inicial de la reserva: pendiente de pago
 
-    console.log('Objeto Reserva a enviar:', nuevaReserva); // Log del objeto reserva antes de enviarlo
+
 
     try {
       const response = await this.reservaService.createReserva(nuevaReserva).toPromise();
       this.mostrarMensaje('Reserva creada con éxito. Ahora serás redirigido para el pago.', false);
       this.isReserving = false;
-      console.log('Respuesta de la reserva:', response);
+
 
       this.reservaPendiente = response.reserva;
 
@@ -217,7 +217,7 @@ export class ReservasComponent implements OnInit {
         confirmButtonText: 'Entendido'
       });
     } else {
-      console.log('Mensaje de éxito:', mensaje);
+
       Swal.fire({
         icon: 'success',
         title: '¡Éxito!',

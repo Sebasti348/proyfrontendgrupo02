@@ -137,7 +137,7 @@ export class PagoExitosoComponent implements OnInit {
 
       // Construye la URL completa del QR con la URL del ticket, tamaño y colores
       this.qrTicketUrl = `${baseUrl}?data=${encodedTicketUrl}&size=200x200&color=000000&bgcolor=FFFFFF`;
-      console.log('QR del Ticket generado:', this.qrTicketUrl); // Log de la URL del QR
+
     } else {
       console.warn('No hay una URL de imagen de ticket para generar el QR.'); // Advertencia si no hay URL de ticket
       this.qrTicketUrl = null; // Asegura que no se muestre un QR vacío

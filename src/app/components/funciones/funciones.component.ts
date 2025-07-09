@@ -47,7 +47,7 @@ export class FuncionesComponent implements OnInit {
         this.mostrarFiltros = true;
         this.aplicarFiltros();
       } else {
-        console.log('No se recibió el nombre de la película de la ruta. Cargando todas las funciones activas.');
+
         this.cargarFuncionesActivas(); // Si no hay nombre de película, carga todas las funciones activas
       }
     });
@@ -60,7 +60,7 @@ export class FuncionesComponent implements OnInit {
         this.cargarFuncionesPorNombre(this.filterNombrePelicula);
       } else {
         this.mostrarMensaje('No se ingresó nombre de película. Cargando todas las funciones activas.', true);
-        console.log('No se ingresó nombre de película. Cargando todas las funciones activas.');
+
         this.cargarFuncionesActivas();
       }
     } else if (this.filtroSeleccionado === 'fecha') {
@@ -68,12 +68,12 @@ export class FuncionesComponent implements OnInit {
         this.cargarFuncionesPorFecha(this.filterFecha);
       } else {
         this.mostrarMensaje('No se ingresó fecha. Cargando todas las funciones activas.', true);
-        console.log('No se ingresó fecha. Cargando todas las funciones activas.');
+
         this.cargarFuncionesActivas();
       }
     } else {
       this.mostrarMensaje('No se seleccionó tipo de filtro. Cargando todas las funciones activas.', true);
-      console.log('No se seleccionó tipo de filtro. Cargando todas las funciones activas.');
+
       this.cargarFuncionesActivas();
     }
   }

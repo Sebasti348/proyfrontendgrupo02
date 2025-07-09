@@ -75,7 +75,7 @@ export class LoginregisterComponent implements OnInit {
     this.http.post('https://proybackendgrupo02.onrender.com/api/usuario/google-login', { idToken })
       .subscribe({
         next: (res: any) => {
-          console.log('Login backend OK', res);
+
           this.googleUser = true;
           if (res.status === '1') {
             const googleUser = res.user;
@@ -94,12 +94,12 @@ export class LoginregisterComponent implements OnInit {
               if (!validacion.existe) {
                 // Crear usuario si no existe
                 this.userservice.createUsuario(this.usuario).subscribe(() => {
-                  console.log('Usuario creado con Google OK');
+
                   this.guardarEnSessionYRedirigir(this.usuario);
                 });
               } else {
                 // Ya existe, simplemente redirigir
-                console.log('Usuario ya existe');
+
                 this.guardarEnSessionYRedirigir(this.usuario);
               }
             });
@@ -118,8 +118,8 @@ export class LoginregisterComponent implements OnInit {
   }
 
   login() {
-    console.log('Login:', this.emailOrUsername);
-    console.log('Contraseña:', this.password);
+
+
 
     this.isLoading = true;
     this.msglogin = '';
@@ -169,23 +169,23 @@ export class LoginregisterComponent implements OnInit {
   register() {
     this.usuario.estado = true;
     this.usuario.rol = 'cliente';
-    console.log(this.usuario);
+
 
     if (!this.usuario.email || !this.usuario.password || !this.usuario.nombre) {
-      console.log('Faltan datos requeridos para el registro');
+
       return;
     }
 
     this.loginservice.validarNuevoUsuario(this.usuario).subscribe(
       (result: any) => {
         this.response = result;
-        console.log(result);
+
         this.usuario.fechaRegistro = new Date();
         
         if (!this.response.existe) {
           this.userservice.createUsuario(this.usuario).subscribe(
             (result: any) => {
-              console.log('Usuario creado exitosamente:', result);
+
               if (this.usuario.email || this.usuario.username && this.usuario.password) {
                 this.emailOrUsername = this.usuario.email ?? this.usuario.username ?? '';
                 this.password = this.usuario.password ?? '';
@@ -199,11 +199,11 @@ export class LoginregisterComponent implements OnInit {
               }
             },
             (error: any) => {
-              console.log('Error al crear usuario:', error);
+
             }
           );
         } else {
-          console.log('Correo electrónico ya registrado');
+
         }
       },
       (error: any) => {
@@ -213,7 +213,7 @@ export class LoginregisterComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
-        console.log('Error al validar usuario:', error);
+
       }
     );
   }

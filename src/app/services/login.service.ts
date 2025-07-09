@@ -19,7 +19,7 @@ export class LoginService {
     }),
   };
   let body = JSON.stringify({ login: login, password: password });
-  console.log(body);
+
   return this._http.post(`${this.apiUrl}/api/usuario/login`, body, httpOption);
 }
 

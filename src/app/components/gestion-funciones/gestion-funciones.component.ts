@@ -43,7 +43,7 @@ export class GestionFuncionesComponent implements OnInit {
       result => {
         // Mapea los resultados a instancias de Pelicula 
         this.peliculas = result.map((item: any) => new Pelicula(item));
-        console.log('Películas obtenidas de la BD:', this.peliculas);
+
       },
       error => {
         console.error('Error al obtener películas de la BD:', error);
@@ -182,7 +182,7 @@ export class GestionFuncionesComponent implements OnInit {
         confirmButtonText: 'Entendido'
       });
     } else {
-      console.log('Mensaje de éxito:', mensaje);
+
       Swal.fire({
         icon: 'success',
         title: '¡Éxito!',
@@ -199,7 +199,7 @@ export class GestionFuncionesComponent implements OnInit {
     this.funcionService.getFuncionesActivas().subscribe(
       funciones => {
         this.funcionesActivas = funciones;
-        console.log('Funciones activas:', this.funcionesActivas);
+
       },
       error => {
         console.error('Error al cargar funciones activas:', error);
