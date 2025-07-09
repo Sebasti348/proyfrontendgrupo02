@@ -146,6 +146,6 @@ export class PagoExitosoComponent implements OnInit {
 
   // Método para navegar a la cartelera
   irInicio(): void {
-    this.router.navigate(['cartelera']);
+    this.router.navigate(['']);
   }
 }
