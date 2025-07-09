@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
 
     // Primero, verificamos si el usuario está logueado
     if (!currentUserLoggedIn) {
-      console.warn('Acceso denegado: No hay usuario logueado.');
+
       return this.router.createUrlTree(['/loginregister']);
     }
 
@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
     // Si currentUserLoggedIn es true, pero userRole es null (lo cual no debería pasar si el login es correcto)
     // o si el rol es una cadena vacía (lo cual podrías considerar inválido)
     if (userRole === null || userRole.trim() === '') { // Usamos .trim() para considerar cadenas vacías inválidas también
-      console.warn('Acceso denegado: El usuario logueado no tiene un rol válido asignado.');
+
       return this.router.createUrlTree(['/loginregister']); // O a una página de error/acceso denegado
     }
 
@@ -41,7 +41,7 @@ export class AuthGuard implements CanActivate {
     if (requiredRoles.includes(userRole)) {
       return true; // El usuario tiene el rol necesario, permitir el acceso
     } else {
-      console.warn(`Acceso denegado: El usuario con rol '${userRole}' no tiene permiso para acceder a esta ruta. Roles requeridos: ${requiredRoles.join(', ')}`);
+
       return this.router.createUrlTree(['/access-denied']);
     }
     

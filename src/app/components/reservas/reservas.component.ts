@@ -53,7 +53,7 @@ export class ReservasComponent implements OnInit {
 
         this.obtenerFuncion(); // Llama al método para obtener los detalles de la función
       } else {
-        console.error('No se recibió ID de función en la ruta.');
+
         alert('Error: No se recibió el ID de la función. Por favor, intente de nuevo.');
         this.router.navigate(['cartelera']);
       }
@@ -71,7 +71,7 @@ export class ReservasComponent implements OnInit {
       },
       error => {
         this.mostrarMensaje('Error al obtener la función. Por favor, inténtalo de nuevo.', true);
-        console.error('Error al obtener la función:', error);
+
       }
     );
   }
@@ -149,14 +149,14 @@ export class ReservasComponent implements OnInit {
       if (this.reservaPendiente && this.reservaPendiente._id) {
         this.pagarReserva(this.reservaPendiente); // Llama al método para iniciar el proceso de pago
       } else {
-        console.error('No se pudo obtener el ID de la reserva para el pago.');
+  
         this.mostrarMensaje('Error al procesar la reserva para el pago. Intente nuevamente.', true);
       }
 
 
     } catch (error: any) {
       this.isReserving = false;
-      console.error('Error al realizar la reserva:', error);
+
       let errorMessage = 'No se pudo completar la reserva. Inténtalo de nuevo.';
       if (error.error && error.error.msg) {
         errorMessage = error.error.msg;
@@ -196,7 +196,7 @@ export class ReservasComponent implements OnInit {
         } else {
           this.mostrarMensaje('No se pudo obtener el link de pago de Mercado Pago.', true);
           alert('No se pudo obtener el link de pago de Mercado Pago.'); // Alerta si no se obtiene el link
-          console.error('Respuesta inesperada de Mercado Pago:', mpResponse); // Log de la respuesta inesperada
+     // Log de la respuesta inesperada
         }
       },
       (error: any) => {

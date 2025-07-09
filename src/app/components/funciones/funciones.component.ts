@@ -97,7 +97,7 @@ export class FuncionesComponent implements OnInit {
           this.mensajeNoFunciones = `No se encontraron funciones para la película "${nombre}".`;
           this.mostrarMensaje(`No se encontraron funciones para la película "${nombre}".`, true); 
         }
-        console.log('Funciones cargadas por nombre:', this.funciones);
+
       },
       error: (error) => {
         console.error('Error no manejado en suscripción de funciones por nombre:', error);
@@ -115,7 +115,7 @@ export class FuncionesComponent implements OnInit {
           this.mensajeNoFunciones = `No se encontraron funciones para la fecha ${fecha}.`;
           return of([]);
         } else {
-          console.error('Error al cargar funciones por fecha:', error);
+    
           this.mensajeNoFunciones = 'Ocurrió un error al buscar funciones por fecha.';
           return of([]);
         }
@@ -127,7 +127,7 @@ export class FuncionesComponent implements OnInit {
           this.mostrarMensaje(`No se encontraron funciones para la fecha ${fecha}.`, true);
           this.mensajeNoFunciones = `No se encontraron funciones para la fecha ${fecha}.`;
         }
-        console.log('Funciones cargadas por fecha:', this.funciones);
+
       },
       error: (error) => {
         console.error('Error no manejado en suscripción de funciones por fecha:', error);
@@ -141,7 +141,7 @@ export class FuncionesComponent implements OnInit {
     this.funcionService.getFuncionesActivas().pipe(
       catchError((error: HttpErrorResponse) => {
         this.mostrarMensaje('Error al cargar todas las funciones activas.', true);
-        console.error('Error al cargar todas las funciones activas:', error);
+
         this.mensajeNoFunciones = 'Ocurrió un error al cargar las funciones activas.';
         return of([]);
       })
@@ -152,7 +152,7 @@ export class FuncionesComponent implements OnInit {
           this.mostrarMensaje('No hay funciones disponibles en este momento.', true);
           this.mensajeNoFunciones = 'No hay funciones activas disponibles en este momento.';
         }
-        console.log('Todas las funciones activas cargadas:', this.funciones);
+
       },
       error: (error) => {
         console.error('Error no manejado en suscripción de funciones activas:', error);
@@ -174,14 +174,14 @@ export class FuncionesComponent implements OnInit {
     if (funcionSeleccionada && this.loginservice.userLoggedIn()) {
       this.router.navigate(['reservas', funcionSeleccionada]);
     } else {
-      console.error('No se seleccionó ninguna función para reservar.');
+
       this.router.navigate(['loginregister']);
     }
   }
 
   private mostrarMensaje(mensaje: string, esError: boolean = false) {
       if (esError) {
-        console.error('Mensaje de error:', mensaje);
+
         Swal.fire({
           icon: 'error',
           title: '¡Oops...',
@@ -189,7 +189,7 @@ export class FuncionesComponent implements OnInit {
           confirmButtonText: 'Entendido'
         });
       } else {
-        console.log('Mensaje de éxito:', mensaje);
+
         Swal.fire({
           icon: 'success',
           title: '¡Éxito!',
